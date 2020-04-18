@@ -1,0 +1,44 @@
+@import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+@import '../styles/_effects.scss';
+@import '../styles/_layout.scss';
+
+.header {
+  width: 100%;
+  background-color: $color-dark-2;
+  height: $heightHeader;
+  box-shadow: $box-shadow-bottom;
+  color: $color-grey;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+
+  &__title {
+    @include type-less-prominent();
+    font-size: 1.25rem;
+    padding: 0 1rem;
+  }
+
+  &__nav {
+    @include type-normal();
+    display: flex;
+    align-items: center;
+
+    &__item {
+      color: $color-grey;
+      text-decoration: none;
+      padding: 0 1rem;
+      height: $heightHeader;
+      display: flex;
+      align-items: center;
+
+      &--active {
+        color: $color-white;
+      }
+
+      &:hover {
+        background-color: $color-dark-4;
+      }
+    }
+  }
+}

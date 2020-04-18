@@ -1,0 +1,27 @@
+@import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+@import '../styles/_effects.scss';
+
+.piece {
+  @include type-normal();
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem;
+  color: $color-white;
+
+  &:hover {
+    background-color: rgba(#fff, 0.05);
+  }
+
+  &__image {
+    width: 4rem;
+    height: 4rem;
+    box-shadow: $box-shadow-bottom;
+    margin-right: 2rem;
+  }
+
+  &__title {
+    margin-right: 2rem;
+  }
+}

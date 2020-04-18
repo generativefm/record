@@ -1,0 +1,35 @@
+@import '../styles/_colors.scss';
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
+
+  &--stroke {
+    color: $color-grey;
+
+    &:hover {
+      color: $color-white;
+    }
+  }
+
+  &--change-background {
+    color: $color-white;
+    padding: 0.5em;
+    border-radius: 5px;
+    &:hover {
+      background-color: rgba($color-white, 0.1);
+    }
+
+    &:active {
+      background-color: rgba($color-white, 0.2);
+    }
+  }
+}

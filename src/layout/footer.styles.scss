@@ -1,0 +1,14 @@
+@import '../styles/colors.scss';
+@import '../styles/effects.scss';
+@import '../styles/_layout.scss';
+
+.footer {
+  background-color: $color-dark-3;
+  height: $heightFooter;
+  width: 100%;
+  box-shadow: $box-shadow-top;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 1;
+}

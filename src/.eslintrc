@@ -1,0 +1,16 @@
+{
+  "extends": ["plugin:react/recommended"],
+  "env": {
+    "node": false,
+    "browser": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "2020"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

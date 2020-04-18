@@ -1,0 +1,17 @@
+@import '../styles/_layout.scss';
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: $heightHeader 1fr $heightFooter;
+  height: 100vh;
+  width: 100vw;
+
+  &--with-search {
+    grid-template-rows: $heightHeader $heightSearchbar 1fr $heightFooter;
+  }
+
+  &__content {
+    overflow-y: auto;
+  }
+}

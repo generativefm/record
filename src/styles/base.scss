@@ -1,0 +1,20 @@
+@import '~reset-css/sass/reset';
+@import '_colors.scss';
+
+html,
+body,
+#root {
+  background-color: $color-dark-1;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.is-shown {
+  visibility: visible;
+}
+
+.is-hidden {
+  visibility: hidden;
+}
