@@ -1,4 +1,6 @@
 @import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+@import '../styles/_effects.scss';
 
 .button {
   background: none;
@@ -31,5 +33,56 @@
     &:active {
       background-color: rgba($color-white, 0.2);
     }
+  }
+
+  &--change-background#{&}--is-disabled {
+    opacity: 0.15;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+  }
+
+  &--text {
+    @include type-normal();
+    color: $color-grey;
+    border: 1px solid $color-grey;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    min-width: 4rem;
+    box-shadow: $box-shadow-bottom;
+
+    &:hover {
+      background-color: $color-grey;
+      color: $color-white;
+    }
+
+    &:active {
+      background-color: rgba($color-grey, 0.5);
+      border-color: transparent;
+      color: rgba($color-white, 0.5);
+      box-shadow: none;
+    }
+
+    &.button--primary {
+      background-color: $color-primary;
+      color: $color-dark-1;
+      border: none;
+
+      &:hover {
+        background-color: rgba($color-primary, 0.75);
+      }
+
+      &:active {
+        background-color: rgba($color-primary, 0.5);
+        box-shadow: none;
+      }
+    }
+  }
+
+  &--text#{&}--is-disabled {
+    color: $color-dark-3 !important;
+    background-color: rgba($color-primary, 0.25) !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
   }
 }

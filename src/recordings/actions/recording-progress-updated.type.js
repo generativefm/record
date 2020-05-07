@@ -1,0 +1,1 @@
+export default 'RECORDING_PROGRESS_UPDATED';

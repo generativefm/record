@@ -27,6 +27,13 @@ const Header = () => (
       >
         Licensing
       </NavLink>
+      <NavLink
+        to="/donate"
+        className="header__nav__item"
+        activeClassName="header__nav__item--active"
+      >
+        Donate <span className="heart" />
+      </NavLink>
     </nav>
   </header>
 );

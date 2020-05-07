@@ -6,14 +6,29 @@ const Volume = () => {
   const [isChanging, setIsChanging] = useState(false);
   const volumeBarRef = useRef(null);
 
+  const updateVolumeLevelForMousePosition = useCallback(
+    (clientX) => {
+      if (volumeBarRef.current) {
+        const { x, width } = volumeBarRef.current.getBoundingClientRect();
+        const xPositionPercent = Math.min(
+          Math.max((clientX - x) / width, 0),
+          1
+        );
+        setVolumeLevelPercentage(xPositionPercent);
+      }
+    },
+    [setVolumeLevelPercentage, volumeBarRef]
+  );
+
   const handlePointerDown = useCallback(
     (event) => {
       if (volumeBarRef.current) {
         setIsChanging(true);
+        updateVolumeLevelForMousePosition(event.clientX);
         volumeBarRef.current.setPointerCapture(event.pointerId);
       }
     },
-    [volumeBarRef]
+    [volumeBarRef, setIsChanging, updateVolumeLevelForMousePosition]
   );
 
   const handlePointerUp = useCallback(
@@ -23,21 +38,16 @@ const Volume = () => {
         volumeBarRef.current.releasePointerCapture(event.pointerId);
       }
     },
-    [volumeBarRef]
+    [volumeBarRef, setIsChanging]
   );
 
   const handlePointerMove = useCallback(
     (event) => {
       if (volumeBarRef.current && isChanging) {
-        const { x, width } = volumeBarRef.current.getBoundingClientRect();
-        const xPositionPercent = Math.min(
-          Math.max((event.clientX - x) / width, 0),
-          1
-        );
-        setVolumeLevelPercentage(xPositionPercent);
+        updateVolumeLevelForMousePosition(event.clientX);
       }
     },
-    [volumeBarRef, isChanging]
+    [volumeBarRef, isChanging, updateVolumeLevelForMousePosition]
   );
 
   return (

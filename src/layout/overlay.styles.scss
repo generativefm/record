@@ -1,0 +1,18 @@
+@import '../styles/_colors.scss';
+
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgba($color-dark-1, 0.8);
+
+  &--appear {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+      transition: opacity 200ms;
+    }
+  }
+}

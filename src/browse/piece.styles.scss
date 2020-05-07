@@ -6,7 +6,7 @@
   @include type-normal();
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 1rem;
   color: $color-white;
 
@@ -14,14 +14,27 @@
     background-color: rgba(#fff, 0.05);
   }
 
-  &__image {
-    width: 4rem;
-    height: 4rem;
-    box-shadow: $box-shadow-bottom;
-    margin-right: 2rem;
+  &__info {
+    display: flex;
+    align-items: center;
+
+    &__image {
+      width: 4rem;
+      height: 4rem;
+      box-shadow: $box-shadow-bottom;
+      margin-right: 2rem;
+    }
+
+    &__title {
+      margin-right: 2rem;
+    }
   }
 
-  &__title {
-    margin-right: 2rem;
+  &__buttons {
+    display: flex;
+
+    &__button {
+      margin-left: 1rem;
+    }
   }
 }

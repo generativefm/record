@@ -15,7 +15,6 @@
 
   &__title {
     @include type-less-prominent();
-    font-size: 1.25rem;
     padding: 0 1rem;
   }
 
@@ -40,5 +39,35 @@
         background-color: $color-dark-4;
       }
     }
+  }
+}
+
+$heart-height: 0.5rem;
+$heart-color: #bf0000;
+.heart {
+  height: $heart-height;
+  width: $heart-height;
+  background-color: $heart-color;
+  transform: rotate(45deg);
+  margin-left: 0.5rem;
+  margin-top: 0.1rem;
+
+  &:before,
+  &:after {
+    content: '';
+    background-color: $heart-color;
+    border-radius: 50%;
+    height: $heart-height;
+    position: absolute;
+    width: $heart-height;
+  }
+
+  &:before {
+    top: -$heart-height / 2;
+    left: 0;
+  }
+
+  &:after {
+    right: $heart-height / 2;
   }
 }

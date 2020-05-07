@@ -23,7 +23,7 @@ const config = {
         enforce: 'pre',
         test: /\.jsx?$/,
         include: /src/,
-        use: { loader: 'eslint-loader', options: { failOnError: false } },
+        use: { loader: 'eslint-loader', options: { emitWarning: true } },
       },
       {
         test: /\.s?css$/,
@@ -56,6 +56,12 @@ const config = {
       {
         test: /\.png$/,
         use: 'file-loader',
+      },
+      {
+        test: /\.js$/,
+        include: /node_modules\/tone/,
+        use: 'source-map-loader',
+        enforce: 'pre',
       },
     ],
   },

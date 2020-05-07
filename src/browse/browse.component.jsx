@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
+import React, { useRef, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import pieces from '@generative-music/pieces-alex-bainter';
+import Fuse from 'fuse.js';
+import selectSearchTerm from '../layout/search/search-term.selector';
 import Piece from './piece.component';
+import pluck from '../utilities/pluck';
+import './browse.styles.scss';
+
+const recordablePieces = pieces.filter(pluck('isRecordable'));
+
+const getMessage = (searchTerm, searchResults) => {
+  if (searchResults.length === 0) {
+    return `No pieces found for "${searchTerm}"`;
+  }
+  return `Showing ${searchResults.length} piece${
+    searchResults.length > 1 ? 's' : ''
+  } matching "${searchTerm}"`;
+};
 
 const Browse = () => {
-  const [filteredPieces] = useState(
-    pieces.filter(({ isRecordable }) => isRecordable)
+  const fuse = useRef(new Fuse(recordablePieces, { keys: ['id', 'title'] }));
+  const searchTerm = useSelector(selectSearchTerm);
+  const searchResults = useMemo(
+    () =>
+      searchTerm
+        ? fuse.current.search(searchTerm).map(pluck('item'))
+        : recordablePieces,
+    [fuse, searchTerm]
   );
+
+  const message = getMessage(searchTerm, searchResults);
+
   return (
-    <div>
-      {filteredPieces.map(({ id, title, image, releaseDate }) => (
-        <Piece
-          key={id}
-          imageSrc={image}
-          title={title}
-          releaseDate={releaseDate}
-        ></Piece>
+    <div className="browse">
+      {searchTerm && <div className="browse__message">{message}</div>}
+      {searchResults.map(({ id }) => (
+        <Piece key={id} id={id}></Piece>
       ))}
     </div>
   );

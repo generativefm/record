@@ -1,0 +1,108 @@
+@import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+@import '../styles/_effects.scss';
+
+.new-recording {
+  @include type-normal();
+  background-color: $color-dark-2;
+  padding: 1rem;
+  color: $color-white;
+  box-shadow: $box-shadow-bottom;
+
+  &__title {
+    @include type-less-prominent();
+    width: 100%;
+    text-align: center;
+  }
+
+  &__piece {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+
+    &__image {
+      width: 4rem;
+      height: 4rem;
+      margin-right: 1rem;
+      box-shadow: $box-shadow-bottom;
+    }
+
+    &__title {
+      margin-left: 1rem;
+    }
+  }
+
+  &__inputs {
+    padding: 0 1rem;
+  }
+
+  &__estimate {
+    width: 100%;
+    text-align: center;
+    color: $color-grey;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+
+    button {
+      margin-right: 1rem;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .animate-in {
+    &--appear {
+      transform: translateX(10%);
+
+      &-active {
+        transform: none;
+        transition: transform 200ms;
+      }
+    }
+  }
+}
+
+.input-row {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 5rem 6rem 5rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 2rem;
+  }
+
+  &__label {
+    text-align: right;
+  }
+
+  &__input-container {
+    padding: 0 1rem;
+
+    input {
+      @include type-normal();
+      text-align: right;
+      font-size: 1rem;
+      background: none;
+      border: 1px solid $color-grey;
+      box-sizing: border-box;
+      width: 100%;
+      color: $color-white;
+      outline-color: $color-primary;
+    }
+  }
+
+  &__unit {
+    color: $color-grey;
+  }
+}

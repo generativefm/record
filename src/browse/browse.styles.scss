@@ -1,0 +1,11 @@
+@import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+
+.browse {
+  &__message {
+    @include type-normal();
+    color: $color-grey;
+    padding-top: 1rem;
+    padding-left: 1rem;
+  }
+}
