@@ -1,0 +1,43 @@
+@import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+
+.donate {
+  &__options {
+    margin: 2rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &__primary {
+      padding: 1.5rem;
+
+      svg {
+        margin-left: 0.5rem;
+      }
+    }
+
+    &__one-time {
+      &__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        svg {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  &__bigger-supporters {
+    @include type-less-prominent();
+    color: $color-white;
+  }
+
+  &__supporters {
+    @include type-normal();
+    color: $color-grey;
+  }
+}

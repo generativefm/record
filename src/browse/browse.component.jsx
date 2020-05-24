@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import pieces from '@generative-music/pieces-alex-bainter';
 import Fuse from 'fuse.js';
-import selectSearchTerm from '../layout/search/search-term.selector';
+import selectSearchTerm from '../search/search-term.selector';
 import Piece from './piece.component';
 import pluck from '../utilities/pluck';
 import './browse.styles.scss';

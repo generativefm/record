@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClearIcon = () => (
+const XIcon = () => (
   <svg
     width="20"
     height="20"
@@ -26,4 +26,4 @@ const ClearIcon = () => (
   </svg>
 );
 
-export default ClearIcon;
+export default XIcon;

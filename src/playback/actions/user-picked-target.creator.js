@@ -1,6 +1,6 @@
 import USER_PICKED_TARGET from './user-picked-target.type';
-import RECORDING from './recording.type';
-import PIECE from './piece.type';
+import RECORDING from '../recording.type';
+import PIECE from '../piece.type';
 
 const validTargetTypes = new Set([PIECE, RECORDING]);
 

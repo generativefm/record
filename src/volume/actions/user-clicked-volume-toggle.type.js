@@ -1,0 +1,1 @@
+export default 'USER_CLICKED_VOLUME_TOGGLE';

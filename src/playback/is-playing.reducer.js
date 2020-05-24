@@ -1,13 +1,9 @@
 import USER_PICKED_TARGET from './actions/user-picked-target.type';
 
-const targetReducer = (state = {}, action) => {
+const isPlayingReducer = (state = false, action) => {
   switch (action.type) {
     case USER_PICKED_TARGET: {
-      const { id, type } = action.payload;
-      return {
-        id,
-        type,
-      };
+      return true;
     }
     default: {
       return state;
@@ -15,4 +11,4 @@ const targetReducer = (state = {}, action) => {
   }
 };
 
-export default targetReducer;
+export default isPlayingReducer;

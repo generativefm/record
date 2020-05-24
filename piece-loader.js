@@ -8,10 +8,11 @@ const pieceLoader = (source) => {
     }`;
   }
   const output = `import image from '${pieceManifest.image}';
-  import makePiece from '${pieceManifest.makePiece}';
   export default {
     image,
-    load: () => Promise.resolve(makePiece),
+    loadMakePiece: () => import('${
+      pieceManifest.makePiece
+    }').then((m) => m.default),
     isRecordable: true,
     title: '${pieceManifest.title}',
     id: '${pieceManifest.id}',

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import selectSearchTerm from './search-term.selector';
 import userChangedSearchTerm from './actions/user-changed-search-term.creator';
 import SearchIcon from './search-icon.component';
-import ClearIcon from './clear-icon.component';
-import Button from '../../common/button.component';
+import XIcon from '../common/x-icon.component';
+import Button from '../common/button.component';
 import './search.styles.scss';
 
 const Search = () => {
@@ -45,7 +45,7 @@ const Search = () => {
         className={`button--stroke ${value ? 'is-shown' : 'is-hidden'}`}
         onClick={handleClearClick}
       >
-        <ClearIcon />
+        <XIcon />
       </Button>
     </div>
   );

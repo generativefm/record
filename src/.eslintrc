@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:react/recommended"],
+  "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
   "env": {
     "node": false,
     "browser": true
@@ -12,5 +12,16 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.spec.js"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "expect": "readonly"
+      }
+    }
+  ]
 }

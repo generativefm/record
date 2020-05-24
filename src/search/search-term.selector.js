@@ -1,4 +1,4 @@
-import pluck from '../../utilities/pluck';
+import pluck from '../utilities/pluck';
 
 const selectSearchTerm = pluck('searchTerm');
 

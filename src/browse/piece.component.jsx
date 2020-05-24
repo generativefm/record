@@ -6,13 +6,18 @@ import Button from '../common/button.component';
 import PlusIcon from '../common/plus-icon.component';
 import PlayIcon from '../common/play-icon.component';
 import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
+import userPickedTarget from '../playback/actions/user-picked-target.creator';
+import PIECE from '../playback/piece.type';
 import './piece.styles.scss';
 
 const Piece = ({ id }) => {
   const dispatch = useDispatch();
   const handleNewRecordingClick = useCallback(() => {
     dispatch(userOpenedNewRecordingConfig(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
+  const handlePlayClick = useCallback(() => {
+    dispatch(userPickedTarget({ id, type: PIECE }));
+  }, [dispatch, id]);
   const { title, image } = byId[id];
   return (
     <div className="piece">
@@ -24,6 +29,7 @@ const Piece = ({ id }) => {
         <Button
           className="button--change-background piece__buttons__button"
           tooltip="Play"
+          onClick={handlePlayClick}
         >
           <PlayIcon width={16} />
         </Button>

@@ -1,8 +1,8 @@
 import React from 'react';
 import pieces from '@generative-music/pieces-alex-bainter';
-import Volume from '../controls/volume.component';
+import VolumeControl from '../volume/volume-control.component';
 import PlayIcon from '../common/play-icon.component';
-import PauseIcon from '../common/pause-icon.component';
+// import PauseIcon from '../common/pause-icon.component';
 import Button from '../common/button.component';
 import './footer.styles.scss';
 
@@ -27,7 +27,7 @@ const Footer = () => {
         </Button>
       </div>
       <div className="footer__right">
-        <Volume />
+        <VolumeControl />
       </div>
     </footer>
   );

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './licensing.styles.scss';
 
 const Licensing = () => (
-  <div className="licensing">
+  <div className="licensing text-content">
     <h1>Creative Commons License</h1>
     <h2>Free for anyone and everyone</h2>
     <p>

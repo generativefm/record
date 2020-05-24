@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
 
-    &__item {
+    a#{&}__item {
       color: $color-grey;
       text-decoration: none;
       padding: 0 1rem;

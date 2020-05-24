@@ -1,11 +1,11 @@
 @import '../styles/_colors.scss';
 
-.volume {
+.volume-slider {
   padding: 1rem;
   cursor: pointer;
 
   &:hover {
-    .volume__bar {
+    .volume-slider__bar {
       height: 0.5rem;
     }
   }
@@ -15,15 +15,15 @@
     height: 0.2rem;
     background-color: $color-grey;
     cursor: pointer;
-  }
 
-  &__level {
-    height: 100%;
-    background-color: $color-white;
-    cursor: pointer;
+    &__level {
+      height: 100%;
+      background-color: $color-white;
+      cursor: pointer;
 
-    &--is-changing {
-      background-color: $color-primary;
+      &--is-changing {
+        background-color: $color-primary;
+      }
     }
   }
 }

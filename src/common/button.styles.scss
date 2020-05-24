@@ -50,6 +50,7 @@
     padding: 0.25rem 0.5rem;
     min-width: 4rem;
     box-shadow: $box-shadow-bottom;
+    text-decoration: none;
 
     &:hover {
       background-color: $color-grey;
@@ -84,5 +85,17 @@
     background-color: rgba($color-primary, 0.25) !important;
     box-shadow: none !important;
     cursor: not-allowed !important;
+  }
+
+  &--link {
+    @include type-normal();
+    color: $color-grey;
+    font-size: inherit;
+    padding: 0;
+    text-decoration: underline;
+
+    &:hover {
+      color: rgba($color-grey, 0.75);
+    }
   }
 }

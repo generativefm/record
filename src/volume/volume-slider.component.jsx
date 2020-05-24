@@ -1,12 +1,16 @@
 import React, { useState, useCallback, useRef } from 'react';
-import './volume.styles.scss';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import userFinishedAdjustingVolume from './actions/user-finished-adjusting-volume.creator';
+import pipe from '../utilities/pipe';
+import './volume-slider.styles.scss';
 
-const Volume = () => {
-  const [volumeLevelPercentage, setVolumeLevelPercentage] = useState(0.5);
+const VolumeSlider = ({ volumeLevelPercentage, onVolumeChange }) => {
   const [isChanging, setIsChanging] = useState(false);
   const volumeBarRef = useRef(null);
+  const dispatch = useDispatch();
 
-  const updateVolumeLevelForMousePosition = useCallback(
+  const getVolumeLevelForMousePosition = useCallback(
     (clientX) => {
       if (volumeBarRef.current) {
         const { x, width } = volumeBarRef.current.getBoundingClientRect();
@@ -14,10 +18,16 @@ const Volume = () => {
           Math.max((clientX - x) / width, 0),
           1
         );
-        setVolumeLevelPercentage(xPositionPercent);
+        return xPositionPercent;
       }
+      return 0;
     },
-    [setVolumeLevelPercentage, volumeBarRef]
+    [volumeBarRef]
+  );
+
+  const updateVolumeLevelForMousePosition = useCallback(
+    (clientX) => pipe(getVolumeLevelForMousePosition, onVolumeChange)(clientX),
+    [getVolumeLevelForMousePosition, onVolumeChange]
   );
 
   const handlePointerDown = useCallback(
@@ -28,7 +38,7 @@ const Volume = () => {
         volumeBarRef.current.setPointerCapture(event.pointerId);
       }
     },
-    [volumeBarRef, setIsChanging, updateVolumeLevelForMousePosition]
+    [volumeBarRef, updateVolumeLevelForMousePosition]
   );
 
   const handlePointerUp = useCallback(
@@ -36,9 +46,11 @@ const Volume = () => {
       if (volumeBarRef.current) {
         setIsChanging(false);
         volumeBarRef.current.releasePointerCapture(event.pointerId);
+        const finalValue = getVolumeLevelForMousePosition(event.clientX);
+        dispatch(userFinishedAdjustingVolume(finalValue));
       }
     },
-    [volumeBarRef, setIsChanging]
+    [volumeBarRef, setIsChanging, dispatch, getVolumeLevelForMousePosition]
   );
 
   const handlePointerMove = useCallback(
@@ -52,15 +64,15 @@ const Volume = () => {
 
   return (
     <div
-      className="volume"
+      className="volume-slider"
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerMove={handlePointerMove}
     >
-      <div className="volume__bar" ref={volumeBarRef}>
+      <div className="volume-slider__bar" ref={volumeBarRef}>
         <div
-          className={`volume__level${
-            isChanging ? ' volume__level--is-changing' : ''
+          className={`volume-slider__bar__level${
+            isChanging ? ' volume-slider__bar__level--is-changing' : ''
           }`}
           style={{ width: `${volumeLevelPercentage * 100}%` }}
         />
@@ -69,4 +81,9 @@ const Volume = () => {
   );
 };
 
-export default Volume;
+VolumeSlider.propTypes = {
+  volumeLevelPercentage: PropTypes.number.isRequired,
+  onVolumeChange: PropTypes.func.isRequired,
+};
+
+export default VolumeSlider;

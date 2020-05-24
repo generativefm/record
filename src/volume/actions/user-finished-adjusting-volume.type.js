@@ -1,0 +1,1 @@
+export default 'USER_FINISHED_ADJUSTING_VOLUME';

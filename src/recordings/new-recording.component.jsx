@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
@@ -8,6 +8,7 @@ import selectNewRecordingId from './new-recording-id.selector';
 import Button from '../common/button.component';
 import userCanceledNewRecordingType from './actions/user-canceled-new-recording.creator';
 import userRequestedNewRecording from './actions/user-requested-new-recording.creator';
+import noop from '../utilities/noop';
 import './new-recording.styles.scss';
 
 const InputRow = ({ label, unit, value, onChange }) => {
@@ -42,6 +43,7 @@ InputRow.propTypes = {
 };
 
 const NewRecording = () => {
+  const containerRef = useRef(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const isOnRecordingsPage = Boolean(useRouteMatch('/recordings'));
@@ -54,7 +56,7 @@ const NewRecording = () => {
   const isValidLength = !Number.isNaN(parsedLength) && parsedLength > 0;
   const piece = byId[newRecordingId];
 
-  const handleCancelClick = useCallback(() => {
+  const dispatchCancelAction = useCallback(() => {
     dispatch(userCanceledNewRecordingType());
   }, [dispatch]);
 
@@ -72,8 +74,23 @@ const NewRecording = () => {
     }
   }, [dispatch, length, fadeIn, fadeOut]);
 
+  useEffect(() => {
+    if (!containerRef.current) {
+      return noop;
+    }
+    const handleDocumentClick = (event) => {
+      if (!containerRef.current.contains(event.target)) {
+        dispatchCancelAction();
+      }
+    };
+    document.addEventListener('click', handleDocumentClick);
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [dispatchCancelAction, containerRef]);
+
   return (
-    <div className="new-recording">
+    <div className="new-recording" ref={containerRef}>
       <CSSTransition in={true} classNames="animate-in-" timeout={20000} appear>
         <div>
           <div className="new-recording__title">New recording</div>
@@ -110,7 +127,7 @@ const NewRecording = () => {
             {parsedLength > 1 ? 's' : ''}
           </div>
           <div className="new-recording__buttons">
-            <Button className="button--text" onClick={handleCancelClick}>
+            <Button className="button--text" onClick={dispatchCancelAction}>
               Cancel
             </Button>
             <Button

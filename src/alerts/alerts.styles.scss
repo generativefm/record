@@ -1,0 +1,133 @@
+@import '../styles/_colors.scss';
+@import '../styles/_effects.scss';
+@import '../styles/_type.scss';
+
+.alerts {
+  position: fixed;
+  bottom: 6rem;
+  right: 2rem;
+  z-index: 30;
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  &__button {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-dark-3;
+    color: $color-white;
+    border-radius: 50%;
+    box-shadow: $box-shadow-bottom;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lighten($color-dark-3, 5%);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      background-color: lighten($color-dark-3, 10%);
+    }
+
+    &--has-dot {
+      &::after {
+        content: '';
+        width: 0.4rem;
+        height: 0.4rem;
+        background-color: $color-primary;
+        position: absolute;
+        right: 0.6rem;
+        top: 0.6rem;
+        border-radius: 50%;
+      }
+    }
+
+    &--is-loud {
+      color: $color-dark-1;
+      background-color: $color-primary;
+
+      &:hover {
+        background-color: darken($color-primary, 10%);
+      }
+
+      &:active {
+        background-color: darken($color-primary, 20%);
+      }
+    }
+
+    &--is-loud#{&}--has-dot {
+      &::after {
+        background-color: $color-dark-1;
+      }
+    }
+  }
+
+  &__messages {
+    &__item {
+      @include type-normal;
+      width: 20rem;
+      background-color: $color-dark-3;
+      color: $color-white;
+      padding: 0.5rem;
+      box-sizing: content-box;
+      margin-bottom: 1rem;
+      box-shadow: $box-shadow-bottom;
+      cursor: pointer;
+
+      &--enter {
+        opacity: 0;
+        transform: translateY(20%);
+
+        &-active {
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 200ms, transform 200ms;
+        }
+      }
+
+      &--exit {
+        opacity: 1;
+
+        &-active {
+          opacity: 0;
+          transform: translateY(20%);
+          transition: opacity 200ms, transform 200ms;
+        }
+      }
+
+      &__description {
+        margin-bottom: 1rem;
+      }
+
+      &__call-to-action {
+        display: flex;
+        align-items: center;
+        svg {
+          margin-left: 0.5rem;
+        }
+      }
+
+      &--is-loud {
+        background-color: $color-primary;
+        color: $color-dark-1;
+
+        .alerts__messages__item__call-to-action {
+          color: $color-dark-1;
+
+          &:hover {
+            color: lighten($color-dark-1, 30%);
+          }
+        }
+      }
+    }
+  }
+}
