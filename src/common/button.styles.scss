@@ -22,6 +22,11 @@
     }
   }
 
+  &--stroke#{&}--is-disabled {
+    color: darken($color-grey, 25%) !important;
+    cursor: not-allowed !important;
+  }
+
   &--change-background {
     color: $color-white;
     padding: 0.5em;
@@ -95,7 +100,7 @@
     text-decoration: underline;
 
     &:hover {
-      color: rgba($color-grey, 0.75);
+      color: darken($color-grey, 10%);
     }
   }
 }

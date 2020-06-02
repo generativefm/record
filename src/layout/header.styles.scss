@@ -31,12 +31,12 @@
       display: flex;
       align-items: center;
 
-      &--active {
-        color: $color-white;
-      }
-
       &:hover {
         background-color: $color-dark-4;
+      }
+
+      &--active {
+        color: $color-white;
       }
     }
   }

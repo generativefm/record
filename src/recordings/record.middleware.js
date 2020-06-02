@@ -14,7 +14,6 @@ const TIMESLICE_MS = 500;
 const recordMiddleware = (store) => (next) => {
   const { wav } = getSamplesByFormat('http://localhost:6969/');
   const provider = makeProvider(wav);
-
   let isRecording;
 
   const startRecording = (recordingConfig) => {
@@ -22,7 +21,7 @@ const recordMiddleware = (store) => (next) => {
     const { recordingId, length, fadeIn, fadeOut, pieceId } = recordingConfig;
     const lengthS = length * 60;
     const piece = byId[pieceId];
-    piece.load().then((makePiece) =>
+    piece.loadMakePiece().then((makePiece) =>
       provider.provide(piece.sampleNames, Tone.context).then((samples) => {
         const startTime = Tone.context.now();
         record(

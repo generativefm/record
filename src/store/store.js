@@ -20,9 +20,9 @@ const reducer = combineReducers({
 const store = createStore(
   reducer,
   applyMiddleware(
-    recordMiddleware,
     loadStoredRecordingsMiddleware,
-    piecePlaybackMiddleware
+    piecePlaybackMiddleware,
+    recordMiddleware
   )
 );
 

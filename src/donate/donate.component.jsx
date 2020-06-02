@@ -2,11 +2,13 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Button from '../common/button.component';
 import ExternalLinkIcon from '../common/external-link-icon.component';
 import CopyIcon from './copy-icon.component';
+import CheckmarkIcon from './checkmark-icon.component';
 import './donate.styles.scss';
 
 const PAYPAL_URL = 'https://paypal.me/alexbainter';
 const PATREON_URL = 'https://www.patreon.com/bePatron?u=2484731';
 const FETCH_PATRONS_URL = `https://api.alexbainter.com/v1/active-patrons`;
+const BTC_ADDRESS = '3DMb8BQVTtfVv59pMLmZmHr6xSoJsb3P4Z';
 
 const makeSupporterNameMessage = (names) =>
   names.map(
@@ -40,6 +42,23 @@ const fetchPatrons = () => {
     });
 };
 
+const execCommandCopy = (text) => {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textArea);
+  return Promise.resolve();
+};
+
+const clipboardApiCopy = (text) => navigator.clipboard.writeText(text);
+
+const copyTextToClipboard = navigator.clipboard
+  ? clipboardApiCopy
+  : execCommandCopy;
+
 const Donate = () => {
   const [
     isShowingOneTimeDonationLinks,
@@ -47,14 +66,42 @@ const Donate = () => {
   ] = useState(false);
   const [bigSupporterMessage, setBigSupporterMessage] = useState([]);
   const [supporterMessage, setSupporterMessage] = useState([]);
+  const [isBtcAddressRecentlyCopied, setIsBtcAddressRecentlyCopied] = useState(
+    false
+  );
 
   const handleShowOneTimeDonationClick = useCallback(() => {
     setIsShowingOneTimeDonationLinks(true);
   }, [setIsShowingOneTimeDonationLinks]);
 
+  const handleBtcCopyClick = useCallback(() => {
+    setIsBtcAddressRecentlyCopied(false);
+    let resetIconTimeout;
+    let isPromiseCanceled = false;
+    copyTextToClipboard(BTC_ADDRESS).then(() => {
+      if (isPromiseCanceled) {
+        return;
+      }
+      setIsBtcAddressRecentlyCopied(true);
+      resetIconTimeout = setTimeout(() => {
+        setIsBtcAddressRecentlyCopied(false);
+      }, 3000);
+    });
+    return () => {
+      isPromiseCanceled = true;
+      if (resetIconTimeout) {
+        clearTimeout(resetIconTimeout);
+      }
+    };
+  }, []);
+
   useEffect(() => {
+    let isCancelled = false;
     fetchPatrons()
       .then((patronList) => {
+        if (isCancelled) {
+          return;
+        }
         const sortedPatrons = patronList.sort(
           (a, b) => b.creditScore - a.creditScore
         );
@@ -76,6 +123,9 @@ const Donate = () => {
       .catch((error) => {
         console.error(error);
       });
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   return (
@@ -83,14 +133,22 @@ const Donate = () => {
       <h1>Why Donate?</h1>
       <h2>You don't have to, but here's why you might</h2>
       <p>
-        Hi there. My name is Alex Bainter, and I’m the creator of Generative.fm.
-        I do everything from designing and building the site to composing and
-        programming the music. I enjoy releasing this work for free so everyone
-        can have access to it. However, hosting this service on the web is not
-        free. Without financial support from folks like you, I’d either have to
-        feature advertisements, charge upfront, or shut it down. Beyond
-        reimbursing costs, funding enables me to spend more time on
-        Generative.fm instead of doing other things to earn a living.
+        Hi there. My name is{' '}
+        <a
+          href="https://alexbainter.com"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Alex Bainter <ExternalLinkIcon />
+        </a>
+        , and I’m the creator of Generative.fm. I do everything from designing
+        and building the site to composing and programming the music. I release
+        this work for free so everyone can have access to it. However, hosting
+        this service on the web is not free. Without financial support from
+        folks like you, I’d either have to feature advertisements, charge
+        upfront, or shut it down. Beyond reimbursing costs, funding enables me
+        to spend more time on Generative.fm instead of doing other things to
+        earn a living.
       </p>
       <p>
         If you enjoy Generative.fm, consider supporting it financially. Ask
@@ -118,8 +176,13 @@ const Donate = () => {
             >
               PayPal <ExternalLinkIcon />
             </a>
-            <Button className="button--link donate__options__one-time__link">
-              BTC: 3DMb8BQVTtfVv59pMLmZmHr6xSoJsb3P4Z <CopyIcon />
+            <Button
+              className="button--link donate__options__one-time__link"
+              tooltip="Copy Bitcoin wallet address"
+              onClick={handleBtcCopyClick}
+            >
+              {`BTC: ${BTC_ADDRESS}`}
+              {isBtcAddressRecentlyCopied ? <CheckmarkIcon /> : <CopyIcon />}
             </Button>
           </div>
         ) : (

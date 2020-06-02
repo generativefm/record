@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import status from './status.reducer';
 import target from './target.reducer';
+import isPlaying from './is-playing.reducer';
 
-const playbackReducer = combineReducers({ status, target });
+const playbackReducer = combineReducers({ isPlaying, target });
 
 export default playbackReducer;

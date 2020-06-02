@@ -72,7 +72,15 @@ const NewRecording = () => {
     if (!isOnRecordingsPage) {
       history.push('/recordings');
     }
-  }, [dispatch, length, fadeIn, fadeOut]);
+  }, [
+    dispatch,
+    fadeIn,
+    fadeOut,
+    parsedLength,
+    history,
+    isOnRecordingsPage,
+    newRecordingId,
+  ]);
 
   useEffect(() => {
     if (!containerRef.current) {
