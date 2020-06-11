@@ -13,10 +13,10 @@ const Licensing = () => (
       . Generally, you are welcome to use or modify the music for any purpose,
       including commercially or publicly, provided you give appropriate credit.
     </p>
-    <p>It's as easy as adding something like this to your work:</p>
+    <p>It&aposs as easy as adding something like this to your work:</p>
     <ul>
-      <li>"Music by Alex Bainter"</li>
-      <li>"[piece title] (Excerpt) by Alex Bainter"</li>
+      <li>&ldquoteMusic by Alex Bainter&rdquote</li>
+      <li>&ldquote[piece title] (Excerpt) by Alex Bainter&rdquote</li>
     </ul>
     <p>
       Links to <a href="https://alexbainter.com">alexbainter.com</a> or{' '}

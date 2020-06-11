@@ -8,6 +8,7 @@ const alertCreated = ({
   onClick,
   isExternal = false,
   isLoud = false,
+  isPersisted = false,
 }) => ({
   type,
   payload: {
@@ -17,6 +18,7 @@ const alertCreated = ({
     onClick,
     isExternal,
     isLoud,
+    isPersisted,
     timestamp: Date.now(),
     id: v4(),
   },

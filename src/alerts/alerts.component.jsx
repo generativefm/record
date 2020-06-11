@@ -63,16 +63,9 @@ const Alerts = () => {
   }, [isOpen, containerRef, setIsOpen]);
 
   const hasUnread = Object.values(alerts).some(pluck('isUnread'));
-  const hasLoud = hasUnread && Object.values(alerts).some(pluck('isLoud'));
-  const wasUnreadRef = useRef(hasUnread);
-
-  useEffect(() => {
-    if (!hasUnread || wasUnreadRef.current === hasUnread || isOpen) {
-      return;
-    }
-    wasUnreadRef.current = hasUnread;
-    const mostRecentUnread = sortedAlerts.slice(-1);
-  }, [hasUnread, isOpen, wasUnreadRef, sortedAlerts]);
+  const hasLoudUnread =
+    hasUnread &&
+    Object.values(alerts).filter(pluck('isUnread')).some(pluck('isLoud'));
 
   return (
     <div className="alerts" ref={containerRef}>
@@ -117,11 +110,28 @@ const Alerts = () => {
             );
           }
         )}
+        {visibleAlerts.length === 0 && (
+          <CSSTransition
+            in={isOpen}
+            classNames="alerts__messages__item-"
+            timeout={200}
+            unmountOnExit
+          >
+            <div
+              className="alerts__messages__item"
+              style={{ transitionDelay: `${200}ms` }}
+            >
+              <div className="alerts__messages__item__description">
+                No alerts
+              </div>
+            </div>
+          </CSSTransition>
+        )}
       </div>
       <button
         className={`alerts__button${
           hasUnread && !isOpen ? ' alerts__button--has-dot' : ''
-        }${hasLoud && !isOpen ? ' alerts__button--is-loud' : ''}`}
+        }${hasLoudUnread && !isOpen ? ' alerts__button--is-loud' : ''}`}
         onClick={handleButtonClick}
       >
         {isOpen ? <XIcon /> : <BellIcon />}

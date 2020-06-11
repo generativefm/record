@@ -1,6 +1,8 @@
 import ALERT_CREATED from './actions/alert-created.type';
 import USER_CLICKED_ALERT from './actions/user-clicked-alert.type';
 import USER_VIEWED_ALERTS from './actions/user-viewed-alerts.type';
+import RECORDING_PROGRESS_UPDATED from '../recordings/actions/recording-progress-updated.type';
+import RECORDING_FINISHED from './recording-finished.type';
 
 const alertsReducer = (
   state = {
@@ -11,6 +13,7 @@ const alertsReducer = (
       isExternal: true,
       isLoud: true,
       isUnread: true,
+      isPersisted: true,
       callToAction: 'Send an email to the creator',
       url: 'mailto:alex@alexbainter.com',
     },
@@ -22,6 +25,7 @@ const alertsReducer = (
       isExternal: true,
       isLoud: true,
       isUnread: true,
+      isPersisted: true,
       callToAction: 'Use the old version',
       url: 'https://generative.fm/record',
     },
@@ -38,6 +42,7 @@ const alertsReducer = (
         isExternal,
         isLoud,
         timestamp,
+        isPersisted,
       } = action.payload;
       return {
         ...state,
@@ -49,6 +54,7 @@ const alertsReducer = (
           isExternal,
           isLoud,
           timestamp,
+          isPersisted,
           isUnread: true,
         },
       };
@@ -75,6 +81,56 @@ const alertsReducer = (
         };
         return newState;
       }, {});
+    }
+    case RECORDING_PROGRESS_UPDATED: {
+      const { recordingId, progress, title } = action.payload;
+      if (progress < 1) {
+        return state;
+      }
+      const alertId = `${recordingId}-finished`;
+      const existingAlert = Object.values(state).find(
+        ({ type }) => type === RECORDING_FINISHED
+      );
+      if (!existingAlert) {
+        return {
+          ...state,
+          [alertId]: {
+            id: alertId,
+            description: `"${title}" recording finished.`,
+            callToAction: 'Go to recordings',
+            url: '/recordings',
+            isLoud: false,
+            isUnread: true,
+            isPersisted: false,
+            type: RECORDING_FINISHED,
+            typeCount: 1,
+          },
+        };
+      }
+      const { id, typeCount } = existingAlert;
+      return {
+        ...Object.values(state).reduce((stateObj, alert) => {
+          if (alert.id !== id) {
+            stateObj[alert.id] = {
+              ...alert,
+            };
+          }
+          return stateObj;
+        }, {}),
+        [alertId]: {
+          id: alertId,
+          description: `"${title}" and ${typeCount} other recording${
+            typeCount > 1 ? 's' : ''
+          } finished.`,
+          callToAction: 'Go to recordings',
+          url: '/recordings',
+          isLoud: false,
+          isUnread: true,
+          isPersisted: false,
+          type: RECORDING_FINISHED,
+          typeCount: typeCount + 1,
+        },
+      };
     }
     default: {
       return state;

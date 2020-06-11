@@ -5,7 +5,7 @@ import Fuse from 'fuse.js';
 import selectSearchTerm from '../search/search-term.selector';
 import Piece from './piece.component';
 import pluck from '../utilities/pluck';
-import useIsRecording from '../recordings/use-is-recording.hook';
+import selectIsRecording from '../recordings/is-recording.selector';
 import './browse.styles.scss';
 
 const recordablePieces = pieces.filter(pluck('isRecordable'));
@@ -20,7 +20,7 @@ const getMessage = (searchTerm, searchResults) => {
 };
 
 const Browse = () => {
-  const isRecording = useIsRecording();
+  const isRecording = useSelector(selectIsRecording);
   const fuse = useRef(new Fuse(recordablePieces, { keys: ['id', 'title'] }));
   const searchTerm = useSelector(selectSearchTerm);
   const searchResults = useMemo(

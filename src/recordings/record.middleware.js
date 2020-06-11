@@ -5,19 +5,32 @@ import record from '@generative-music/web-recorder';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { reduce, tap, mergeMap, take } from 'rxjs/operators';
 import USER_REQUESTED_NEW_RECORDING from './actions/user-requested-new-recording.type';
+import PIECE_FINISHED_SCHEDULING from '../playback/actions/piece-finished-scheduling.type';
 import recordingProgressUpdated from './actions/recording-progress-updated.creator';
 import saveRecording from '../storage/save-recording';
 import selectRecordings from './recordings.selector';
+import selectIsScheduling from '../playback/is-scheduling.selector';
+import selectIsRecording from './is-recording.selector';
 
-const TIMESLICE_MS = 500;
+const TIMESLICE_MS = 100;
+
+const handleBeforeUnload = (event) => {
+  event.preventDefault();
+  event.returnValue = '';
+};
 
 const recordMiddleware = (store) => (next) => {
   const { wav } = getSamplesByFormat('http://localhost:6969/');
   const provider = makeProvider(wav);
-  let isRecording;
+
+  const getRecordingQueue = (state = store.getState()) => {
+    const recordings = selectRecordings(state);
+    return Object.values(recordings)
+      .filter((recording) => recording.progress === 0)
+      .sort((a, b) => a.queuedAt - b.queuedAt);
+  };
 
   const startRecording = (recordingConfig) => {
-    isRecording = true;
     const { recordingId, length, fadeIn, fadeOut, pieceId } = recordingConfig;
     const lengthS = length * 60;
     const piece = byId[pieceId];
@@ -52,21 +65,20 @@ const recordMiddleware = (store) => (next) => {
             )
           )
           .subscribe(() => {
-            const recordings = selectRecordings(store.getState());
-            const recordingQueue = Object.values(recordings)
-              .filter(
-                (recording) =>
-                  recording.progress === 0 &&
-                  recording.recordingId !== recordingId
-              )
-              .sort((a, b) => a.queuedAt - b.queuedAt);
+            const recordingQueue = getRecordingQueue().filter(
+              (recording) => recording.recordingId !== recordingId
+            );
             if (recordingQueue.length > 0) {
               startRecording(recordingQueue[0]);
             } else {
-              isRecording = false;
+              window.removeEventListener('beforeunload', handleBeforeUnload);
             }
             store.dispatch(
-              recordingProgressUpdated({ recordingId, progress: 1 })
+              recordingProgressUpdated({
+                recordingId,
+                progress: 1,
+                title: `${piece.title} (Excerpt)`,
+              })
             );
           });
       })
@@ -74,8 +86,22 @@ const recordMiddleware = (store) => (next) => {
   };
 
   return (action) => {
-    if (action.type === USER_REQUESTED_NEW_RECORDING && !isRecording) {
+    const state = store.getState();
+    const isRecording = selectIsRecording(state);
+    const isScheduling = selectIsScheduling(state);
+    if (
+      action.type === USER_REQUESTED_NEW_RECORDING &&
+      !isRecording &&
+      !isScheduling
+    ) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
       startRecording(action.payload);
+    } else if (action.type === PIECE_FINISHED_SCHEDULING) {
+      const recordingQueue = getRecordingQueue(state);
+      if (recordingQueue.length > 0) {
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        startRecording(recordingQueue[0]);
+      }
     }
     return next(action);
   };

@@ -5,7 +5,6 @@
   &__message {
     @include type-normal();
     color: $color-grey;
-    padding-top: 1rem;
-    padding-left: 1rem;
+    padding: 1rem 0 1rem 1rem;
   }
 }

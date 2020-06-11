@@ -6,10 +6,25 @@
   width: 100%;
   text-align: left;
 
-  td,
-  th {
-    vertical-align: middle;
+  &__header {
+    th {
+      vertical-align: middle;
+      color: $color-white;
+      height: 3rem;
+    }
+
+    th:first-of-type {
+      padding-left: 1rem;
+    }
+
+    th:last-of-type {
+      padding-left: 1rem;
+    }
+  }
+
+  &--empty {
     color: $color-grey;
-    height: 3rem;
+    padding: 1rem 0 0 1rem;
+    width: auto;
   }
 }

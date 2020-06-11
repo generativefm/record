@@ -8,6 +8,8 @@ import selectIsPlaying from './is-playing.selector';
 import selectTarget from './target.selector';
 import PIECE from './piece.type';
 import noop from '../utilities/noop';
+import pieceStartedScheduling from './actions/piece-started-scheduling.creator';
+import pieceFinishedScheduling from './actions/piece-finished-scheduling.creator';
 
 const piecePlaybackMiddleware = (store) => (next) => {
   const { wav } = getSamplesByFormat('http://localhost:6969/');
@@ -39,7 +41,7 @@ const piecePlaybackMiddleware = (store) => (next) => {
       ),
       filter(([piece]) => isPiecePlaying(piece.id)),
       tap(() => {
-        clearTransportAndCleanUp();
+        store.dispatch(pieceStartedScheduling());
       }),
       exhaustMap(([piece, destination, makePiece, samples]) =>
         makePiece({
@@ -50,9 +52,10 @@ const piecePlaybackMiddleware = (store) => (next) => {
       )
     )
     .subscribe(([piece, cleanUp]) => {
+      store.dispatch(pieceFinishedScheduling());
       clearTransportAndCleanUp = () => {
         Tone.Transport.stop();
-        Tone.Transport.clear();
+        Tone.Transport.cancel();
         cleanUp();
         clearTransportAndCleanUp = noop;
       };

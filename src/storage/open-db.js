@@ -1,5 +1,6 @@
 import RECORDINGS_OBJECT_STORE_NAME from './recordings-object-store-name';
 import RECORDING_FILES_OBJECT_STORE_NAME from './recording-files-object-store-name';
+import STATE_OBJECT_STORE_NAME from './state-object-store-name';
 
 const DB_VERSION = 1;
 const DB_NAME = '@generative-music/record::storage';
@@ -12,6 +13,7 @@ const attachUpgradeNeededHandler = (openRequest) => {
       keyPath: 'recordingId',
     });
     db.createObjectStore(RECORDING_FILES_OBJECT_STORE_NAME);
+    db.createObjectStore(STATE_OBJECT_STORE_NAME, { keyPath: 'key' });
   };
   openRequest.addEventListener('upgradeneeded', handleUpgradeNeeded);
 };

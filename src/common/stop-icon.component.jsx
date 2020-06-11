@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const StopIcon = ({ width }) => {
   const innerWidth = 0.8 * width;
@@ -20,6 +21,10 @@ const StopIcon = ({ width }) => {
       />
     </svg>
   );
+};
+
+StopIcon.propTypes = {
+  width: PropTypes.number.isRequired,
 };
 
 export default StopIcon;

@@ -26,14 +26,9 @@ const Search = () => {
 
   return (
     <div className="search">
-      <Button
-        className="button--stroke"
-        onClick={() => {
-          /* noop */
-        }}
-      >
+      <div className="search__icon">
         <SearchIcon />
-      </Button>
+      </div>
       <input
         type="text"
         className="search__input"

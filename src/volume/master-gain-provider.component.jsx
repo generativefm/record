@@ -10,7 +10,11 @@ const MasterGainProvider = ({ children }) => {
   const gainNodeRef = useRef(new Tone.Gain(currentVolume).toMaster());
 
   useEffect(() => {
-    if (gainNodeRef.current.gain.value !== currentVolume) {
+    if (
+      currentVolume !== null &&
+      typeof currentVolume !== 'undefined' &&
+      gainNodeRef.current.gain.value !== currentVolume
+    ) {
       gainNodeRef.current.set({ gain: currentVolume });
     }
   }, [currentVolume, gainNodeRef]);

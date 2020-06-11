@@ -41,7 +41,7 @@ const Piece = ({ id, isPlayable }) => {
       <div className="piece__buttons">
         <Button
           className="button--change-background piece__buttons__button"
-          tooltip="Play"
+          tooltip={isCurrentlyPlaying ? 'Stop' : 'Play'}
           onClick={handlePlaybackClick}
           isDisabled={!isPlayable}
         >

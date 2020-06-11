@@ -30,4 +30,10 @@
       outline: none;
     }
   }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

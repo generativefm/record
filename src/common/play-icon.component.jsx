@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const PlayIcon = ({ width }) => {
   const xAdjustment = width / 6;
@@ -19,6 +20,10 @@ const PlayIcon = ({ width }) => {
       />
     </svg>
   );
+};
+
+PlayIcon.propTypes = {
+  width: PropTypes.number.isRequired,
 };
 
 export default PlayIcon;

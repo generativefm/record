@@ -2,6 +2,8 @@
 @import '../styles/_effects.scss';
 
 .recording-row {
+  color: $color-grey;
+
   &__img {
     width: 4rem;
     img {
@@ -24,6 +26,11 @@
   &__progress {
     width: 15%;
     padding-right: 1rem;
+  }
+
+  td {
+    vertical-align: middle;
+    height: 3rem;
   }
 
   td:first-of-type {

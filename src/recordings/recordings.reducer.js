@@ -45,7 +45,10 @@ const recordingsReducer = (state = DEFAULT_STATE, action) => {
     case RECORDINGS_LOADED_FROM_STORAGE: {
       return {
         ...action.payload.reduce((o, recording) => {
-          o[recording.recordingId] = recording;
+          o[recording.recordingId] = {
+            ...recording,
+            progress: 1,
+          };
           return o;
         }, {}),
         ...state,

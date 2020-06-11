@@ -131,7 +131,7 @@ const Donate = () => {
   return (
     <div className="donate text-content">
       <h1>Why Donate?</h1>
-      <h2>You don't have to, but here's why you might</h2>
+      <h2>You don&apost have to, but here&aposs why you might</h2>
       <p>
         Hi there. My name is{' '}
         <a
@@ -139,7 +139,7 @@ const Donate = () => {
           target="_blank"
           rel="noreferrer noopener"
         >
-          Alex Bainter <ExternalLinkIcon />
+          Alex Bainter
         </a>
         , and I’m the creator of Generative.fm. I do everything from designing
         and building the site to composing and programming the music. I release
@@ -190,7 +190,7 @@ const Donate = () => {
             className="button--link"
             onClick={handleShowOneTimeDonationClick}
           >
-            Make a one-time donation via PayPay or magic internet money
+            Make a one-time donation via PayPal or magic internet money
           </Button>
         )}
       </div>

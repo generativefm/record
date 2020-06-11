@@ -24,7 +24,11 @@ const VolumeButton = ({ volumeLevelPercentage }) => {
     VolumeIcon = VolumeMuteIcon;
   }
   return (
-    <Button className="button--stroke" onClick={handleClick}>
+    <Button
+      className="button--stroke"
+      onClick={handleClick}
+      tooltip={volumeLevelPercentage === 0 ? 'Unmute' : 'Mute'}
+    >
       <VolumeIcon />
     </Button>
   );
