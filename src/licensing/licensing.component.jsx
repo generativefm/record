@@ -13,10 +13,10 @@ const Licensing = () => (
       . Generally, you are welcome to use or modify the music for any purpose,
       including commercially or publicly, provided you give appropriate credit.
     </p>
-    <p>It&aposs as easy as adding something like this to your work:</p>
+    <p>It&apos;s as easy as adding something like this to your work:</p>
     <ul>
-      <li>&ldquoteMusic by Alex Bainter&rdquote</li>
-      <li>&ldquote[piece title] (Excerpt) by Alex Bainter&rdquote</li>
+      <li>&quot;Music by Alex Bainter&quot;</li>
+      <li>&quot;Above the Rain (Excerpt) by Alex Bainter&quot;</li>
     </ul>
     <p>
       Links to <a href="https://alexbainter.com">alexbainter.com</a> or{' '}
@@ -33,9 +33,11 @@ const Licensing = () => (
     </p>
     <h1>Other Licensing Arrangements</h1>
     <h2>For special cases and people with fancy pants</h2>
-    If you prefer not to use the Creative Commons licensing, send an email with
-    your offer to <a href="mailto:alex@alexbainter.com">alex@alexbainter.com</a>
-    .
+    <p>
+      If you prefer not to use the Creative Commons licensing, send an email
+      with your offer to{' '}
+      <a href="mailto:alex@alexbainter.com">alex@alexbainter.com</a>.
+    </p>
   </div>
 );
 

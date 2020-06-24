@@ -1,10 +1,5 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  useMemo,
-} from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import { useSelector, useDispatch } from 'react-redux';
 import BellIcon from './bell-icon.component';
@@ -12,9 +7,9 @@ import selectAlerts from './alerts.selector';
 import userViewedAlerts from './actions/user-viewed-alerts.creator';
 import XIcon from '../common/x-icon.component';
 import ExternalLinkIcon from '../common/external-link-icon.component';
-import noop from '../utilities/noop';
 import pluck from '../utilities/pluck';
 import Button from '../common/button.component';
+import useDismissable from '../common/use-dismissable.hook';
 import './alerts.styles.scss';
 
 const alertComparator = (a, b) => {
@@ -27,7 +22,7 @@ const alertComparator = (a, b) => {
   return -1;
 };
 
-const Alerts = () => {
+const Alerts = ({ shouldAdjustForFooter = false }) => {
   const containerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const alerts = useSelector(selectAlerts);
@@ -47,20 +42,15 @@ const Alerts = () => {
     }
   }, [setIsOpen, dispatch, visibleAlerts]);
 
-  useEffect(() => {
-    if (!isOpen || !containerRef.current) {
-      return noop;
-    }
-    const handleDocumentClick = (event) => {
-      if (!containerRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('click', handleDocumentClick);
-    return () => {
-      document.removeEventListener('click', handleDocumentClick);
-    };
-  }, [isOpen, containerRef, setIsOpen]);
+  const handleDismiss = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  useDismissable({
+    isOpen,
+    dismissableRef: containerRef,
+    onDismiss: handleDismiss,
+  });
 
   const hasUnread = Object.values(alerts).some(pluck('isUnread'));
   const hasLoudUnread =
@@ -68,7 +58,12 @@ const Alerts = () => {
     Object.values(alerts).filter(pluck('isUnread')).some(pluck('isLoud'));
 
   return (
-    <div className="alerts" ref={containerRef}>
+    <div
+      className={`alerts${
+        shouldAdjustForFooter ? ' alerts--above-footer' : ''
+      }`}
+      ref={containerRef}
+    >
       <div className="alerts__messages">
         {visibleAlerts.map(
           ({ id, description, url, callToAction, isLoud, isExternal }, i) => {
@@ -138,6 +133,10 @@ const Alerts = () => {
       </button>
     </div>
   );
+};
+
+Alerts.propTypes = {
+  shouldAdjustForFooter: PropTypes.bool,
 };
 
 export default Alerts;

@@ -1,17 +1,22 @@
 @import '../styles/_colors.scss';
 @import '../styles/_effects.scss';
 @import '../styles/_type.scss';
+@import '../styles/_layout.scss';
 
 .alerts {
   position: fixed;
-  bottom: 6rem;
-  right: 2rem;
+  bottom: 1rem;
+  right: 1rem;
   z-index: 30;
   width: 20rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+
+  &--above-footer {
+    bottom: $heightFooter + 1rem;
+  }
 
   &__button {
     width: 3rem;

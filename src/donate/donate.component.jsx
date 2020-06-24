@@ -42,58 +42,9 @@ const fetchPatrons = () => {
     });
 };
 
-const execCommandCopy = (text) => {
-  const textArea = document.createElement('textarea');
-  textArea.value = text;
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-  document.execCommand('copy');
-  document.body.removeChild(textArea);
-  return Promise.resolve();
-};
-
-const clipboardApiCopy = (text) => navigator.clipboard.writeText(text);
-
-const copyTextToClipboard = navigator.clipboard
-  ? clipboardApiCopy
-  : execCommandCopy;
-
 const Donate = () => {
-  const [
-    isShowingOneTimeDonationLinks,
-    setIsShowingOneTimeDonationLinks,
-  ] = useState(false);
   const [bigSupporterMessage, setBigSupporterMessage] = useState([]);
   const [supporterMessage, setSupporterMessage] = useState([]);
-  const [isBtcAddressRecentlyCopied, setIsBtcAddressRecentlyCopied] = useState(
-    false
-  );
-
-  const handleShowOneTimeDonationClick = useCallback(() => {
-    setIsShowingOneTimeDonationLinks(true);
-  }, [setIsShowingOneTimeDonationLinks]);
-
-  const handleBtcCopyClick = useCallback(() => {
-    setIsBtcAddressRecentlyCopied(false);
-    let resetIconTimeout;
-    let isPromiseCanceled = false;
-    copyTextToClipboard(BTC_ADDRESS).then(() => {
-      if (isPromiseCanceled) {
-        return;
-      }
-      setIsBtcAddressRecentlyCopied(true);
-      resetIconTimeout = setTimeout(() => {
-        setIsBtcAddressRecentlyCopied(false);
-      }, 3000);
-    });
-    return () => {
-      isPromiseCanceled = true;
-      if (resetIconTimeout) {
-        clearTimeout(resetIconTimeout);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     let isCancelled = false;
@@ -131,7 +82,7 @@ const Donate = () => {
   return (
     <div className="donate text-content">
       <h1>Why Donate?</h1>
-      <h2>You don&apost have to, but here&aposs why you might</h2>
+      <h2>You don&apos;t have to, but here&apos;s why you might</h2>
       <p>
         Hi there. My name is{' '}
         <a
@@ -158,41 +109,22 @@ const Donate = () => {
       <div className="donate__options">
         <a
           href={PATREON_URL}
-          className="button button--text button--primary donate__options__primary"
+          className="button button--text button--primary donate__options__option donate__options__option--primary "
           target="_blank"
           rel="noreferrer noopener"
         >
-          Make a monthly donation (and get cool benefits)
+          Make a monthly donation (with benefits!)
           <ExternalLinkIcon />
         </a>
         Or
-        {isShowingOneTimeDonationLinks ? (
-          <div className="donate__options__one-time">
-            <a
-              className="donate__options__one-time__link"
-              href={PAYPAL_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              PayPal <ExternalLinkIcon />
-            </a>
-            <Button
-              className="button--link donate__options__one-time__link"
-              tooltip="Copy Bitcoin wallet address"
-              onClick={handleBtcCopyClick}
-            >
-              {`BTC: ${BTC_ADDRESS}`}
-              {isBtcAddressRecentlyCopied ? <CheckmarkIcon /> : <CopyIcon />}
-            </Button>
-          </div>
-        ) : (
-          <Button
-            className="button--link"
-            onClick={handleShowOneTimeDonationClick}
-          >
-            Make a one-time donation via PayPal or magic internet money
-          </Button>
-        )}
+        <a
+          href={'' /* alexbainter.com/tip?  */}
+          className="donate__options__option"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Make a one-time donation <ExternalLinkIcon />
+        </a>
       </div>
       {bigSupporterMessage.length || supporterMessage.length ? (
         <p>

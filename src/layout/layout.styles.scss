@@ -9,7 +9,7 @@
     'header'
     'content'
     'footer';
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 
   &--with-search {
@@ -19,6 +19,21 @@
       'search'
       'content'
       'footer';
+  }
+
+  &--without-footer {
+    grid-template-rows: $heightHeader 1fr;
+    grid-template-areas:
+      'header'
+      'content';
+  }
+
+  &--with-search#{&}--without-footer {
+    grid-template-rows: $heightHeader $heightSearchbar 1fr;
+    grid-template-areas:
+      'header'
+      'search'
+      'content';
   }
 
   &__content {

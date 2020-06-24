@@ -6,12 +6,12 @@
 .footer {
   background-color: $color-dark-3;
   height: $heightFooter;
-  width: 100%;
+  width: 100vw;
   box-shadow: $box-shadow-top;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 3;
 
   &__left,
   &__center,
@@ -32,6 +32,19 @@
 
   &__right {
     justify-content: flex-end;
+  }
+
+  &--without-volume {
+    .footer__left,
+    .footer__right {
+      flex: 0 0 50%;
+    }
+
+    .footer__right {
+      .button {
+        margin-right: 1rem;
+      }
+    }
   }
 }
 

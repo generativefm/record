@@ -1,3 +1,9 @@
 $heightHeader: 4rem;
 $heightSearchbar: $heightHeader;
 $heightFooter: 5rem;
+
+@mixin if-narrow {
+  @media (max-width: 600px) {
+    @content;
+  }
+}

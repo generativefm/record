@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
@@ -8,10 +8,10 @@ import selectNewRecordingId from './new-recording-id.selector';
 import Button from '../common/button.component';
 import userCanceledNewRecordingType from './actions/user-canceled-new-recording.creator';
 import userRequestedNewRecording from './actions/user-requested-new-recording.creator';
-import noop from '../utilities/noop';
+import useDismissable from '../common/use-dismissable.hook';
 import './new-recording.styles.scss';
 
-const InputRow = ({ label, unit, value, onChange }) => {
+const InputRow = ({ label, unit, value, onChange, isAutoFocused = false }) => {
   const handleChange = useCallback(
     (event) => {
       onChange(event.target.value);
@@ -28,6 +28,7 @@ const InputRow = ({ label, unit, value, onChange }) => {
           min="0"
           onChange={handleChange}
           value={value}
+          autoFocus={isAutoFocused}
         />
       </div>
       <div className="input-row__unit">{unit}</div>
@@ -40,6 +41,7 @@ InputRow.propTypes = {
   unit: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  isAutoFocused: PropTypes.bool,
 };
 
 const NewRecording = () => {
@@ -82,24 +84,14 @@ const NewRecording = () => {
     newRecordingId,
   ]);
 
-  useEffect(() => {
-    if (!containerRef.current) {
-      return noop;
-    }
-    const handleDocumentClick = (event) => {
-      if (!containerRef.current.contains(event.target)) {
-        dispatchCancelAction();
-      }
-    };
-    document.addEventListener('click', handleDocumentClick);
-    return () => {
-      document.removeEventListener('click', handleDocumentClick);
-    };
-  }, [dispatchCancelAction, containerRef]);
+  useDismissable({
+    dismissableRef: containerRef,
+    onDismiss: dispatchCancelAction,
+  });
 
   return (
     <div className="new-recording" ref={containerRef}>
-      <CSSTransition in={true} classNames="animate-in-" timeout={20000} appear>
+      <CSSTransition in={true} classNames="animate-in-" timeout={200} appear>
         <div>
           <div className="new-recording__title">New recording</div>
           <div className="new-recording__piece">
@@ -112,6 +104,7 @@ const NewRecording = () => {
               unit="minutes"
               value={length}
               onChange={setLength}
+              isAutoFocused
             />
             <InputRow
               label="Fade in"

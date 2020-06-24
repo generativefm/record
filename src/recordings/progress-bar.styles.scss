@@ -1,0 +1,15 @@
+@import '../styles/colors.scss';
+
+.progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  border: 1px solid $color-grey;
+  box-sizing: border-box;
+
+  &__fill {
+    height: calc(0.5rem - 2px);
+    background-color: $color-primary;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+  }
+}

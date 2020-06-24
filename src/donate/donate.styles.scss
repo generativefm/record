@@ -1,37 +1,38 @@
 @import '../styles/_colors.scss';
 @import '../styles/_type.scss';
+@import '../styles/_layout.scss';
 
 .donate {
   &__options {
-    margin: 2rem 0;
-    width: 100%;
+    margin: 2rem auto;
+    max-width: 50rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
 
-    &__primary {
-      padding: 1.5rem;
+    @include if-narrow() {
+      flex-direction: column;
 
-      svg {
-        margin-left: 0.5rem;
+      &__option {
+        &:first-of-type {
+          margin-bottom: 2rem;
+        }
+        &:last-of-type {
+          margin-top: 2rem;
+        }
       }
     }
 
-    &__one-time {
-      &__link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        svg {
-          margin: 0 0.5rem;
-        }
+    &__option {
+      display: flex;
+      align-items: center;
+      &--primary {
+        padding: 1.5rem;
       }
+    }
+
+    svg {
+      margin-left: 0.5rem;
     }
   }
 

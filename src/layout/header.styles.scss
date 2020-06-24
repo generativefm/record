@@ -8,7 +8,6 @@
   background-color: $color-dark-2;
   height: $heightHeader;
   box-shadow: $box-shadow-bottom;
-  color: $color-grey;
   display: flex;
   align-items: center;
   z-index: 1;
@@ -16,6 +15,7 @@
   &__title {
     @include type-less-prominent();
     padding: 0 1rem;
+    color: $color-grey;
   }
 
   &__nav {
@@ -28,6 +28,82 @@
       text-decoration: none;
       padding: 0 1rem;
       height: $heightHeader;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background-color: $color-dark-4;
+      }
+
+      &--active {
+        color: $color-white;
+      }
+    }
+  }
+
+  &--is-unshadowed {
+    box-shadow: none;
+  }
+
+  &--is-narrow {
+    .header__title {
+      color: $color-white;
+      @include type-normal();
+      display: flex;
+      align-items: center;
+      &__part {
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+.nav-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $color-dark-2;
+  height: 100%;
+  box-shadow: $box-shadow-right;
+  overflow: hidden;
+  z-index: 2;
+
+  &--animated {
+    &--enter {
+      transform: translateX(-100%);
+
+      &-active {
+        transform: none;
+        transition: transform 200ms;
+      }
+    }
+
+    &--exit {
+      transform: none;
+      &-active {
+        transform: translateX(-100%);
+        transition: transform 200ms;
+      }
+    }
+  }
+
+  &__title {
+    @include type-less-prominent();
+    padding: 1rem;
+    color: $color-grey;
+    display: flex;
+    align-items: center;
+  }
+
+  &__nav {
+    @include type-normal();
+    display: flex;
+    flex-direction: column;
+
+    a#{&}__item {
+      color: $color-grey;
+      text-decoration: none;
+      padding: 1rem;
       display: flex;
       align-items: center;
 

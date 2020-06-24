@@ -14,6 +14,7 @@ import userClickedStop from '../playback/actions/user-clicked-stop.creator';
 import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
 import selectIsRecording from '../recordings/is-recording.selector';
 import useMasterGain from '../volume/use-master-gain.hook';
+import useIsNarrowScreen from './use-is-narrow-screen.hook';
 import './footer.styles.scss';
 
 const NowPlaying = () => {
@@ -36,6 +37,7 @@ const Footer = () => {
   const { id, type } = useSelector(selectPlaybackTarget);
   const isRecording = useSelector(selectIsRecording);
   const masterGain = useMasterGain();
+  const isNarrowScreen = useIsNarrowScreen();
 
   const handlePlaybackClick = useCallback(() => {
     if (!id) {
@@ -53,11 +55,13 @@ const Footer = () => {
   }, [dispatch, id]);
 
   return (
-    <footer className="footer">
+    <footer
+      className={`footer${isNarrowScreen ? ' footer--without-volume' : ''}`}
+    >
       <div className="footer__left">
         <NowPlaying />
       </div>
-      <div className="footer__center">
+      <div className={isNarrowScreen ? 'footer__right' : 'footer__center'}>
         {id && (
           <>
             <Button
@@ -79,9 +83,11 @@ const Footer = () => {
           </>
         )}
       </div>
-      <div className="footer__right">
-        <VolumeControl />
-      </div>
+      {!isNarrowScreen && (
+        <div className="footer__right">
+          <VolumeControl />
+        </div>
+      )}
     </footer>
   );
 };

@@ -1,12 +1,13 @@
 @import '~reset-css/sass/reset';
 @import '_colors.scss';
 @import '_type.scss';
+@import '_layout.scss';
 
 html,
 body,
 #root {
   background-color: $color-dark-1;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   box-sizing: border-box;
   overflow: hidden;
@@ -25,7 +26,7 @@ body,
   color: $color-white;
   padding: 1rem;
   margin: 0 auto;
-  max-width: 70%;
+  max-width: 60%;
 
   h1 {
     @include type-more-prominent();
@@ -49,6 +50,15 @@ body,
   li {
     margin-left: 1rem;
   }
+
+  @include if-narrow() {
+    max-width: none;
+    font-size: 16px;
+
+    h1 {
+      font-size: 1.75em;
+    }
+  }
 }
 
 .text-center {
@@ -60,5 +70,11 @@ a {
 
   &:hover {
     color: darken($color-grey, 10%);
+  }
+}
+
+@include if-narrow {
+  html {
+    font-size: 14px;
   }
 }

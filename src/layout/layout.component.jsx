@@ -9,6 +9,8 @@ import NewRecording from '../recordings/new-recording.component';
 import Footer from './footer.component';
 import Alerts from '../alerts/alerts.component';
 import selectNewRecordingId from '../recordings/new-recording-id.selector';
+import useIsNarrowScreen from './use-is-narrow-screen.hook';
+import selectPlaybackTarget from '../playback/target.selector';
 import './layout.styles.scss';
 
 const Layout = () => {
@@ -16,10 +18,18 @@ const Layout = () => {
   const isUserConfiguringNewRecording = Boolean(
     useSelector(selectNewRecordingId)
   );
+  const isNarrowScreen = useIsNarrowScreen();
+  const { id } = useSelector(selectPlaybackTarget);
+
+  const shouldRenderFooter = !isNarrowScreen || id;
 
   return (
     <>
-      <div className={`layout${isBrowsing ? ' layout--with-search' : ''}`}>
+      <div
+        className={`layout${isBrowsing ? ' layout--with-search' : ''}${
+          shouldRenderFooter ? '' : ' layout--without-footer'
+        }`}
+      >
         <Header />
         {isBrowsing && <Search />}
         <div className="layout__content">
@@ -32,9 +42,9 @@ const Layout = () => {
             </Overlay>
           </div>
         )}
-        <Footer />
+        {shouldRenderFooter && <Footer />}
       </div>
-      <Alerts />
+      <Alerts shouldAdjustForFooter={shouldRenderFooter} />
     </>
   );
 };
