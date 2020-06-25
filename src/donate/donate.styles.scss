@@ -4,7 +4,7 @@
 
 .donate {
   &__options {
-    margin: 2rem auto;
+    margin: 1rem auto;
     max-width: 50rem;
     display: flex;
     justify-content: space-around;
@@ -15,10 +15,10 @@
 
       &__option {
         &:first-of-type {
-          margin-bottom: 2rem;
+          margin-bottom: 1rem;
         }
         &:last-of-type {
-          margin-top: 2rem;
+          margin-top: 1rem;
         }
       }
     }

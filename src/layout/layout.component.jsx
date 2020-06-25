@@ -21,7 +21,7 @@ const Layout = () => {
   const isNarrowScreen = useIsNarrowScreen();
   const { id } = useSelector(selectPlaybackTarget);
 
-  const shouldRenderFooter = !isNarrowScreen || id;
+  const shouldRenderFooter = Boolean(!isNarrowScreen || id);
 
   return (
     <>

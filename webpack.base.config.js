@@ -54,7 +54,7 @@ const config = {
         use: 'worker-loader',
       },
       {
-        test: /\.png$/,
+        test: [/\.png$/, /\.mp3$/],
         use: 'file-loader',
       },
       {

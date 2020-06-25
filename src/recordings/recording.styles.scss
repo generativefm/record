@@ -1,6 +1,7 @@
 @import '../styles/_colors.scss';
 @import '../styles/_type.scss';
 @import '../styles/_effects.scss';
+@import '../styles/_layout.scss';
 
 .recording {
   @include type-normal();
@@ -9,6 +10,7 @@
   justify-content: space-between;
   padding: 1rem;
   color: $color-grey;
+  max-width: 100vw;
 
   &:hover {
     background-color: rgba($color-white, 0.05);
@@ -43,7 +45,13 @@
       }
     }
 
-    & > div {
+    &__title,
+    &__info,
+    &__length,
+    &__fade-in,
+    &__fade-out,
+    &__date,
+    &__progress {
       margin-right: 2rem;
     }
   }
@@ -53,6 +61,38 @@
     align-items: center;
     > .button {
       margin-left: 1rem;
+    }
+  }
+
+  @include if-narrow() {
+    &__image {
+      width: 3rem;
+      height: 3rem;
+      box-shadow: $box-shadow-bottom;
+      margin-right: 1rem;
+      flex-basis: 3rem;
+    }
+
+    &__info {
+      min-width: 0;
+      display: block;
+
+      &__title {
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+        white-space: nowrap;
+        flex: 1;
+      }
+      &__lengths {
+        margin-top: 0.5rem;
+        color: $color-grey;
+      }
+      &__progress {
+        margin-top: 0.5rem;
+      }
+    }
+
+    &__buttons {
     }
   }
 }

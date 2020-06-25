@@ -14,7 +14,7 @@ const alertsReducer = (
       isLoud: true,
       isUnread: true,
       isPersisted: true,
-      callToAction: 'Send an email to the creator',
+      callToAction: 'Send me an email',
       url: 'mailto:alex@alexbainter.com',
     },
     'early-access': {

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { byId } from '@generative-music/pieces-alex-bainter';
+import record from '@generative-music/web-recorder';
 import selectNewRecordingId from './new-recording-id.selector';
 import Button from '../common/button.component';
 import userCanceledNewRecordingType from './actions/user-canceled-new-recording.creator';
@@ -88,6 +89,27 @@ const NewRecording = () => {
     dismissableRef: containerRef,
     onDismiss: dispatchCancelAction,
   });
+
+  if (!record.isSupported) {
+    return (
+      <div className="new-recording" ref={containerRef}>
+        <CSSTransition in={true} classNames="animate-in-" timeout={200} appear>
+          <div>
+            <div className="new-recording__title">Recording not supported</div>
+            <div className="new-recording__message">
+              Sorry, the browser you&apos;re using doesn&apos;t currently
+              support this service.
+            </div>
+            <div className="new-recording__buttons">
+              <Button className="button--text" onClick={dispatchCancelAction}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </CSSTransition>
+      </div>
+    );
+  }
 
   return (
     <div className="new-recording" ref={containerRef}>

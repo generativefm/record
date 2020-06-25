@@ -1,14 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import Button from '../common/button.component';
+import React, { useState, useEffect } from 'react';
 import ExternalLinkIcon from '../common/external-link-icon.component';
-import CopyIcon from './copy-icon.component';
-import CheckmarkIcon from './checkmark-icon.component';
 import './donate.styles.scss';
 
-const PAYPAL_URL = 'https://paypal.me/alexbainter';
 const PATREON_URL = 'https://www.patreon.com/bePatron?u=2484731';
+const TIP_URL = 'https://alexbainter.com/tip';
 const FETCH_PATRONS_URL = `https://api.alexbainter.com/v1/active-patrons`;
-const BTC_ADDRESS = '3DMb8BQVTtfVv59pMLmZmHr6xSoJsb3P4Z';
 
 const makeSupporterNameMessage = (names) =>
   names.map(
@@ -81,8 +77,30 @@ const Donate = () => {
 
   return (
     <div className="donate text-content">
-      <h1>Why Donate?</h1>
-      <h2>You don&apos;t have to, but here&apos;s why you might</h2>
+      <h1>How to Donate</h1>
+      <h2>Because it&apos;s only free if you don&apos;t pay for it</h2>
+      <div className="donate__options">
+        <a
+          href={PATREON_URL}
+          className="button button--text button--primary donate__options__option donate__options__option--primary "
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Make a monthly donation (with benefits!)
+          <ExternalLinkIcon />
+        </a>
+        Or
+        <a
+          href={TIP_URL}
+          className="donate__options__option"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Make a one-time donation <ExternalLinkIcon />
+        </a>
+      </div>
+      <h1>About This Service</h1>
+      <h2>I am not a company</h2>
       <p>
         Hi there. My name is{' '}
         <a
@@ -106,26 +124,6 @@ const Donate = () => {
         yourself what you’d expect to pay if you had to. I very much appreciate
         it.
       </p>
-      <div className="donate__options">
-        <a
-          href={PATREON_URL}
-          className="button button--text button--primary donate__options__option donate__options__option--primary "
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Make a monthly donation (with benefits!)
-          <ExternalLinkIcon />
-        </a>
-        Or
-        <a
-          href={'' /* alexbainter.com/tip?  */}
-          className="donate__options__option"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Make a one-time donation <ExternalLinkIcon />
-        </a>
-      </div>
       {bigSupporterMessage.length || supporterMessage.length ? (
         <p>
           If nothing else, take a moment to thank these lovely folks for their

@@ -1,4 +1,5 @@
 @import '../styles/_colors.scss';
+@import '../styles/_layout.scss';
 
 .overlay {
   display: flex;
@@ -14,5 +15,10 @@
       opacity: 1;
       transition: opacity 200ms;
     }
+  }
+
+  @include if-narrow() {
+    flex-direction: column;
+    justify-content: flex-end;
   }
 }

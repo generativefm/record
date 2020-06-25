@@ -8,6 +8,7 @@ import alerts from '../alerts/alerts.reducer';
 import volume from '../volume/volume.reducer';
 import persistStateMiddleware from '../storage/persist-state.middleware';
 import loadStoredStateValues from '../storage/load-stored-state-values';
+import silentHtml5AudioMiddleware from '../playback/silent-html5-audio.middleware';
 
 const reducer = combineReducers({
   recording,
@@ -20,6 +21,7 @@ const reducer = combineReducers({
 const applyMiddlewareEnhancer = applyMiddleware(
   piecePlaybackMiddleware,
   recordMiddleware,
+  silentHtml5AudioMiddleware,
   persistStateMiddleware
 );
 

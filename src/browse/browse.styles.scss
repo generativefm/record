@@ -5,6 +5,7 @@
   &__message {
     @include type-normal();
     color: $color-grey;
-    padding: 1rem 0 1rem 1rem;
+    padding: 1rem;
+    overflow-wrap: break-word;
   }
 }

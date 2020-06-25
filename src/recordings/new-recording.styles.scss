@@ -1,6 +1,7 @@
 @import '../styles/_colors.scss';
 @import '../styles/_type.scss';
 @import '../styles/_effects.scss';
+@import '../styles/_layout.scss';
 
 .new-recording {
   @include type-normal();
@@ -44,6 +45,13 @@
     color: $color-grey;
   }
 
+  &__message {
+    @include type-normal();
+    color: $color-white;
+    margin-top: 2rem;
+    padding: 0 1rem;
+  }
+
   &__buttons {
     display: flex;
     justify-content: flex-end;
@@ -65,6 +73,25 @@
       &-active {
         transform: none;
         transition: transform 200ms;
+      }
+    }
+  }
+
+  @include if-narrow() {
+    width: 100%;
+    overflow-y: auto;
+
+    &__piece {
+      margin: 1rem 0;
+    }
+
+    &__buttons {
+      justify-content: center;
+    }
+
+    .animate-in {
+      &--appear {
+        transform: translateY(10%);
       }
     }
   }
