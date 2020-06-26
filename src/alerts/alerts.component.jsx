@@ -2,13 +2,13 @@ import React, { useState, useCallback, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import BellIcon from './bell-icon.component';
 import selectAlerts from './alerts.selector';
 import userViewedAlerts from './actions/user-viewed-alerts.creator';
 import XIcon from '../common/x-icon.component';
 import ExternalLinkIcon from '../common/external-link-icon.component';
 import pluck from '../utilities/pluck';
-import Button from '../common/button.component';
 import useDismissable from '../common/use-dismissable.hook';
 import './alerts.styles.scss';
 
@@ -20,6 +20,61 @@ const alertComparator = (a, b) => {
   }
   // b.isLoud
   return -1;
+};
+
+const AlertItem = ({
+  id,
+  description,
+  url,
+  callToAction,
+  isLoud,
+  isExternal,
+  isOpen,
+  delay,
+}) => {
+  return (
+    <CSSTransition
+      key={id}
+      in={isOpen}
+      classNames="alerts__messages__item-"
+      timeout={200 + delay}
+      unmountOnExit
+    >
+      <div
+        className={`alerts__messages__item${
+          isLoud ? ' alerts__messages__item--is-loud' : ''
+        }`}
+        style={{ transitionDelay: `${delay}ms` }}
+      >
+        <div className="alerts__messages__item__description">{description}</div>
+        {isExternal ? (
+          <a
+            className="alerts__messages__item__call-to-action"
+            href={url}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            {callToAction} {isExternal && <ExternalLinkIcon />}
+          </a>
+        ) : (
+          <Link className="alerts__messages__item__call-to-action" to={url}>
+            {callToAction}
+          </Link>
+        )}
+      </div>
+    </CSSTransition>
+  );
+};
+
+AlertItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  callToAction: PropTypes.string.isRequired,
+  isLoud: PropTypes.bool.isRequired,
+  isExternal: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  delay: PropTypes.number.isRequired,
 };
 
 const Alerts = ({ shouldAdjustForFooter = false }) => {
@@ -65,46 +120,18 @@ const Alerts = ({ shouldAdjustForFooter = false }) => {
       ref={containerRef}
     >
       <div className="alerts__messages">
-        {visibleAlerts.map(
-          ({ id, description, url, callToAction, isLoud, isExternal }, i) => {
-            const timingMultiplier = isOpen ? visibleAlerts.length - i - 1 : i;
-            const delay = timingMultiplier * 50;
-            return (
-              <CSSTransition
-                key={id}
-                in={isOpen}
-                classNames="alerts__messages__item-"
-                timeout={200 + delay}
-                unmountOnExit
-              >
-                <div
-                  className={`alerts__messages__item${
-                    isLoud ? ' alerts__messages__item--is-loud' : ''
-                  }`}
-                  style={{ transitionDelay: `${delay}ms` }}
-                >
-                  <div className="alerts__messages__item__description">
-                    {description}
-                  </div>
-                  {url ? (
-                    <a
-                      className="alerts__messages__item__call-to-action"
-                      href={url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      {callToAction} {isExternal && <ExternalLinkIcon />}
-                    </a>
-                  ) : (
-                    <Button className="button--link alerts__messages__item__call-to-action">
-                      {callToAction}
-                    </Button>
-                  )}
-                </div>
-              </CSSTransition>
-            );
-          }
-        )}
+        {visibleAlerts.map((alert, i) => {
+          const timingMultiplier = isOpen ? visibleAlerts.length - i - 1 : i;
+          const delay = timingMultiplier * 50;
+          return (
+            <AlertItem
+              key={alert.id}
+              isOpen={isOpen}
+              delay={delay}
+              {...alert}
+            />
+          );
+        })}
         {visibleAlerts.length === 0 && (
           <CSSTransition
             in={isOpen}
