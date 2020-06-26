@@ -39,6 +39,7 @@
   &__content {
     grid-area: content;
     overflow-y: auto;
+    padding-bottom: 5rem;
   }
 
   &__overlay {
