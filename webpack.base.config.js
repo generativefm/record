@@ -6,6 +6,10 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
+  output: {
+    filename: '[name].[hash].js',
+    chunkFilename: '[chunkhash].js',
+  },
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
     mainFields: ['generativeFmManifest', 'browser', 'module', 'main'],
@@ -77,7 +81,7 @@ const config = {
         background: '#121212',
       },
     }),
-    new FaviconsWebpackPlugin('./src/logo.png'),
+    new FaviconsWebpackPlugin({ logo: './src/logo.png', prefix: '' }),
     new CleanWebpackPlugin(),
     new EnvironmentPlugin({
       SAMPLE_FILE_HOST: '//localhost:6969',

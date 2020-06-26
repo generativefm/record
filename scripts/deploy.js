@@ -63,7 +63,9 @@ const getContentType = (filename = '') => {
 };
 
 const uploadDistItems = () =>
-  Promise.all([`${DIST_DIR}/!(*.map)`].map((pattern) => globPromise(pattern)))
+  Promise.all(
+    [`${DIST_DIR}/**/*!(*.map)`].map((pattern) => globPromise(pattern))
+  )
     .then((fileGroups) =>
       fileGroups.reduce((allFiles, fileGroup) => allFiles.concat(fileGroup), [])
     )
@@ -74,10 +76,11 @@ const uploadDistItems = () =>
       const allFilenames = filenames.concat(NON_DIST_FILENAMES);
       let completed = 0;
       return Promise.all(
-        allFilenames.map((filename) =>
-          fs
+        allFilenames.map((filename) => {
+          const isMp3 = filename.endsWith('.mp3');
+          return fs
             .readFile(path.resolve(filename))
-            .then((file) => gzip(file))
+            .then((file) => (isMp3 ? file : gzip(file)))
             .then((buffer) => {
               const uploadParams = {
                 Key: filename.includes(DIST_DIR)
@@ -86,7 +89,7 @@ const uploadDistItems = () =>
                 Body: buffer,
                 ACL: 'public-read',
                 ContentType: getContentType(filename),
-                ContentEncoding: 'gzip',
+                ContentEncoding: isMp3 ? '' : 'gzip',
               };
               if (!filename.endsWith('.html')) {
                 uploadParams.CacheControl = 'max-age=31536000';
@@ -100,8 +103,8 @@ const uploadDistItems = () =>
                     `${filename} upload complete (${completed}/${allFilenames.length})`
                   );
                 });
-            })
-        )
+            });
+        })
       );
     });
 

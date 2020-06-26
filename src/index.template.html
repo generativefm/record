@@ -23,7 +23,10 @@
       name="og:description"
       content="Download free tracks of any length from a variety of ambient generative music systems. Composed by a human, performed by computers."
     />
-    <meta name="og:image" content="<%= require('./cover-image.png') %>" />
+    <meta
+      name="og:image"
+      content="<%= `https://record.generative.fm/${require('./cover-image.png').default}` %>"
+    />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://record.generative.fm" />
     <meta
@@ -36,7 +39,7 @@
     />
     <meta
       property="twitter:image"
-      content="<%= require('./cover-image.png') %>"
+      content="<%= `https://record.generative.fm/${require('./cover-image.png').default}` %>"
     />
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap"

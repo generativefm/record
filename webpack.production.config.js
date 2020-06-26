@@ -16,3 +16,5 @@ prodConfig.module.rules.unshift({
 prodConfig.plugins.push(
   new MiniCssExtractPlugin({ filename: '[name].[hash].css' })
 );
+
+module.exports = prodConfig;
