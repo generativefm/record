@@ -6,12 +6,16 @@
 .alerts {
   position: fixed;
   bottom: 1rem;
-  right: 1rem;
+  right: 2rem;
   z-index: 30;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+
+  @include if-narrow() {
+    right: 1rem;
+  }
 
   &--above-footer {
     bottom: $heightFooter + 1rem;

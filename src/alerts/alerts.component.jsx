@@ -97,7 +97,7 @@ const Alerts = ({ shouldAdjustForFooter = false }) => {
                     </a>
                   ) : (
                     <Button className="button--link alerts__messages__item__call-to-action">
-                      {callToAction} {isExternal && <ExternalLinkIcon />}
+                      {callToAction}
                     </Button>
                   )}
                 </div>

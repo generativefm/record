@@ -1,7 +1,5 @@
 import Tone from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import getSamplesByFormat from '@generative-music/samples-alex-bainter';
-import makeProvider from '@generative-music/web-provider';
 import { Subject } from 'rxjs';
 import { map, mergeMap, filter, exhaustMap, tap } from 'rxjs/operators';
 import selectIsPlaying from './is-playing.selector';
@@ -10,11 +8,9 @@ import PIECE from './piece.type';
 import noop from '../utilities/noop';
 import pieceStartedScheduling from './actions/piece-started-scheduling.creator';
 import pieceFinishedScheduling from './actions/piece-finished-scheduling.creator';
+import provider from '../samples/provider';
 
 const piecePlaybackMiddleware = (store) => (next) => {
-  const { wav } = getSamplesByFormat('http://localhost:6969/');
-  const provider = makeProvider(wav);
-
   let clearTransportAndCleanUp = noop;
   const pieceJobs$ = new Subject();
 

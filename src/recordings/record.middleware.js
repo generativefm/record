@@ -1,6 +1,4 @@
 import Tone from 'tone';
-import getSamplesByFormat from '@generative-music/samples-alex-bainter';
-import makeProvider from '@generative-music/web-provider';
 import record from '@generative-music/web-recorder';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { reduce, tap, mergeMap, take } from 'rxjs/operators';
@@ -11,6 +9,7 @@ import saveRecording from '../storage/save-recording';
 import selectRecordings from './recordings.selector';
 import selectIsScheduling from '../playback/is-scheduling.selector';
 import selectIsRecording from './is-recording.selector';
+import provider from '../samples/provider';
 
 const TIMESLICE_MS = 100;
 
@@ -20,9 +19,6 @@ const handleBeforeUnload = (event) => {
 };
 
 const recordMiddleware = (store) => (next) => {
-  const { wav } = getSamplesByFormat('http://localhost:6969/');
-  const provider = makeProvider(wav);
-
   const getRecordingQueue = (state = store.getState()) => {
     const recordings = selectRecordings(state);
     return Object.values(recordings)

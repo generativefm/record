@@ -1,6 +1,9 @@
 'use strict';
 const path = require('path');
+const { EnvironmentPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
   resolve: {
@@ -24,11 +27,6 @@ const config = {
         test: /\.jsx?$/,
         include: /src/,
         use: { loader: 'eslint-loader', options: { emitWarning: true } },
-      },
-      {
-        test: /\.s?css$/,
-        include: /src/,
-        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.scss$/,
@@ -58,6 +56,10 @@ const config = {
         use: 'file-loader',
       },
       {
+        test: /\.png$/,
+        use: 'image-webpack-loader',
+      },
+      {
         test: /\.js$/,
         include: /node_modules\/tone/,
         use: 'source-map-loader',
@@ -65,7 +67,22 @@ const config = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: 'src/index.template.html' })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.template.html',
+      favicons: {
+        appName: 'Generative.fm Record',
+        appDescription: 'Free ambient music, made to order by Generative.fm',
+        theme: '#1e1e1e',
+        background: '#121212',
+      },
+    }),
+    new FaviconsWebpackPlugin('./src/logo.png'),
+    new CleanWebpackPlugin(),
+    new EnvironmentPlugin({
+      SAMPLE_FILE_HOST: '//localhost:6969',
+    }),
+  ],
 };
 
 module.exports = config;
