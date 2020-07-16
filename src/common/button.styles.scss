@@ -1,6 +1,7 @@
 @import '../styles/_colors.scss';
 @import '../styles/_type.scss';
 @import '../styles/_effects.scss';
+@import '../styles/_values.scss';
 
 .button {
   background: none;
@@ -30,7 +31,7 @@
   &--change-background {
     color: $color-white;
     padding: 0.5em;
-    border-radius: 5px;
+    border-radius: $border-radius-md;
     &:hover {
       background-color: rgba($color-white, 0.1);
     }
@@ -52,10 +53,11 @@
     color: $color-grey;
     border: 1px solid $color-grey;
     font-size: 1rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 1.25rem;
     min-width: 4rem;
     box-shadow: $box-shadow-bottom;
     text-decoration: none;
+    border-radius: $border-radius-md;
 
     &:hover {
       background-color: $color-grey;

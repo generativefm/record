@@ -1,4 +1,5 @@
 @import '../styles/_colors.scss';
+@import '../styles/_values.scss';
 
 .volume-slider {
   padding: 1rem;
@@ -15,14 +16,17 @@
     height: 0.2rem;
     background-color: $color-grey;
     cursor: pointer;
+    border-radius: $border-radius-sm;
 
     &__level {
       height: 100%;
       background-color: $color-white;
       cursor: pointer;
+      border-radius: $border-radius-sm;
 
       &--is-changing {
         background-color: $color-primary;
+        border-radius: $border-radius-sm;
       }
     }
   }

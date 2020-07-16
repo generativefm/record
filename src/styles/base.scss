@@ -31,7 +31,11 @@ body,
   h1 {
     @include type-more-prominent();
     font-size: 2em;
-    margin-bottom: 1rem;
+    margin: 2rem 0 1rem;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 
   h2 {
