@@ -2,6 +2,7 @@
 @import '../styles/_effects.scss';
 @import '../styles/_type.scss';
 @import '../styles/_layout.scss';
+@import '../styles/_values.scss';
 
 .alerts {
   position: fixed;
@@ -90,6 +91,7 @@
       margin-bottom: 1rem;
       box-shadow: $box-shadow-bottom;
       cursor: pointer;
+      border-radius: $border-radius-md;
 
       &--enter {
         opacity: 0;

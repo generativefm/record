@@ -2,6 +2,7 @@
 @import '../styles/_effects.scss';
 @import '../styles/_layout.scss';
 @import '../styles/_type.scss';
+@import '../styles/_values.scss';
 
 .footer {
   background-color: $color-dark-3;
@@ -57,6 +58,7 @@
     height: 4rem;
     margin: 0 1rem;
     box-shadow: $box-shadow-bottom;
+    border-radius: $border-radius-sm;
   }
 
   &__title {

@@ -2,6 +2,7 @@
 @import '../styles/_type.scss';
 @import '../styles/_effects.scss';
 @import '../styles/_layout.scss';
+@import '../styles/_values.scss';
 
 .new-recording {
   @include type-normal();
@@ -9,6 +10,7 @@
   padding: 1rem;
   color: $color-white;
   box-shadow: $box-shadow-bottom;
+  border-radius: $border-radius-lg;
 
   &__title {
     @include type-less-prominent();
@@ -28,6 +30,7 @@
       height: 4rem;
       margin-right: 1rem;
       box-shadow: $box-shadow-bottom;
+      border-radius: $border-radius-sm;
     }
 
     &__title {
@@ -126,6 +129,7 @@
       width: 100%;
       color: $color-white;
       outline-color: $color-primary;
+      border-radius: $border-radius-sm;
     }
   }
 
