@@ -90,14 +90,12 @@ const Donate = () => {
           <ExternalLinkIcon />
         </a>
         Or
-        <a
-          href={TIP_URL}
-          className="donate__options__option"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Make a one-time donation <ExternalLinkIcon />
-        </a>
+        <span className="donate__options__option">
+          <a href={TIP_URL} target="_blank" rel="noreferrer noopener">
+            Make a one-time donation
+          </a>
+          <ExternalLinkIcon />
+        </span>
       </div>
       <h1>About This Service</h1>
       <h2>I am not a company</h2>

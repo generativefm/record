@@ -2,6 +2,7 @@
 @import '../styles/_type.scss';
 @import '../styles/_effects.scss';
 @import '../styles/_layout.scss';
+@import '../styles/_values.scss';
 
 .recording {
   @include type-normal();
@@ -25,6 +26,7 @@
       height: 3rem;
       box-shadow: $box-shadow-bottom;
       margin-right: 1rem;
+      border-radius: $border-radius-sm;
     }
 
     &__title {

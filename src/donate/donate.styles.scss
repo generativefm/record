@@ -4,7 +4,7 @@
 
 .donate {
   &__options {
-    margin: 1rem auto;
+    margin: 3rem auto;
     max-width: 50rem;
     display: flex;
     justify-content: space-around;
@@ -26,6 +26,16 @@
     &__option {
       display: flex;
       align-items: center;
+      transition: color 200ms;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-primary;
+        a {
+          color: $color-primary;
+        }
+      }
+
       &--primary {
         padding: 1.5rem;
       }
@@ -39,10 +49,12 @@
   &__bigger-supporters {
     @include type-less-prominent();
     color: $color-white;
+    font-size: 1.25em !important;
   }
 
   &__supporters {
     @include type-normal();
     color: $color-grey;
+    font-size: 1em !important;
   }
 }
