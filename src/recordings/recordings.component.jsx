@@ -16,7 +16,7 @@ const Recordings = () => {
 
   if (sortedRecordings.length === 0) {
     return (
-      <div className="recordings recordings--is-empty">
+      <div className="recordings recordings--is-empty text-content">
         {isLoadingFinished ? (
           <>
             No recordings saved. Create one from the{' '}
