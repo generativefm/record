@@ -1,0 +1,74 @@
+@import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+@import '../styles/_effects.scss';
+@import '../styles/_layout.scss';
+
+.header {
+  width: 100%;
+  background-color: $color-dark-2;
+  height: $heightNav;
+  box-shadow: $box-shadow-bottom;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+
+  &__title {
+    @include type-less-prominent();
+    padding: 0 1rem;
+    color: $color-grey;
+  }
+
+  &__nav {
+    @include type-normal();
+    display: flex;
+    align-items: center;
+
+    a#{&}__item {
+      color: $color-grey;
+      text-decoration: none;
+      padding: 0 1rem;
+      height: $heightNav;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background-color: $color-dark-4;
+      }
+
+      &--active {
+        color: $color-white;
+      }
+    }
+  }
+
+  &--is-unshadowed {
+    box-shadow: none;
+  }
+}
+
+.nav--narrow {
+  width: 100%;
+  background-color: $color-dark-2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__item {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0.5rem 0 0.5rem;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: $color-grey;
+    @include type-normal();
+    font-size: 0.75em;
+
+    &--active {
+      color: $color-white;
+    }
+  }
+}

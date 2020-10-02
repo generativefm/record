@@ -2,10 +2,12 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
+import {
+  PlayArrow as PlayIcon,
+  Stop as StopIcon,
+  AddCircle as AddIcon,
+} from '@material-ui/icons';
 import Button from '../common/button.component';
-import PlusIcon from '../common/plus-icon.component';
-import PlayIcon from '../common/play-icon.component';
-import StopIcon from '../common/stop-icon.component';
 import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
 import userClickedPlay from '../playback/actions/user-clicked-play.creator';
 import userClickedStop from '../playback/actions/user-clicked-stop.creator';
@@ -46,9 +48,9 @@ const Piece = ({ id, isPlayable }) => {
           isDisabled={!isPlayable}
         >
           {isCurrentlyPlaying ? (
-            <StopIcon width={16} />
+            <StopIcon style={{ width: 30, height: 30 }} />
           ) : (
-            <PlayIcon width={16} />
+            <PlayIcon style={{ width: 30, height: 30 }} />
           )}
         </Button>
         <Button
@@ -56,7 +58,7 @@ const Piece = ({ id, isPlayable }) => {
           tooltip="New recording"
           onClick={handleNewRecordingClick}
         >
-          <PlusIcon />
+          <AddIcon style={{ width: 30, height: 30 }} />
         </Button>
       </div>
     </div>

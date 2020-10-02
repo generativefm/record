@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
+import {
+  PlayArrow as PlayIcon,
+  Stop as StopIcon,
+  AddCircle as AddIcon,
+} from '@material-ui/icons';
 import VolumeControl from '../volume/volume-control.component';
-import PlayIcon from '../common/play-icon.component';
-import StopIcon from '../common/stop-icon.component';
-import PlusIcon from '../common/plus-icon.component';
 import Button from '../common/button.component';
 import selectIsPlaying from '../playback/is-playing.selector';
 import selectPlaybackTarget from '../playback/target.selector';
@@ -70,7 +72,11 @@ const Footer = () => {
               isDisabled={!id || isRecording}
               onClick={handlePlaybackClick}
             >
-              {isPlaying ? <StopIcon width={20} /> : <PlayIcon width={20} />}
+              {isPlaying ? (
+                <StopIcon style={{ width: 30, height: 30 }} />
+              ) : (
+                <PlayIcon style={{ width: 30, height: 30 }} />
+              )}
             </Button>
             <Button
               className="button--stroke"
@@ -78,7 +84,7 @@ const Footer = () => {
               isDisabled={!id}
               onClick={handleNewRecordingClick}
             >
-              <PlusIcon />
+              <AddIcon style={{ width: 30, height: 30 }} />
             </Button>
           </>
         )}

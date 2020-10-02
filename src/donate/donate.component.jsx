@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ExternalLinkIcon from '../common/external-link-icon.component';
+import { OpenInNew as OpenInNewIcon } from '@material-ui/icons';
 import './donate.styles.scss';
 
 const PATREON_URL = 'https://www.patreon.com/bePatron?u=2484731';
@@ -87,14 +87,14 @@ const Donate = () => {
           rel="noreferrer noopener"
         >
           Make a monthly donation (with benefits!)
-          <ExternalLinkIcon />
+          <OpenInNewIcon />
         </a>
         Or
         <span className="donate__options__option">
           <a href={TIP_URL} target="_blank" rel="noreferrer noopener">
             Make a one-time donation
           </a>
-          <ExternalLinkIcon />
+          <OpenInNewIcon />
         </span>
       </div>
       <h1>About This Service</h1>

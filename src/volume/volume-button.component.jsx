@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import {
+  VolumeUp as VolumeUpIcon,
+  VolumeDown as VolumeDownIcon,
+  VolumeMute as VolumeMuteIcon,
+} from '@material-ui/icons';
 import Button from '../common/button.component';
-import VolumeUpIcon from './volume-up-icon.component';
-import VolumeDownIcon from './volume-down-icon.component';
-import VolumeMuteIcon from './volume-mute-icon.component';
 import userClickedVolumeToggle from './actions/user-clicked-volume-toggle.creator';
 import './volume-button.styles.scss';
 
