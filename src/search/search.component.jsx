@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Search as SearchIcon, Clear as ClearIcon } from '@material-ui/icons';
 import selectSearchTerm from './search-term.selector';
 import userChangedSearchTerm from './actions/user-changed-search-term.creator';
-import SearchIcon from './search-icon.component';
-import XIcon from '../common/x-icon.component';
 import Button from '../common/button.component';
 import './search.styles.scss';
 
@@ -27,7 +26,7 @@ const Search = () => {
   return (
     <div className="search">
       <div className="search__icon">
-        <SearchIcon />
+        <SearchIcon style={{ width: 30, height: 30 }} />
       </div>
       <input
         type="text"
@@ -40,7 +39,7 @@ const Search = () => {
         className={`button--stroke ${value ? 'is-shown' : 'is-hidden'}`}
         onClick={handleClearClick}
       >
-        <XIcon />
+        <ClearIcon style={{ width: 30, height: 30 }} />
       </Button>
     </div>
   );

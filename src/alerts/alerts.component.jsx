@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import BellIcon from './bell-icon.component';
+import {
+  Notifications as BellIcon,
+  Clear as ClearIcon,
+  OpenInNew as OpenInNewIcon,
+} from '@material-ui/icons';
 import selectAlerts from './alerts.selector';
 import userViewedAlerts from './actions/user-viewed-alerts.creator';
-import XIcon from '../common/x-icon.component';
-import ExternalLinkIcon from '../common/external-link-icon.component';
 import pluck from '../utilities/pluck';
 import useDismissable from '../common/use-dismissable.hook';
 import './alerts.styles.scss';
@@ -54,7 +56,7 @@ const AlertItem = ({
             target="_blank"
             rel="noreferrer noopener"
           >
-            {callToAction} {isExternal && <ExternalLinkIcon />}
+            {callToAction} {isExternal && <OpenInNewIcon />}
           </a>
         ) : (
           <Link className="alerts__messages__item__call-to-action" to={url}>
@@ -156,7 +158,7 @@ const Alerts = ({ shouldAdjustForFooter = false }) => {
         }${hasLoudUnread && !isOpen ? ' alerts__button--is-loud' : ''}`}
         onClick={handleButtonClick}
       >
-        {isOpen ? <XIcon /> : <BellIcon />}
+        {isOpen ? <ClearIcon /> : <BellIcon />}
       </button>
     </div>
   );

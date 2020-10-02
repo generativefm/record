@@ -14,10 +14,6 @@
   justify-content: flex-end;
   align-items: flex-end;
 
-  @include if-narrow() {
-    right: 1rem;
-  }
-
   &--above-footer {
     bottom: $heightFooter + 1rem;
   }
@@ -138,6 +134,17 @@
           }
         }
       }
+    }
+  }
+}
+
+@include if-narrow() {
+  .alerts {
+    right: 1rem;
+    bottom: $heightNav + 1rem;
+
+    &--above-footer {
+      bottom: $heightFooter + $heightNav + 1rem;
     }
   }
 }

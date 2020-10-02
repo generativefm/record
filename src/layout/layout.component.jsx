@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Header from './header.component';
+import Nav from './nav.component';
 import Search from '../search/search.component';
 import Content from './content.component';
 import Overlay from './overlay.component';
@@ -30,7 +30,7 @@ const Layout = () => {
           shouldRenderFooter ? '' : ' layout--without-footer'
         }`}
       >
-        <Header />
+        {!isNarrowScreen && <Nav />}
         {isBrowsing && <Search />}
         <div className="layout__content">
           <Content />
@@ -43,6 +43,7 @@ const Layout = () => {
           </div>
         )}
         {shouldRenderFooter && <Footer />}
+        {isNarrowScreen && <Nav />}
       </div>
       <Alerts shouldAdjustForFooter={shouldRenderFooter} />
     </>
