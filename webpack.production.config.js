@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const baseConfig = require('./webpack.base.config');
 
@@ -11,6 +12,12 @@ prodConfig.module.rules.unshift({
   test: /\.s?css$/,
   include: /src/,
   use: [MiniCssExtractPlugin.loader, 'css-loader'],
+});
+
+prodConfig.resolve = Object.assign(prodConfig.resolve, {
+  alias: {
+    'fuse.js$': path.resolve('./node_modules/fuse.js/dist/fuse.basic.min.js'),
+  },
 });
 
 prodConfig.plugins.push(
