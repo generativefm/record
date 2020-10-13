@@ -17,18 +17,6 @@ const alertsReducer = (
       callToAction: 'Send me an email',
       url: 'mailto:alex@alexbainter.com',
     },
-    'early-access': {
-      id: 'early-access',
-      description:
-        'This is an early access version of the app. That means planned features are missing, and stuff can break.',
-      timestamp: Date.now(),
-      isExternal: true,
-      isLoud: true,
-      isUnread: true,
-      isPersisted: true,
-      callToAction: 'Use the old version',
-      url: 'https://generative.fm/record',
-    },
   },
   action
 ) => {
@@ -135,6 +123,14 @@ const alertsReducer = (
       };
     }
     default: {
+      if (state['early-access']) {
+        return Object.keys(state)
+          .filter((key) => key !== 'early-access')
+          .reduce((o, key) => {
+            o[key] = state[key];
+            return o;
+          }, {});
+      }
       return state;
     }
   }
