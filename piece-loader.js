@@ -10,7 +10,7 @@ const pieceLoader = (source) => {
   const output = `import image from '${pieceManifest.image}';
   export default {
     image,
-    loadMakePiece: () => import('${
+    loadActivate: () => import('${
       pieceManifest.makePiece
     }').then((m) => m.default),
     isRecordable: true,

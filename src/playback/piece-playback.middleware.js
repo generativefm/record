@@ -1,81 +1,95 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import { Subject } from 'rxjs';
-import { map, mergeMap, filter, exhaustMap, tap } from 'rxjs/operators';
+import { Subject, combineLatest } from 'rxjs';
+import {
+  map,
+  mergeMap,
+  filter,
+  tap,
+  distinctUntilChanged,
+  switchMap,
+  pairwise,
+  withLatestFrom,
+  startWith,
+} from 'rxjs/operators';
 import selectIsPlaying from './is-playing.selector';
 import selectTarget from './target.selector';
 import PIECE from './piece.type';
 import noop from '../utilities/noop';
-import pieceStartedScheduling from './actions/piece-started-scheduling.creator';
-import pieceFinishedScheduling from './actions/piece-finished-scheduling.creator';
-import provider from '../samples/provider';
+import USER_CLICKED_PLAY from './actions/user-clicked-play.type';
+import sampleLibrary from '../samples/library';
 
 const piecePlaybackMiddleware = (store) => (next) => {
-  let clearTransportAndCleanUp = noop;
-  const pieceJobs$ = new Subject();
+  const action$ = new Subject();
+  const state$ = new Subject();
+  const target$ = state$.pipe(map(selectTarget));
+  const isPlaying$ = state$.pipe(map(selectIsPlaying));
+  const destinationNode$ = action$.pipe(
+    filter(({ type }) => type === USER_CLICKED_PLAY),
+    map(({ payload }) => payload.destinationNode),
+    distinctUntilChanged()
+  );
 
-  const isPiecePlaying = (pieceId) => {
-    const state = store.getState();
-    const target = selectTarget(state);
-    const isPlaying = selectIsPlaying(state);
-    return target.type === PIECE && target.id === pieceId && isPlaying;
-  };
+  const isPiecePlaying$ = isPlaying$.pipe(
+    distinctUntilChanged(),
+    withLatestFrom(
+      target$.pipe(map(({ type, id }) => type === PIECE && Boolean(byId[id])))
+    ),
+    map((conditions) => conditions.every((val) => val))
+  );
 
-  pieceJobs$
-    .pipe(
-      map(([pieceId, destination]) => [byId[pieceId], destination]),
-      mergeMap(([piece, destination]) =>
-        Promise.all([
-          piece.loadMakePiece(),
-          provider.provide(piece.sampleNames, Tone.context),
-        ]).then(([makePiece, samples]) => [
-          piece,
-          destination,
-          makePiece,
-          samples,
-        ])
-      ),
-      filter(([piece]) => isPiecePlaying(piece.id)),
-      tap(() => {
-        store.dispatch(pieceStartedScheduling());
-      }),
-      exhaustMap(([piece, destination, makePiece, samples]) =>
-        makePiece({
-          destination,
-          samples,
-          audioContext: Tone.context,
-        }).then((cleanUp) => [piece, cleanUp])
-      )
-    )
-    .subscribe(([piece, cleanUp]) => {
-      store.dispatch(pieceFinishedScheduling());
-      clearTransportAndCleanUp = () => {
+  const activate$ = target$.pipe(
+    distinctUntilChanged(
+      (previousTarget, currentTarget) =>
+        currentTarget.type !== PIECE || previousTarget.id === currentTarget.id
+    ),
+    filter(({ type, id }) => type === PIECE && Boolean(byId[id])),
+    switchMap(({ id }) => byId[id].loadActivate())
+  );
+
+  const schedule$ = combineLatest(activate$, destinationNode$).pipe(
+    mergeMap(([activate, destination]) =>
+      activate({
+        context: Tone.context,
+        destination,
+        sampleLibrary,
+      })
+    ),
+    startWith([noop]),
+    pairwise(),
+    tap(([[deactivatePrevious]]) => {
+      deactivatePrevious();
+    }),
+    map(([, current]) => current),
+    map(([, schedule]) => schedule)
+  );
+
+  let clearTransport = noop;
+
+  combineLatest(isPiecePlaying$, schedule$).subscribe(
+    ([isPlaying, schedule]) => {
+      clearTransport();
+      if (!isPlaying) {
+        return;
+      }
+      clearTransport();
+      const end = schedule();
+      clearTransport = () => {
+        end();
         Tone.Transport.stop();
         Tone.Transport.cancel();
-        cleanUp();
-        clearTransportAndCleanUp = noop;
+        clearTransport = noop;
       };
-      if (isPiecePlaying(piece.id)) {
-        Tone.Transport.start();
-      } else {
-        clearTransportAndCleanUp();
-      }
-    });
+      Tone.Transport.start();
+    }
+  );
+
+  state$.next(store.getState());
 
   return (action) => {
-    const previousState = store.getState();
     const result = next(action);
-    const nextState = store.getState();
-    const previousTarget = selectTarget(previousState);
-    const target = selectTarget(nextState);
-    const wasPlaying = selectIsPlaying(previousState);
-    const isPlaying = selectIsPlaying(nextState);
-    if (previousTarget !== target || wasPlaying !== isPlaying) {
-      clearTransportAndCleanUp();
-      if (target.type === PIECE && isPlaying) {
-        pieceJobs$.next([target.id, action.payload.destinationNode]);
-      }
-    }
+    action$.next(action);
+    state$.next(store.getState());
     return result;
   };
 };
