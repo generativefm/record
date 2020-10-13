@@ -56,6 +56,8 @@ const Footer = () => {
     dispatch(userOpenedNewRecordingConfig(id));
   }, [dispatch, id]);
 
+  const isValidId = id && type === PIECE && Boolean(byId[type]);
+
   return (
     <footer
       className={`footer${isNarrowScreen ? ' footer--without-volume' : ''}`}
@@ -64,7 +66,7 @@ const Footer = () => {
         <NowPlaying />
       </div>
       <div className={isNarrowScreen ? 'footer__right' : 'footer__center'}>
-        {id && (
+        {isValidId && (
           <>
             <Button
               className="button--stroke"
