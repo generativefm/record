@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import record from '@generative-music/web-recorder';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { reduce, tap, mergeMap, take } from 'rxjs/operators';
@@ -9,7 +9,8 @@ import saveRecording from '../storage/save-recording';
 import selectRecordings from './recordings.selector';
 import selectIsScheduling from '../playback/is-scheduling.selector';
 import selectIsRecording from './is-recording.selector';
-import provider from '../samples/provider';
+import sampleLibrary from '../samples/library';
+import noop from '../utilities/noop';
 
 const TIMESLICE_MS = 100;
 
@@ -30,55 +31,49 @@ const recordMiddleware = (store) => (next) => {
     const { recordingId, length, fadeIn, fadeOut, pieceId } = recordingConfig;
     const lengthS = length * 60;
     const piece = byId[pieceId];
-    piece.loadMakePiece().then((makePiece) =>
-      provider.provide(piece.sampleNames, Tone.context).then((samples) => {
-        const startTime = Tone.context.now();
-        record(
-          makePiece,
-          { samples },
-          {
-            lengthS,
-            fadeInS: fadeIn,
-            fadeOutS: fadeOut,
-            timeslice: TIMESLICE_MS,
-          }
+    piece.loadActivate().then((activate) => {
+      const startTime = Tone.context.now();
+      record(
+        activate,
+        { sampleLibrary, onProgress: noop },
+        {
+          lengthS,
+          fadeInS: fadeIn,
+          fadeOutS: fadeOut,
+          timeslice: TIMESLICE_MS,
+        }
+      )
+        .pipe(
+          tap(() => {
+            const now = Tone.context.now();
+            const progress = Math.min((now - startTime) / lengthS, 0.999);
+            store.dispatch(recordingProgressUpdated({ recordingId, progress }));
+          }),
+          reduce((blobs, newBlob) => blobs.concat([newBlob]), []),
+          mergeMap((blobs) =>
+            new Blob(blobs, { type: 'audio/ogg; codecs=opus' }).arrayBuffer()
+          ),
+          take(1),
+          mergeMap((arrayBuffer) => saveRecording(recordingConfig, arrayBuffer))
         )
-          .pipe(
-            tap(() => {
-              const now = Tone.context.now();
-              const progress = Math.min((now - startTime) / lengthS, 0.999);
-              store.dispatch(
-                recordingProgressUpdated({ recordingId, progress })
-              );
-            }),
-            reduce((blobs, newBlob) => blobs.concat([newBlob]), []),
-            mergeMap((blobs) =>
-              new Blob(blobs, { type: 'audio/ogg; codecs=opus' }).arrayBuffer()
-            ),
-            take(1),
-            mergeMap((arrayBuffer) =>
-              saveRecording(recordingConfig, arrayBuffer)
-            )
-          )
-          .subscribe(() => {
-            const recordingQueue = getRecordingQueue().filter(
-              (recording) => recording.recordingId !== recordingId
-            );
-            if (recordingQueue.length > 0) {
-              startRecording(recordingQueue[0]);
-            } else {
-              window.removeEventListener('beforeunload', handleBeforeUnload);
-            }
-            store.dispatch(
-              recordingProgressUpdated({
-                recordingId,
-                progress: 1,
-                title: `${piece.title} (Excerpt)`,
-              })
-            );
-          });
-      })
-    );
+        .subscribe(() => {
+          const recordingQueue = getRecordingQueue().filter(
+            (recording) => recording.recordingId !== recordingId
+          );
+          if (recordingQueue.length > 0) {
+            startRecording(recordingQueue[0]);
+          } else {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+          }
+          store.dispatch(
+            recordingProgressUpdated({
+              recordingId,
+              progress: 1,
+              title: `${piece.title} (Excerpt)`,
+            })
+          );
+        });
+    });
   };
 
   return (action) => {

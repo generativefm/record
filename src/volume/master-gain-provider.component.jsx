@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { useSelector } from 'react-redux';
 import useIsNarrowScreen from '../layout/use-is-narrow-screen.hook';
 import selectCurrentVolume from './current-volume.selector';
