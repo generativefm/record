@@ -12,7 +12,7 @@ const lazySamples =
   audio.canPlayType('audio/ogg') !== '' ? lazyOggSamples() : lazyMp3Samples();
 
 export default lazySamples.then(({ default: getSamples }) => {
-  const sampleIndex = getSamples({});
+  const sampleIndex = getSamples();
   return createLibrary({
     sampleIndex,
     provider,
