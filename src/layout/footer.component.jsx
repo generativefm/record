@@ -56,7 +56,7 @@ const Footer = () => {
     dispatch(userOpenedNewRecordingConfig(id));
   }, [dispatch, id]);
 
-  const isValidId = id && type === PIECE && Boolean(byId[type]);
+  const isValidId = id && type === PIECE && Boolean(byId[id]);
 
   return (
     <footer

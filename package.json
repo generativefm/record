@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack-cli --config webpack.production.config.js",
+    "build:profile": "webpack-cli --config webpack.profile.config.js",
     "test": "karma start --single-run",
     "test:watch": "karma start",
     "lint": "eslint . --ext \".js,.jsx\"",
@@ -57,12 +58,13 @@
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.1.3",
     "webpack": "^4.42.1",
+    "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "@generative-music/pieces-alex-bainter": "^4.1.2",
-    "@generative-music/samples-alex-bainter": "^1.2.0",
+    "@generative-music/samples-alex-bainter": "^2.0.0",
     "@generative-music/web-library": "^0.2.0",
     "@generative-music/web-provider": "^2.0.4",
     "@generative-music/web-recorder": "^1.0.1",

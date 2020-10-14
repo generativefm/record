@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import { Subject, combineLatest } from 'rxjs';
+import { Subject, combineLatest, from } from 'rxjs';
 import {
   map,
   mergeMap,
@@ -17,7 +17,7 @@ import selectTarget from './target.selector';
 import PIECE from './piece.type';
 import noop from '../utilities/noop';
 import USER_CLICKED_PLAY from './actions/user-clicked-play.type';
-import sampleLibrary from '../samples/library';
+import sampleLibraryPromise from '../samples/library';
 
 const piecePlaybackMiddleware = (store) => (next) => {
   const action$ = new Subject();
@@ -47,8 +47,12 @@ const piecePlaybackMiddleware = (store) => (next) => {
     switchMap(({ id }) => byId[id].loadActivate())
   );
 
-  const schedule$ = combineLatest(activate$, destinationNode$).pipe(
-    mergeMap(([activate, destination]) =>
+  const schedule$ = combineLatest(
+    activate$,
+    destinationNode$,
+    from(sampleLibraryPromise)
+  ).pipe(
+    mergeMap(([activate, destination, sampleLibrary]) =>
       activate({
         context: Tone.context,
         destination,

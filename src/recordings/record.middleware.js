@@ -9,7 +9,7 @@ import saveRecording from '../storage/save-recording';
 import selectRecordings from './recordings.selector';
 import selectIsScheduling from '../playback/is-scheduling.selector';
 import selectIsRecording from './is-recording.selector';
-import sampleLibrary from '../samples/library';
+import sampleLibraryPromise from '../samples/library';
 import noop from '../utilities/noop';
 
 const TIMESLICE_MS = 100;
@@ -31,49 +31,55 @@ const recordMiddleware = (store) => (next) => {
     const { recordingId, length, fadeIn, fadeOut, pieceId } = recordingConfig;
     const lengthS = length * 60;
     const piece = byId[pieceId];
-    piece.loadActivate().then((activate) => {
-      const startTime = Tone.context.now();
-      record(
-        activate,
-        { sampleLibrary, onProgress: noop },
-        {
-          lengthS,
-          fadeInS: fadeIn,
-          fadeOutS: fadeOut,
-          timeslice: TIMESLICE_MS,
-        }
-      )
-        .pipe(
-          tap(() => {
-            const now = Tone.context.now();
-            const progress = Math.min((now - startTime) / lengthS, 0.999);
-            store.dispatch(recordingProgressUpdated({ recordingId, progress }));
-          }),
-          reduce((blobs, newBlob) => blobs.concat([newBlob]), []),
-          mergeMap((blobs) =>
-            new Blob(blobs, { type: 'audio/ogg; codecs=opus' }).arrayBuffer()
-          ),
-          take(1),
-          mergeMap((arrayBuffer) => saveRecording(recordingConfig, arrayBuffer))
-        )
-        .subscribe(() => {
-          const recordingQueue = getRecordingQueue().filter(
-            (recording) => recording.recordingId !== recordingId
-          );
-          if (recordingQueue.length > 0) {
-            startRecording(recordingQueue[0]);
-          } else {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
+    Promise.all([piece.loadActivate(), sampleLibraryPromise]).then(
+      ([activate, sampleLibrary]) => {
+        const startTime = Tone.context.now();
+        record(
+          activate,
+          { sampleLibrary, onProgress: noop },
+          {
+            lengthS,
+            fadeInS: fadeIn,
+            fadeOutS: fadeOut,
+            timeslice: TIMESLICE_MS,
           }
-          store.dispatch(
-            recordingProgressUpdated({
-              recordingId,
-              progress: 1,
-              title: `${piece.title} (Excerpt)`,
-            })
-          );
-        });
-    });
+        )
+          .pipe(
+            tap(() => {
+              const now = Tone.context.now();
+              const progress = Math.min((now - startTime) / lengthS, 0.999);
+              store.dispatch(
+                recordingProgressUpdated({ recordingId, progress })
+              );
+            }),
+            reduce((blobs, newBlob) => blobs.concat([newBlob]), []),
+            mergeMap((blobs) =>
+              new Blob(blobs, { type: 'audio/ogg; codecs=opus' }).arrayBuffer()
+            ),
+            take(1),
+            mergeMap((arrayBuffer) =>
+              saveRecording(recordingConfig, arrayBuffer)
+            )
+          )
+          .subscribe(() => {
+            const recordingQueue = getRecordingQueue().filter(
+              (recording) => recording.recordingId !== recordingId
+            );
+            if (recordingQueue.length > 0) {
+              startRecording(recordingQueue[0]);
+            } else {
+              window.removeEventListener('beforeunload', handleBeforeUnload);
+            }
+            store.dispatch(
+              recordingProgressUpdated({
+                recordingId,
+                progress: 1,
+                title: `${piece.title} (Excerpt)`,
+              })
+            );
+          });
+      }
+    );
   };
 
   return (action) => {
