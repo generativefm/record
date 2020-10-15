@@ -2,23 +2,47 @@ name: CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Install
-      run: npm ci
-   
-    - name: Deploy
-      run: npm run deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        S3_SYNC_BUCKET: record.generative.fm
-        S3_SYNC_DISTRIBUTION_ID: E1DKN02IA7ST0K
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit test
+        run: npm test
+
+      - name: Get tag
+        id: get-tag
+        run: |
+          env TZ=America/Chicago
+          echo "::set-output name=tag::$(date +'%Y-%m-%dT%H:%M:%S')"
+
+      - name: Build
+        run: npm run build
+        env:
+          RELEASE_TAG: ${{ steps.get-tag.outputs.tag }}
+          SAMPLE_FILE_HOST: '//samples.alexbainter.com'
+
+      - name: Tag
+        run: |
+          git config user.name "Github Actions"
+          git config user.email "<>"
+          git tag -a ${{ steps.get-tag.outputs.tag }} -m "Automatic deployment by Github Actions"
+          git push origin ${{ steps.get-tag.outputs.tag }}
+
+      - name: Deploy
+        run: npm run deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          S3_SYNC_BUCKET: record.generative.fm
+          S3_SYNC_DISTRIBUTION_ID: E1DKN02IA7ST0K
