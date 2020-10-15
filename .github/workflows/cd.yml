@@ -29,6 +29,7 @@ jobs:
         env:
           RELEASE_TAG: ${{ steps.get-tag.outputs.tag }}
           SAMPLE_FILE_HOST: '//samples.alexbainter.com'
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Tag
         run: |

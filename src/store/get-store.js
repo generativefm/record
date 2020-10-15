@@ -9,6 +9,7 @@ import volume from '../volume/volume.reducer';
 import persistStateMiddleware from '../storage/persist-state.middleware';
 import loadStoredStateValues from '../storage/load-stored-state-values';
 import silentHtml5AudioMiddleware from '../playback/silent-html5-audio.middleware';
+import sentryBreadcrumbMiddleware from '../sentry/breadcrumb.middleware';
 
 const reducer = combineReducers({
   recording,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
 });
 
 const applyMiddlewareEnhancer = applyMiddleware(
+  sentryBreadcrumbMiddleware,
   piecePlaybackMiddleware,
   recordMiddleware,
   silentHtml5AudioMiddleware,
