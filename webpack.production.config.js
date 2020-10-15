@@ -3,7 +3,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { EnvironmentPlugin } = require('webpack');
-const { SentryWebpackPlugin } = require('@sentry/webpack-plugin');
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const baseConfig = require('./webpack.base.config');
 
 const prodConfig = Object.assign(baseConfig, {
@@ -30,11 +30,11 @@ prodConfig.plugins.push(
 if (process.env.SENTRY_AUTH_TOKEN && process.env.RELEASE_TAG) {
   prodConfig.plugins.push(
     new SentryWebpackPlugin({
-      authToken: process.env.SENTRY_AUTH_TOKEN,
+      //authToken: process.env.SENTRY_AUTH_TOKEN,
       org: 'ab-0v',
       project: 'record-web',
       include: './src',
-      release: process.env.RELEASE_TAG,
+      //release: process.env.RELEASE_TAG,
     })
   );
 }
