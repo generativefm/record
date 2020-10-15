@@ -27,7 +27,7 @@ prodConfig.plugins.push(
   new EnvironmentPlugin(['RELEASE_TAG'])
 );
 
-if (process.env.SENTRY_AUTH_TOKEN) {
+if (process.env.SENTRY_AUTH_TOKEN && process.env.RELEASE_TAG) {
   prodConfig.plugins.push(
     new SentryWebpackPlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN,
