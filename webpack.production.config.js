@@ -30,11 +30,11 @@ prodConfig.plugins.push(
 if (process.env.SENTRY_AUTH_TOKEN && process.env.RELEASE_TAG) {
   prodConfig.plugins.push(
     new SentryWebpackPlugin({
-      //authToken: process.env.SENTRY_AUTH_TOKEN,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      release: process.env.RELEASE_TAG,
       org: 'ab-0v',
       project: 'record-web',
       include: './src',
-      //release: process.env.RELEASE_TAG,
     })
   );
 }
