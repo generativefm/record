@@ -23,8 +23,7 @@ jobs:
       - name: Get tag
         id: get-tag
         run: |
-          env TZ=America/Chicago
-          echo "::set-output name=tag::$(date +'%Y-%m-%dT%H:%M:%S')"
+          echo "::set-output name=tag::$(git rev-parse --short HEAD)"
 
       - name: Build
         run: npm run build
