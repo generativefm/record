@@ -13,6 +13,12 @@
       "version": "detect"
     }
   },
+  "globals": {
+    "process": "readonly"
+  },
+  "rules": {
+    "no-process-env": 0
+  },
   "overrides": [
     {
       "files": ["**/*.spec.js"],

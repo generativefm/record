@@ -2,6 +2,7 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { EnvironmentPlugin } = require('webpack');
 const baseConfig = require('./webpack.base.config');
 
 const prodConfig = Object.assign(baseConfig, {
@@ -21,7 +22,8 @@ prodConfig.resolve = Object.assign(prodConfig.resolve, {
 });
 
 prodConfig.plugins.push(
-  new MiniCssExtractPlugin({ filename: '[name].[hash].css' })
+  new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
+  new EnvironmentPlugin(['RELEASE_TAG'])
 );
 
 module.exports = prodConfig;

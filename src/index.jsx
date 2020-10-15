@@ -18,6 +18,7 @@ if (isProduction) {
       'https://706481c04f7e460791b36123b381fddf@o461193.ingest.sentry.io/5462662',
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 1,
+    release: process.env.RELEASE_TAG,
   });
 }
 

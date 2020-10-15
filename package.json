@@ -10,7 +10,6 @@
     "test": "karma start --single-run",
     "test:watch": "karma start",
     "lint": "eslint . --ext \".js,.jsx\"",
-    "predeploy": "npm run lint && npm run test && cross-env SAMPLE_FILE_HOST=//samples.alexbainter.com npm run build",
     "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy"
   },
   "repository": {
