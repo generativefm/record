@@ -22,8 +22,7 @@ jobs:
 
       - name: Get tag
         id: get-tag
-        run: |
-          echo "::set-output name=tag::$(git rev-parse --short HEAD)"
+        run: echo "::set-output name=tag::$(git rev-parse --short HEAD)"
 
       - name: Build
         run: npm run build
