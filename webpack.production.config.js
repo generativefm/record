@@ -34,7 +34,16 @@ if (process.env.SENTRY_AUTH_TOKEN && process.env.RELEASE_TAG) {
       release: process.env.RELEASE_TAG,
       org: 'ab-0v',
       project: 'record-web',
-      include: './src',
+      include: ['./src', './dist'],
+      setCommits: {
+        auto: true,
+      },
+      deploy: {
+        env: 'production',
+        name: `${process.env.RELEASE_TAG} automatic deployment`,
+        started: Date.now(),
+        url: `https://github.com/generative-fm/record/actions/runs/${process.env.GITHUB_RUN_NUMBER}`,
+      },
     })
   );
 }

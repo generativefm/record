@@ -34,6 +34,12 @@ const recordMiddleware = (store) => (next) => {
     Promise.all([piece.loadActivate(), sampleLibraryPromise]).then(
       ([activate, sampleLibrary]) => {
         const startTime = Tone.context.now();
+        store.dispatch(
+          recordingProgressUpdated({
+            recordingId,
+            progress: 0,
+          })
+        );
         record(
           activate,
           { sampleLibrary, onProgress: noop },
