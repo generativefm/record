@@ -8,6 +8,7 @@ const baseConfig = require('./webpack.base.config');
 
 const prodConfig = Object.assign(baseConfig, {
   mode: 'production',
+  devtool: 'source-map',
 });
 
 prodConfig.module.rules.unshift({
