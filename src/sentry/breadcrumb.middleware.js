@@ -4,6 +4,9 @@ import shouldUse from './should-use';
 const noopMiddleware = () => (next) => (action) => next(action);
 
 const breadcrumbMiddleware = () => (next) => (action) => {
+  if (action.meta && action.meta.shouldSentryIgnore) {
+    return next(action);
+  }
   addBreadcrumb({
     data: action,
     category: 'redux.action',

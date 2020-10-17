@@ -1,3 +1,7 @@
-const createStandardAction = (type) => (payload) => ({ type, payload });
+const createStandardAction = (type) => (payload, meta) => ({
+  type,
+  payload,
+  meta,
+});
 
 export default createStandardAction;
