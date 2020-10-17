@@ -35,9 +35,6 @@ if (process.env.SENTRY_AUTH_TOKEN && process.env.RELEASE_TAG) {
       org: 'ab-0v',
       project: 'record-web',
       include: ['./src', './dist'],
-      setCommits: {
-        auto: true,
-      },
       deploy: {
         env: 'production',
         name: `${process.env.RELEASE_TAG} automatic deployment`,
