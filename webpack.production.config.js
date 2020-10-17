@@ -38,7 +38,6 @@ if (process.env.SENTRY_AUTH_TOKEN && process.env.RELEASE_TAG) {
       deploy: {
         env: 'production',
         name: `${process.env.RELEASE_TAG} automatic deployment`,
-        started: Date.now(),
         url: `https://github.com/generative-fm/record/actions/runs/${process.env.GITHUB_RUN_NUMBER}`,
       },
     })
