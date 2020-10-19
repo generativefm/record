@@ -54,6 +54,7 @@ const Recording = ({
   fadeIn,
   fadeOut,
   progress,
+  onSave,
 }) => {
   const dispatch = useDispatch();
   const isNarrowScreen = useIsNarrowScreen();
@@ -67,8 +68,11 @@ const Recording = ({
       linkElement.setAttribute('href', url);
       linkElement.setAttribute('download', `${pieceId}-excerpt.ogg`);
       linkElement.click();
+      if (typeof onSave === 'function') {
+        onSave();
+      }
     });
-  }, [pieceId, recordingId]);
+  }, [pieceId, recordingId, onSave]);
 
   const handleNewRecordingClick = useCallback(() => {
     dispatch(userOpenedNewRecordingConfig(pieceId));
@@ -187,6 +191,7 @@ Recording.propTypes = {
   fadeIn: PropTypes.number.isRequired,
   fadeOut: PropTypes.number.isRequired,
   progress: PropTypes.number.isRequired,
+  onSave: PropTypes.func,
 };
 
 export default Recording;

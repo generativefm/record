@@ -10,7 +10,7 @@ import Footer from './footer.component';
 import Alerts from '../alerts/alerts.component';
 import selectNewRecordingId from '../recordings/new-recording-id.selector';
 import useIsNarrowScreen from './use-is-narrow-screen.hook';
-import selectPlaybackTarget from '../playback/target.selector';
+import useIsFooterVisible from './use-is-footer-visible.hook';
 import './layout.styles.scss';
 
 const Layout = () => {
@@ -19,9 +19,7 @@ const Layout = () => {
     useSelector(selectNewRecordingId)
   );
   const isNarrowScreen = useIsNarrowScreen();
-  const { id } = useSelector(selectPlaybackTarget);
-
-  const shouldRenderFooter = Boolean(!isNarrowScreen || id);
+  const shouldRenderFooter = useIsFooterVisible();
 
   return (
     <>

@@ -1,5 +1,5 @@
 const maybeAssign = (target, name, value) => {
-  if (value) {
+  if (typeof value !== 'undefined') {
     target[name] = value;
   }
   return target;

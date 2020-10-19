@@ -7,6 +7,9 @@
   justify-content: center;
   height: 100%;
   background-color: rgba($color-dark-1, 0.8);
+  width: 100%;
+  position: fixed;
+  top: 0;
 
   &--appear {
     opacity: 0;
@@ -20,5 +23,11 @@
   @include if-narrow() {
     flex-direction: column;
     justify-content: flex-end;
+    top: initial;
+    bottom: $heightNav;
+
+    &--above-footer {
+      bottom: $heightNav + $heightFooter;
+    }
   }
 }
