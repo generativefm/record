@@ -1,0 +1,36 @@
+@import '../styles/_colors.scss';
+@import '../styles/_type.scss';
+@import '../styles/_layout.scss';
+@import '../styles/_effects.scss';
+@import '../styles/values.scss';
+
+.modal {
+  @include type-normal();
+  background-color: $color-dark-2;
+  padding: 1rem;
+  color: $color-white;
+  box-shadow: $box-shadow-bottom;
+  border-radius: $border-radius-lg;
+
+  .animate-in {
+    &--appear {
+      transform: translateX(10%);
+
+      &-active {
+        transform: none;
+        transition: transform 200ms;
+      }
+    }
+  }
+
+  @include if-narrow() {
+    width: 100%;
+    overflow-y: auto;
+
+    .animate-in {
+      &--appear {
+        transform: translateY(10%);
+      }
+    }
+  }
+}

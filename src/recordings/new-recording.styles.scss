@@ -5,25 +5,11 @@
 @import '../styles/_values.scss';
 
 .new-recording {
-  @include type-normal();
-  background-color: $color-dark-2;
-  padding: 1rem;
-  color: $color-white;
-  box-shadow: $box-shadow-bottom;
-  border-radius: $border-radius-lg;
-
-  &__title {
-    @include type-less-prominent();
-    width: 100%;
-    text-align: center;
-  }
-
   &__piece {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 2rem 0;
 
     &__image {
       width: 4rem;
@@ -39,7 +25,7 @@
   }
 
   &__inputs {
-    padding: 0 1rem;
+    padding: 1rem 1rem 0;
   }
 
   &__estimate {
@@ -48,55 +34,8 @@
     color: $color-grey;
   }
 
-  &__message {
-    @include type-normal();
-    color: $color-white;
-    margin-top: 2rem;
-    padding: 0 1rem;
-  }
-
-  &__buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 2rem;
-
-    button {
-      margin-right: 1rem;
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-    }
-  }
-
-  .animate-in {
-    &--appear {
-      transform: translateX(10%);
-
-      &-active {
-        transform: none;
-        transition: transform 200ms;
-      }
-    }
-  }
-
-  @include if-narrow() {
-    width: 100%;
-    overflow-y: auto;
-
-    &__piece {
-      margin: 1rem 0;
-    }
-
-    &__buttons {
-      justify-content: center;
-    }
-
-    .animate-in {
-      &--appear {
-        transform: translateY(10%);
-      }
-    }
+  &__left-button {
+    margin-right: 1rem;
   }
 }
 
