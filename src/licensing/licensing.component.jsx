@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Licensing = () => (
   <div className="licensing text-content">
     <h1>Creative Commons License</h1>
-    <h2>Free for anyone and everyone</h2>
+    <h2>For anyone and everyone</h2>
     <p>
       Music from Generative.fm is officially licensed under a{' '}
       <a
