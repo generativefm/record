@@ -1,0 +1,1 @@
+export default 'USER_SELECTED_PROMPT_SETTING';

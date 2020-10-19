@@ -6,7 +6,8 @@ const makeWrapper = ({ className: wrapperClassName }) => ({
 }) => (
   <div
     className={[wrapperClassName, className].reduce(
-      (str, classNameProp) => `${str}${classNameProp ? ' classNameProp' : ''}`
+      (str, classNameProp) =>
+        `${str}${classNameProp ? ` ${classNameProp}` : ''}`
     )}
   >
     {children}
