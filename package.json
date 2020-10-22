@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@generative-music/pieces-alex-bainter": "^4.1.2",
-    "@generative-music/samples-alex-bainter": "^2.1.0",
+    "@generative-music/samples-alex-bainter": "^2.0.1",
     "@generative-music/web-library": "^0.2.0",
     "@generative-music/web-provider": "^2.0.4",
     "@generative-music/web-recorder": "^1.0.1",
