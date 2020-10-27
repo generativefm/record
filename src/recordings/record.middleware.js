@@ -59,9 +59,13 @@ const recordMiddleware = (store) => (next) => {
               );
             }),
             reduce((blobs, newBlob) => blobs.concat([newBlob]), []),
-            mergeMap((blobs) =>
-              new Blob(blobs, { type: 'audio/ogg; codecs=opus' }).arrayBuffer()
-            ),
+            mergeMap((blobs) => {
+              const blob = new Blob(blobs, { type: 'audio/ogg; codecs=opus' });
+              if (typeof blob.arrayBuffer === 'function') {
+                return blob.arrayBuffer();
+              }
+              return new Response(blob).arrayBuffer();
+            }),
             take(1),
             mergeMap((arrayBuffer) =>
               saveRecording(recordingConfig, arrayBuffer)
