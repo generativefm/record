@@ -25,12 +25,5 @@
 
   @include if-narrow() {
     width: 100%;
-    overflow-y: auto;
-
-    .animate-in {
-      &--appear {
-        transform: translateY(10%);
-      }
-    }
   }
 }

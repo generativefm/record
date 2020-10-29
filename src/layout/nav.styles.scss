@@ -10,7 +10,7 @@
   box-shadow: $box-shadow-bottom;
   display: flex;
   align-items: center;
-  z-index: 2;
+  z-index: 1;
 
   &__title {
     @include type-less-prominent();

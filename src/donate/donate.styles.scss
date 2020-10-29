@@ -1,6 +1,7 @@
 @import '../styles/_colors.scss';
 @import '../styles/_type.scss';
 @import '../styles/_layout.scss';
+@import '../styles/values.scss';
 
 .donate {
   &__options {
@@ -28,6 +29,7 @@
       align-items: center;
       transition: color 200ms;
       cursor: pointer;
+      line-height: 1.5;
 
       &:hover {
         color: $color-primary;
@@ -37,8 +39,15 @@
       }
 
       &--primary {
-        padding: 1.5rem;
       }
+    }
+
+    #monthly-donation-link {
+      padding: 1.25rem;
+      text-transform: none;
+      font-size: 1em;
+      border-radius: 100px;
+      transition: background-color 200ms;
     }
 
     svg {

@@ -82,9 +82,10 @@ const Donate = () => {
       <div className="donate__options">
         <a
           href={PATREON_URL}
-          className="button button--text button--primary donate__options__option donate__options__option--primary "
+          className="button button--text button--primary donate__options__option"
           target="_blank"
           rel="noreferrer noopener"
+          id="monthly-donation-link"
         >
           Make a monthly donation (with benefits!)
           <OpenInNewIcon />

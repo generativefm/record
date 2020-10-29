@@ -77,7 +77,7 @@ const DonationPrompt = ({ onDismiss }) => {
             rel="noreferrer noopener"
             onClick={onDismiss}
           >
-            Pay with PayPal <OpenInNewIcon />
+            Pay with PayPal <OpenInNewIcon style={{ marginLeft: '0.25rem' }} />
           </a>
           For more ways to pay, see <Link to="/donate">Donate</Link>.
           <div className="donation-prompt__content__hide">

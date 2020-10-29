@@ -33,17 +33,15 @@ const Layout = () => {
         <div className="layout__content">
           <Content />
         </div>
-        {isUserConfiguringNewRecording && (
-          <div className="layout__overlay">
-            <Overlay>
-              <NewRecording />
-            </Overlay>
-          </div>
-        )}
         {shouldRenderFooter && <Footer />}
         {isNarrowScreen && <Nav />}
       </div>
       <Alerts shouldAdjustForFooter={shouldRenderFooter} />
+      {isUserConfiguringNewRecording && (
+        <Overlay>
+          <NewRecording />
+        </Overlay>
+      )}
     </>
   );
 };

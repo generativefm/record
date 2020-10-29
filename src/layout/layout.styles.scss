@@ -41,11 +41,6 @@
     overflow-y: auto;
     padding-bottom: 5rem;
   }
-
-  &__overlay {
-    grid-area: content;
-    z-index: 1;
-  }
 }
 
 @include if-narrow() {
