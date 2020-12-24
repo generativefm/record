@@ -2,7 +2,7 @@ import React, { useRef, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import pieces, { byId } from '@generative-music/pieces-alex-bainter';
 import Fuse from 'fuse.js';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import selectSearchTerm from '../search/search-term.selector';
 import Piece from './piece.component';
 import pluck from '../utilities/pluck';
@@ -38,7 +38,6 @@ const Browse = () => {
 
   const { search: queryString } = useLocation();
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     const queryStringNewRecordingMatch = queryString.match(
@@ -54,9 +53,8 @@ const Browse = () => {
     if (!byId[newRecordingPieceId]) {
       return;
     }
-    history.replace('');
     dispatch(userOpenedNewRecordingConfig(newRecordingPieceId));
-  }, [queryString, dispatch, history]);
+  }, [queryString, dispatch]);
 
   const message = getMessage(searchTerm, searchResults);
 
