@@ -63,7 +63,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@generative-music/pieces-alex-bainter": "^4.2.1",
+    "@generative-music/pieces-alex-bainter": "^4.6.0",
     "@generative-music/samples-alex-bainter": "^2.2.0",
     "@generative-music/web-library": "^0.2.0",
     "@generative-music/web-provider": "^2.0.4",
