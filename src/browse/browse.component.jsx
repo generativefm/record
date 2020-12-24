@@ -1,11 +1,14 @@
-import React, { useRef, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import pieces from '@generative-music/pieces-alex-bainter';
+import React, { useRef, useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import pieces, { byId } from '@generative-music/pieces-alex-bainter';
 import Fuse from 'fuse.js';
+import { useLocation } from 'react-router-dom';
 import selectSearchTerm from '../search/search-term.selector';
 import Piece from './piece.component';
 import pluck from '../utilities/pluck';
 import selectIsRecording from '../recordings/is-recording.selector';
+import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
+
 import './browse.styles.scss';
 
 const recordablePieces = pieces.filter(pluck('isRecordable'));
@@ -19,6 +22,8 @@ const getMessage = (searchTerm, searchResults) => {
   } matching "${searchTerm}"`;
 };
 
+const NEW_RECORDING_QS_REGEX = /new-recording=([\w\d-]+)/i;
+
 const Browse = () => {
   const isRecording = useSelector(selectIsRecording);
   const fuse = useRef(new Fuse(recordablePieces, { keys: ['id', 'title'] }));
@@ -30,6 +35,26 @@ const Browse = () => {
         : recordablePieces,
     [fuse, searchTerm]
   );
+
+  const { search: queryString } = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const queryStringNewRecordingMatch = queryString.match(
+      NEW_RECORDING_QS_REGEX
+    );
+    if (
+      queryStringNewRecordingMatch === null ||
+      queryStringNewRecordingMatch.length < 1
+    ) {
+      return;
+    }
+    const newRecordingPieceId = queryStringNewRecordingMatch[1].toLowerCase();
+    if (!byId[newRecordingPieceId]) {
+      return;
+    }
+    dispatch(userOpenedNewRecordingConfig(newRecordingPieceId));
+  }, [queryString, dispatch]);
 
   const message = getMessage(searchTerm, searchResults);
 
