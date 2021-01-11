@@ -44,7 +44,12 @@ const piecePlaybackMiddleware = (store) => (next) => {
         currentTarget.type !== PIECE || previousTarget.id === currentTarget.id
     ),
     filter(({ type, id }) => type === PIECE && Boolean(byId[id])),
-    switchMap(({ id }) => byId[id].loadActivate())
+    switchMap(({ id }) =>
+      byId[id].loadActivate().then((activate) => ({ activate, pieceId: id }))
+    ),
+    withLatestFrom(target$),
+    filter(([{ pieceId }, { id, type }]) => type === PIECE && pieceId === id),
+    map(([activateResult]) => activateResult)
   );
 
   const schedule$ = combineLatest(
@@ -52,13 +57,22 @@ const piecePlaybackMiddleware = (store) => (next) => {
     destinationNode$,
     from(sampleLibraryPromise)
   ).pipe(
-    mergeMap(([activate, destination, sampleLibrary]) =>
+    mergeMap(([{ activate, pieceId }, destination, sampleLibrary]) =>
       activate({
         context: Tone.context,
         destination,
         sampleLibrary,
-      })
+      }).then(([deactivate, schedule]) => ({ pieceId, deactivate, schedule }))
     ),
+    withLatestFrom(target$),
+    filter(([{ pieceId, deactivate }, { id, type }]) => {
+      if (type !== PIECE || pieceId !== id) {
+        deactivate();
+        return false;
+      }
+      return true;
+    }),
+    map(([{ deactivate, schedule }]) => [deactivate, schedule]),
     startWith([noop]),
     pairwise(),
     tap(([[deactivatePrevious]]) => {
