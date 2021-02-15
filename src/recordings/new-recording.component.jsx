@@ -6,7 +6,7 @@ import { byId } from '@generative-music/pieces-alex-bainter';
 import record from '@generative-music/web-recorder';
 import selectNewRecordingId from './new-recording-id.selector';
 import Button from '../common/button.component';
-import userCanceledNewRecordingType from './actions/user-canceled-new-recording.creator';
+import userCanceledNewRecording from './actions/user-canceled-new-recording.creator';
 import userRequestedNewRecording from './actions/user-requested-new-recording.creator';
 import Modal from '../modal/modal.component';
 import ModalHeader from '../modal/modal-header.component';
@@ -61,7 +61,7 @@ const NewRecording = () => {
   const piece = byId[newRecordingId];
 
   const dispatchCancelAction = useCallback(() => {
-    dispatch(userCanceledNewRecordingType());
+    dispatch(userCanceledNewRecording());
   }, [dispatch]);
 
   const handleStartClick = useCallback(() => {
