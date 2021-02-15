@@ -2,10 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import {
-  SaveAlt as DownloadIcon,
-  AddCircle as AddIcon,
-} from '@material-ui/icons';
+import { SaveAlt as DownloadIcon, Add } from '@material-ui/icons';
 import Button from '../common/button.component';
 import ProgressBar from './progress-bar.component';
 import loadRecordingFile from '../storage/load-recording-file';
@@ -127,7 +124,7 @@ const Recording = ({
             tooltip="New recording"
             onClick={handleNewRecordingClick}
           >
-            <AddIcon />
+            <Add />
           </Button>
         </div>
       </div>
@@ -176,7 +173,7 @@ const Recording = ({
           tooltip="New recording"
           onClick={handleNewRecordingClick}
         >
-          <AddIcon style={{ height: 30, width: 30 }} />
+          <Add style={{ height: 30, width: 30 }} />
         </Button>
       </div>
     </div>

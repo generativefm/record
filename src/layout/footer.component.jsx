@@ -4,7 +4,8 @@ import { byId } from '@generative-music/pieces-alex-bainter';
 import {
   PlayArrow as PlayIcon,
   Stop as StopIcon,
-  AddCircle as AddIcon,
+  Add,
+  Album,
 } from '@material-ui/icons';
 import VolumeControl from '../volume/volume-control.component';
 import Button from '../common/button.component';
@@ -57,6 +58,7 @@ const Footer = () => {
   }, [dispatch, id]);
 
   const isValidId = id && type === PIECE && Boolean(byId[id]);
+  const bandcampUrl = isValidId && byId[id].bandcampUrl;
 
   return (
     <footer
@@ -80,13 +82,24 @@ const Footer = () => {
                 <PlayIcon style={{ width: 30, height: 30 }} />
               )}
             </Button>
+            {bandcampUrl && (
+              <a
+                href={bandcampUrl}
+                className="button button--stroke"
+                title="Official recordings"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                <Album style={{ width: 30, height: 30 }} />
+              </a>
+            )}
             <Button
               className="button--stroke"
               tooltip="New recording"
               isDisabled={!id}
               onClick={handleNewRecordingClick}
             >
-              <AddIcon style={{ width: 30, height: 30 }} />
+              <Add style={{ width: 30, height: 30 }} />
             </Button>
           </>
         )}

@@ -11,7 +11,10 @@ const devConfig = Object.assign(baseConfig, {
 devConfig.module.rules.unshift({
   test: /\.s?css$/,
   include: /src/,
-  use: ['style-loader', 'css-loader'],
+  use: [
+    'style-loader',
+    { loader: 'css-loader', options: { importLoaders: 1 } },
+  ],
 });
 
 module.exports = devConfig;

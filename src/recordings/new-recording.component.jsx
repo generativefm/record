@@ -92,11 +92,12 @@ const NewRecording = () => {
         <ModalHeader>Recording not supported</ModalHeader>
         <ModalContent>
           Sorry, the browser you&apos;re using doesn&apos;t currently support
-          this service.
+          this service. Premade recordings are available at{' '}
+          <a href={piece.bandcampUrl}>{piece.bandcampUrl}</a>.
         </ModalContent>
         <ModalFooter>
           <Button className="button--text" onClick={dispatchCancelAction}>
-            Cancel
+            Dismiss
           </Button>
         </ModalFooter>
       </Modal>

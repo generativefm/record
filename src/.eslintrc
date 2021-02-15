@@ -1,17 +1,8 @@
 {
-  "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
-  "env": {
-    "node": false,
-    "browser": true
-  },
+  "extends": "@alexbainter/eslint-config/react",
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": "2020"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
   },
   "globals": {
     "process": "readonly"

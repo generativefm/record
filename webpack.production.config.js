@@ -14,7 +14,10 @@ const prodConfig = Object.assign(baseConfig, {
 prodConfig.module.rules.unshift({
   test: /\.s?css$/,
   include: /src/,
-  use: [MiniCssExtractPlugin.loader, 'css-loader'],
+  use: [
+    MiniCssExtractPlugin.loader,
+    { loader: 'css-loader', options: { importLoaders: 1 } },
+  ],
 });
 
 prodConfig.resolve = Object.assign(prodConfig.resolve, {
