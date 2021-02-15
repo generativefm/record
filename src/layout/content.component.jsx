@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Browse from '../browse/browse.component';
 import Recordings from '../recordings/recordings.component';
 import Licensing from '../licensing/licensing.component';
-import Donate from '../donate/donate.component';
+import Donate from '../donate/donate';
 import './content.styles.scss';
 
 const Content = () => (

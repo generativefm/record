@@ -1,10 +1,3 @@
 {
-  "extends": "metalex9",
-  "env": {
-    "node": true,
-    "es6": true
-  },
-  "rules": {
-    "no-process-env": 0
-  }
+  "extends": "@alexbainter/eslint-config/node"
 }

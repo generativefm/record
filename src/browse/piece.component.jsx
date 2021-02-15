@@ -5,7 +5,8 @@ import { byId } from '@generative-music/pieces-alex-bainter';
 import {
   PlayArrow as PlayIcon,
   Stop as StopIcon,
-  AddCircle as AddIcon,
+  Add,
+  Album,
 } from '@material-ui/icons';
 import Button from '../common/button.component';
 import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
@@ -33,7 +34,7 @@ const Piece = ({ id, isPlayable }) => {
       : userClickedPlay({ id, type: PIECE, destinationNode: masterGain });
     dispatch(action);
   }, [dispatch, id, isCurrentlyPlaying, masterGain]);
-  const { title, image } = byId[id];
+  const { title, image, bandcampUrl } = byId[id];
   return (
     <div className="piece">
       <div className="piece__info">
@@ -53,12 +54,21 @@ const Piece = ({ id, isPlayable }) => {
             <PlayIcon style={{ width: 30, height: 30 }} />
           )}
         </Button>
+        <a
+          href={bandcampUrl}
+          className="button button--change-background piece__buttons__button"
+          title="Official recordings"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          <Album style={{ width: 30, height: 30 }} />
+        </a>
         <Button
           className="button--change-background piece__buttons__button"
           tooltip="New recording"
           onClick={handleNewRecordingClick}
         >
-          <AddIcon style={{ width: 30, height: 30 }} />
+          <Add style={{ width: 30, height: 30 }} />
         </Button>
       </div>
     </div>

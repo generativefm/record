@@ -41,3 +41,19 @@
     }
   }
 }
+
+@include if-narrow() {
+  .piece {
+    padding: 0.5rem;
+    &__info {
+      &__image {
+        width: 3rem;
+        height: 3rem;
+        margin-right: 0.5rem;
+      }
+      &__title {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

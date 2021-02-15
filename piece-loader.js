@@ -19,7 +19,8 @@ const pieceLoader = (source) => {
     artist: '${pieceManifest.artistId}',
     tags: [${pieceManifest.tags.map((tag) => `"${tag}"`)}],
     releaseDate: new Date('${pieceManifest.releaseDate}'),
-    sampleNames: [${pieceManifest.sampleNames.map((name) => `"${name}"`)}]
+    sampleNames: [${pieceManifest.sampleNames.map((name) => `"${name}"`)}],
+    bandcampUrl: "${pieceManifest.bandcampUrl}"
   }`;
 
   return output;
