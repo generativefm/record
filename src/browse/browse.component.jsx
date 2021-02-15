@@ -50,7 +50,7 @@ const Browse = () => {
       return;
     }
     const newRecordingPieceId = queryStringNewRecordingMatch[1].toLowerCase();
-    if (!byId[newRecordingPieceId]) {
+    if (!byId[newRecordingPieceId] || !byId[newRecordingPieceId].isRecordable) {
       return;
     }
     dispatch(userOpenedNewRecordingConfig(newRecordingPieceId));
