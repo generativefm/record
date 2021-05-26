@@ -8,7 +8,7 @@ import {
   Add,
   Album,
 } from '@material-ui/icons';
-import Button from '../common/button.component';
+import { IconButton } from '@generative.fm/web-ui';
 import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
 import userClickedPlay from '../playback/actions/user-clicked-play.creator';
 import userClickedStop from '../playback/actions/user-clicked-stop.creator';
@@ -42,9 +42,8 @@ const Piece = ({ id, isPlayable }) => {
         <div className="piece__info__title">{title}</div>
       </div>
       <div className="piece__buttons">
-        <Button
-          className="button--change-background piece__buttons__button"
-          tooltip={isCurrentlyPlaying ? 'Stop' : 'Play'}
+        <IconButton
+          title={isCurrentlyPlaying ? 'Stop' : 'Play'}
           onClick={handlePlaybackClick}
           isDisabled={!isPlayable}
         >
@@ -53,7 +52,7 @@ const Piece = ({ id, isPlayable }) => {
           ) : (
             <PlayIcon style={{ width: 30, height: 30 }} />
           )}
-        </Button>
+        </IconButton>
         <a
           href={bandcampUrl}
           className="button button--change-background piece__buttons__button"
@@ -63,13 +62,9 @@ const Piece = ({ id, isPlayable }) => {
         >
           <Album style={{ width: 30, height: 30 }} />
         </a>
-        <Button
-          className="button--change-background piece__buttons__button"
-          tooltip="New recording"
-          onClick={handleNewRecordingClick}
-        >
+        <IconButton title="New recording" onClick={handleNewRecordingClick}>
           <Add style={{ width: 30, height: 30 }} />
-        </Button>
+        </IconButton>
       </div>
     </div>
   );

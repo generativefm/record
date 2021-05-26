@@ -1,17 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import record from '@generative-music/web-recorder';
+import { Dialog } from '@generative.fm/web-ui';
 import selectNewRecordingId from './new-recording-id.selector';
-import Button from '../common/button.component';
 import userCanceledNewRecording from './actions/user-canceled-new-recording.creator';
 import userRequestedNewRecording from './actions/user-requested-new-recording.creator';
-import Modal from '../modal/modal.component';
-import ModalHeader from '../modal/modal-header.component';
-import ModalContent from '../modal/modal-content.component';
-import ModalFooter from '../modal/modal-footer.component';
 import './new-recording.styles.scss';
 
 const InputRow = ({ label, unit, value, onChange, isAutoFocused = false }) => {
@@ -86,81 +82,66 @@ const NewRecording = () => {
     newRecordingId,
   ]);
 
+  const actions = useMemo(
+    () => [
+      { text: 'Cancel' },
+      { text: 'Start', onClick: handleStartClick, isDisabled: !isValidLength },
+    ],
+    [handleStartClick, isValidLength]
+  );
+
   if (!record.isSupported) {
     return (
-      <Modal onDismiss={dispatchCancelAction}>
-        <ModalHeader>Recording not supported</ModalHeader>
-        <ModalContent>
+      <Dialog title="Not supported" onDismiss={dispatchCancelAction}>
+        <div className="new-recording">
           Sorry, the browser you&apos;re using doesn&apos;t currently support
-          this service. Premade recordings are available at{' '}
-          <a href={piece.bandcampUrl}>{piece.bandcampUrl}</a>.
-        </ModalContent>
-        <ModalFooter>
-          <Button className="button--text" onClick={dispatchCancelAction}>
-            Dismiss
-          </Button>
-        </ModalFooter>
-      </Modal>
+          this service. Premade recordings are available{' '}
+          <a href={piece.bandcampUrl}>on Bandcamp</a>.
+        </div>
+      </Dialog>
     );
   }
 
   return (
-    <Modal onDismiss={dispatchCancelAction}>
-      <ModalHeader>New recording</ModalHeader>
-      <ModalContent>
-        <>
-          <div className="new-recording__piece">
-            <img className="new-recording__piece__image" src={piece.image} />
-            <div className="new-recording__piece__title">{piece.title}</div>
-          </div>
-          <div className="new-recording__inputs">
-            <InputRow
-              label="Length"
-              unit="minutes"
-              value={length}
-              onChange={setLength}
-              isAutoFocused
-            />
-            <InputRow
-              label="Fade in"
-              unit="seconds"
-              value={fadeIn}
-              onChange={setFadeIn}
-            />
-            <InputRow
-              label="Fade out"
-              unit="seconds"
-              value={fadeOut}
-              onChange={setFadeOut}
-            />
-          </div>
-          <div
-            className={`new-recording__estimate ${
-              isValidLength ? 'is-shown' : 'is-hidden'
-            }`}
-          >
-            This will take about {parsedLength} minute
-            {parsedLength > 1 ? 's' : ''}
-          </div>
-        </>
-      </ModalContent>
-      <ModalFooter>
-        <Button
-          className="button--text new-recording__left-button"
-          onClick={dispatchCancelAction}
-        >
-          Cancel
-        </Button>
-        <Button
-          className="button--text button--primary"
-          isDisabled={!isValidLength}
-          tooltip={isValidLength ? 'Start recording' : "Something isn't ready"}
-          onClick={handleStartClick}
-        >
-          Start
-        </Button>
-      </ModalFooter>
-    </Modal>
+    <Dialog
+      title="New recording"
+      onDismiss={dispatchCancelAction}
+      actions={actions}
+    >
+      <div className="new-recording__piece">
+        <img className="new-recording__piece__image" src={piece.image} />
+        <div className="new-recording__piece__title">{piece.title}</div>
+      </div>
+      <div className="new-recording__inputs">
+        <InputRow
+          label="Length"
+          unit="minutes"
+          value={length}
+          onChange={setLength}
+          isAutoFocused
+        />
+        <InputRow
+          label="Fade in"
+          unit="seconds"
+          value={fadeIn}
+          onChange={setFadeIn}
+        />
+        <InputRow
+          label="Fade out"
+          unit="seconds"
+          value={fadeOut}
+          onChange={setFadeOut}
+        />
+      </div>
+      <div
+        className={`new-recording__estimate ${
+          isValidLength ? 'is-shown' : 'is-hidden'
+        }`}
+      >
+        This will take about {parsedLength} minute
+        {parsedLength > 1 ? 's' : ''}
+      </div>
+    </Dialog>
   );
 };
 

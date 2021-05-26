@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Search as SearchIcon, Clear as ClearIcon } from '@material-ui/icons';
+import { IconButton } from '@generative.fm/web-ui';
 import selectSearchTerm from './search-term.selector';
 import userChangedSearchTerm from './actions/user-changed-search-term.creator';
-import Button from '../common/button.component';
 import './search.styles.scss';
 
 const Search = () => {
@@ -35,12 +35,11 @@ const Search = () => {
         value={value}
         onChange={handleChange}
       />
-      <Button
-        className={`button--stroke ${value ? 'is-shown' : 'is-hidden'}`}
-        onClick={handleClearClick}
-      >
-        <ClearIcon style={{ width: 30, height: 30 }} />
-      </Button>
+      {typeof value === 'string' && value.trim() && (
+        <IconButton onClick={handleClearClick}>
+          <ClearIcon style={{ width: 30, height: 30 }} />
+        </IconButton>
+      )}
     </div>
   );
 };

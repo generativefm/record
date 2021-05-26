@@ -6,7 +6,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: $heightNav 1fr $heightFooter;
   grid-template-areas:
-    'nav'
+    'top-bar'
     'content'
     'controls';
   height: 100%;
@@ -15,7 +15,7 @@
   &--with-search {
     grid-template-rows: $heightNav $heightSearchbar 1fr $heightFooter;
     grid-template-areas:
-      'nav'
+      'top-bar'
       'search'
       'content'
       'controls';
@@ -24,14 +24,14 @@
   &--without-footer {
     grid-template-rows: $heightNav 1fr;
     grid-template-areas:
-      'nav'
+      'top-bar'
       'content';
   }
 
   &--with-search#{&}--without-footer {
     grid-template-rows: $heightNav $heightSearchbar 1fr;
     grid-template-areas:
-      'nav'
+      'top-bar'
       'search'
       'content';
   }
@@ -45,34 +45,38 @@
 
 @include if-narrow() {
   .layout {
-    grid-template-rows: 1fr $heightFooter $heightNav;
+    grid-template-rows: 3rem 1fr $heightFooter $heightNav;
     grid-template-areas:
+      'top-bar'
       'content'
       'controls'
-      'nav';
+      'bottom-nav';
 
     &--with-search {
-      grid-template-rows: $heightSearchbar 1fr $heightFooter $heightNav;
+      grid-template-rows: 3rem $heightSearchbar 1fr $heightFooter $heightNav;
       grid-template-areas:
+        'top-bar'
         'search'
         'content'
         'controls'
-        'nav';
+        'bottom-nav';
     }
 
     &--without-footer {
-      grid-template-rows: 1fr $heightNav;
+      grid-template-rows: 3rem 1fr $heightNav;
       grid-template-areas:
+        'top-bar'
         'content'
-        'nav';
+        'bottom-nav';
     }
 
     &--with-search#{&}--without-footer {
-      grid-template-rows: $heightSearchbar 1fr $heightNav;
+      grid-template-rows: 3rem $heightSearchbar 1fr $heightNav;
       grid-template-areas:
+        'top-bar'
         'search'
         'content'
-        'nav';
+        'bottom-nav';
     }
   }
 }

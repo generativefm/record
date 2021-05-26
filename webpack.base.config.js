@@ -3,12 +3,12 @@ const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
   output: {
-    filename: '[name].[hash].js',
-    chunkFilename: '[chunkhash].js',
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[contenthash].js',
+    clean: true,
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
@@ -34,7 +34,6 @@ const config = {
       },
       {
         test: /\.scss$/,
-        include: /src/,
         use: 'sass-loader',
       },
       {
@@ -82,7 +81,6 @@ const config = {
       },
     }),
     new FaviconsWebpackPlugin({ logo: './src/logo.png', prefix: '' }),
-    new CleanWebpackPlugin(),
     new EnvironmentPlugin({
       SAMPLE_FILE_HOST: '//localhost:6969',
     }),

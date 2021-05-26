@@ -1,0 +1,65 @@
+@import '@generative.fm/web-ui/styles/_theme.scss';
+
+$text-margin: 2rem;
+
+.text-content {
+  @include type-normal();
+  color: $color-white;
+  padding: 1rem;
+  margin: 0 auto;
+  max-width: 100rem;
+  margin-top: 2rem;
+
+  h1 {
+    @include type-more-prominent();
+    font-size: 2em;
+    margin: $text-margin * 2 0 1rem;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  h2 {
+    @include type-less-prominent();
+    font-size: 1.5em;
+    color: $color-grey;
+    margin-top: $text-margin;
+  }
+
+  p,
+  ul {
+    line-height: 1.5;
+    margin-top: $text-margin;
+    font-size: 1.2em;
+  }
+
+  li {
+    margin-left: 1rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: $color-white;
+    border-bottom: 1px solid $color-primary;
+    transition: color 200ms;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  @include is-narrow-screen() {
+    max-width: none;
+    font-size: 16px;
+    box-sizing: border-box;
+
+    h1 {
+      font-size: 1.75em;
+    }
+  }
+}
+
+.text-center {
+  text-align: center;
+}

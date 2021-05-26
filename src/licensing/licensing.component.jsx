@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './licensing.styles.scss';
 
 const Licensing = () => (
   <div className="licensing text-content">
