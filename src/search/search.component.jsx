@@ -31,7 +31,7 @@ const Search = () => {
       <input
         type="text"
         className="search__input"
-        placeholder="Search titles"
+        placeholder="Search by name"
         value={value}
         onChange={handleChange}
       />

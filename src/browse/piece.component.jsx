@@ -2,12 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import {
-  PlayArrow as PlayIcon,
-  Stop as StopIcon,
-  Add,
-  Album,
-} from '@material-ui/icons';
+import { PlayArrow, Stop, Add, Album } from '@material-ui/icons';
 import { IconButton } from '@generative.fm/web-ui';
 import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
 import userClickedPlay from '../playback/actions/user-clicked-play.creator';
@@ -47,23 +42,13 @@ const Piece = ({ id, isPlayable }) => {
           onClick={handlePlaybackClick}
           isDisabled={!isPlayable}
         >
-          {isCurrentlyPlaying ? (
-            <StopIcon style={{ width: 30, height: 30 }} />
-          ) : (
-            <PlayIcon style={{ width: 30, height: 30 }} />
-          )}
+          {isCurrentlyPlaying ? <Stop /> : <PlayArrow />}
         </IconButton>
-        <a
-          href={bandcampUrl}
-          className="button button--change-background piece__buttons__button"
-          title="Official recordings"
-          rel="noreferrer noopener"
-          target="_blank"
-        >
-          <Album style={{ width: 30, height: 30 }} />
-        </a>
+        <IconButton href={bandcampUrl} title="Official recordings">
+          <Album />
+        </IconButton>
         <IconButton title="New recording" onClick={handleNewRecordingClick}>
-          <Add style={{ width: 30, height: 30 }} />
+          <Add />
         </IconButton>
       </div>
     </div>

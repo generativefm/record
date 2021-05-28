@@ -7,12 +7,15 @@
 .footer {
   background-color: $color-dark-2;
   height: $heightFooter;
-  width: 100vw;
   box-shadow: $box-shadow-top;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 2;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
   &__left,
   &__center,

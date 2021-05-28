@@ -1,6 +1,4 @@
-@import '../styles/_colors.scss';
-@import '../styles/_type.scss';
-@import '../styles/_effects.scss';
+@import '@generative.fm/web-ui/styles/_theme.scss';
 @import '../styles/_layout.scss';
 
 .search {
@@ -16,6 +14,8 @@
   border-top: 1px solid black;
   padding: 0 1rem;
   z-index: 2;
+  top: 4rem;
+  position: fixed;
 
   &__input {
     margin: 0 0.5rem;
@@ -35,5 +35,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@include is-narrow-screen() {
+  .search {
+    position: static;
+    height: 3rem;
   }
 }

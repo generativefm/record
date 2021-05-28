@@ -13,6 +13,11 @@ const config = {
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
     mainFields: ['generativeFmManifest', 'browser', 'module', 'main'],
+    alias: {
+      react: path.join(__dirname, 'node_modules/react'),
+      'react-router-dom': path.join(__dirname, 'node_modules/react-router-dom'),
+      'react-dom': path.join(__dirname, 'node_modules/react-dom'),
+    },
   },
   module: {
     rules: [

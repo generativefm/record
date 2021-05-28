@@ -37,29 +37,34 @@ const DonationPrompt = ({ onDismiss }) => {
   }, []);
 
   return (
-    <Dialog title="Name your price">
+    <Dialog title="Name your price" onDismiss={onDismiss}>
       <div className="donation-prompt__content">
-        $
-        <input
-          type="tel"
-          min="0"
-          placeholder="0"
-          className="donation-prompt__content__price-input"
-          value={priceInputValue}
-          onKeyDown={handlePriceKeyDown}
-          onChange={handlePriceChange}
-        />
-        USD
-        <a
-          href={payPalUrl}
-          className="button button--text button--primary donation-prompt__content__pay-pal-link"
-          target="_blank"
-          rel="noreferrer noopener"
-          onClick={onDismiss}
-        >
-          Pay with PayPal <OpenInNewIcon style={{ marginLeft: '0.25rem' }} />
-        </a>
-        For more ways to pay, see <Link to="/donate">Donate</Link>.
+        <div>
+          $
+          <input
+            type="tel"
+            min="0"
+            placeholder="0"
+            className="donation-prompt__content__price-input"
+            value={priceInputValue}
+            onKeyDown={handlePriceKeyDown}
+            onChange={handlePriceChange}
+          />
+          USD
+        </div>
+        <div className="donation-prompt__content__pay-pal-link">
+          <a
+            href={payPalUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            onClick={onDismiss}
+          >
+            Pay with PayPal <OpenInNewIcon style={{ marginLeft: '0.25rem' }} />
+          </a>
+        </div>
+        <div>
+          For other ways to pay, see <Link to="/donate">Donate</Link>.
+        </div>
       </div>
     </Dialog>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { Donate } from '@generative.fm/web-ui';
+import classnames from 'classnames';
 import Browse from '../browse/browse.component';
 import Recordings from '../recordings/recordings.component';
 import Licensing from '../licensing/licensing.component';
@@ -17,7 +18,12 @@ const Content = () => {
   }, [pathname]);
 
   return (
-    <section className="content" ref={contentRef}>
+    <section
+      className={classnames('content', {
+        'content--has-search': pathname === '/browse',
+      })}
+      ref={contentRef}
+    >
       <Switch>
         <Route path="/recordings">
           <Recordings />
