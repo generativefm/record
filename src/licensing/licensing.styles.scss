@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '@generative.fm/web-ui/styles/_theme.scss';
 
 $text-margin: 2rem;
@@ -62,4 +63,24 @@ $text-margin: 2rem;
 
 .text-center {
   text-align: center;
+}
+
+@include is-narrow-screen() {
+  .text-content {
+    margin-top: 0;
+    h1 {
+      font-size: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin: 1rem 0;
+    }
+
+    p,
+    ul {
+      margin-top: math.div($text-margin, 2);
+      font-size: 1rem;
+    }
+  }
 }

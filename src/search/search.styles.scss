@@ -4,7 +4,7 @@
 .search {
   width: 100%;
   box-sizing: border-box;
-  background-color: $color-dark-2;
+  background-color: $color-dark-3;
   height: $heightSearchbar;
   box-shadow: $box-shadow-bottom;
   color: $color-grey;
@@ -40,6 +40,7 @@
 
 @include is-narrow-screen() {
   .search {
+    background-color: $color-dark-2;
     position: static;
     height: 3rem;
   }

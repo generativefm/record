@@ -1,0 +1,11 @@
+.layout__footer {
+  &--will-enter {
+    transform: translateY(100%);
+    will-change: transform;
+  }
+
+  &--is-entering {
+    transform: none;
+    transition: transform 200ms;
+  }
+}

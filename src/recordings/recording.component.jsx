@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { SaveAlt as DownloadIcon, Add } from '@material-ui/icons';
 import { IconButton } from '@generative.fm/web-ui';
-import Button from '../common/button.component';
 import ProgressBar from './progress-bar.component';
 import loadRecordingFile from '../storage/load-recording-file';
 import userOpenedNewRecordingConfig from './actions/user-opened-new-recording-config.creator';
@@ -112,21 +111,16 @@ const Recording = ({
           )}
         </div>
         <div className="recording__buttons">
-          <Button
-            className="button--change-background"
-            tooltip="Save"
+          <IconButton
+            title="Save"
             isDisabled={progress < 1}
             onClick={handleSaveClick}
           >
             <DownloadIcon />
-          </Button>
-          <Button
-            className="button--change-background"
-            tooltip="New recording"
-            onClick={handleNewRecordingClick}
-          >
+          </IconButton>
+          <IconButton title="New recording" onClick={handleNewRecordingClick}>
             <Add />
-          </Button>
+          </IconButton>
         </div>
       </div>
     );
@@ -166,10 +160,10 @@ const Recording = ({
           isDisabled={progress < 1}
           onClick={handleSaveClick}
         >
-          <DownloadIcon style={{ height: 30, width: 30 }} />
+          <DownloadIcon />
         </IconButton>
         <IconButton title="New recording" onClick={handleNewRecordingClick}>
-          <Add style={{ height: 30, width: 30 }} />
+          <Add />
         </IconButton>
       </div>
     </div>

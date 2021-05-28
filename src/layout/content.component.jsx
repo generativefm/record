@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import { Donate } from '@generative.fm/web-ui';
+import { Donate, About } from '@generative.fm/web-ui';
 import classnames from 'classnames';
 import Browse from '../browse/browse.component';
 import Recordings from '../recordings/recordings.component';
 import Licensing from '../licensing/licensing.component';
+import logoSrc from '../logo.png';
 import './content.styles.scss';
 
 const Content = () => {
@@ -36,6 +37,13 @@ const Content = () => {
         </Route>
         <Route path="/donate">
           <Donate />
+        </Route>
+        <Route path="/about">
+          <About
+            productName="Record"
+            logoSrc={logoSrc}
+            sourceCodeUrl="https://github.com/generative-fm/record"
+          />
         </Route>
         <Route path="/">
           <Redirect to="/browse" />
