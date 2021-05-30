@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
 import { SaveAlt as DownloadIcon, Add } from '@material-ui/icons';
-import Button from '../common/button.component';
+import { IconButton } from '@generative.fm/web-ui';
 import ProgressBar from './progress-bar.component';
 import loadRecordingFile from '../storage/load-recording-file';
 import userOpenedNewRecordingConfig from './actions/user-opened-new-recording-config.creator';
@@ -51,6 +51,7 @@ const Recording = ({
   fadeIn,
   fadeOut,
   progress,
+  mimeType,
   onSave,
 }) => {
   const dispatch = useDispatch();
@@ -59,17 +60,20 @@ const Recording = ({
   const handleSaveClick = useCallback(() => {
     loadRecordingFile(recordingId).then((arrayBuffer) => {
       const url = URL.createObjectURL(
-        new Blob([arrayBuffer], { type: 'audio/ogg; codecs=opus' })
+        new Blob([arrayBuffer], { type: mimeType })
       );
       const linkElement = document.createElement('a');
       linkElement.setAttribute('href', url);
-      linkElement.setAttribute('download', `${pieceId}-excerpt.ogg`);
+      linkElement.setAttribute(
+        'download',
+        `${pieceId}-excerpt.${mimeType === 'audio/wav' ? 'wav' : 'ogg'}`
+      );
       linkElement.click();
       if (typeof onSave === 'function') {
         onSave();
       }
     });
-  }, [pieceId, recordingId, onSave]);
+  }, [pieceId, recordingId, onSave, mimeType]);
 
   const handleNewRecordingClick = useCallback(() => {
     dispatch(userOpenedNewRecordingConfig(pieceId));
@@ -111,21 +115,16 @@ const Recording = ({
           )}
         </div>
         <div className="recording__buttons">
-          <Button
-            className="button--change-background"
-            tooltip="Save"
+          <IconButton
+            title="Save"
             isDisabled={progress < 1}
             onClick={handleSaveClick}
           >
             <DownloadIcon />
-          </Button>
-          <Button
-            className="button--change-background"
-            tooltip="New recording"
-            onClick={handleNewRecordingClick}
-          >
+          </IconButton>
+          <IconButton title="New recording" onClick={handleNewRecordingClick}>
             <Add />
-          </Button>
+          </IconButton>
         </div>
       </div>
     );
@@ -160,21 +159,16 @@ const Recording = ({
         ) : null}
       </div>
       <div className="recording__buttons">
-        <Button
-          className="button--change-background"
-          tooltip="Save"
+        <IconButton
+          title="Save"
           isDisabled={progress < 1}
           onClick={handleSaveClick}
         >
-          <DownloadIcon style={{ height: 30, width: 30 }} />
-        </Button>
-        <Button
-          className="button--change-background"
-          tooltip="New recording"
-          onClick={handleNewRecordingClick}
-        >
-          <Add style={{ height: 30, width: 30 }} />
-        </Button>
+          <DownloadIcon />
+        </IconButton>
+        <IconButton title="New recording" onClick={handleNewRecordingClick}>
+          <Add />
+        </IconButton>
       </div>
     </div>
   );
@@ -188,6 +182,7 @@ Recording.propTypes = {
   fadeIn: PropTypes.number.isRequired,
   fadeOut: PropTypes.number.isRequired,
   progress: PropTypes.number.isRequired,
+  mimeType: PropTypes.string.isRequired,
   onSave: PropTypes.func,
 };
 

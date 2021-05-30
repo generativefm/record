@@ -2,13 +2,8 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import {
-  PlayArrow as PlayIcon,
-  Stop as StopIcon,
-  Add,
-  Album,
-} from '@material-ui/icons';
-import Button from '../common/button.component';
+import { PlayArrow, Stop, Add, Album } from '@material-ui/icons';
+import { IconButton } from '@generative.fm/web-ui';
 import userOpenedNewRecordingConfig from '../recordings/actions/user-opened-new-recording-config.creator';
 import userClickedPlay from '../playback/actions/user-clicked-play.creator';
 import userClickedStop from '../playback/actions/user-clicked-stop.creator';
@@ -42,34 +37,19 @@ const Piece = ({ id, isPlayable }) => {
         <div className="piece__info__title">{title}</div>
       </div>
       <div className="piece__buttons">
-        <Button
-          className="button--change-background piece__buttons__button"
-          tooltip={isCurrentlyPlaying ? 'Stop' : 'Play'}
+        <IconButton
+          title={isCurrentlyPlaying ? 'Stop' : 'Play'}
           onClick={handlePlaybackClick}
           isDisabled={!isPlayable}
         >
-          {isCurrentlyPlaying ? (
-            <StopIcon style={{ width: 30, height: 30 }} />
-          ) : (
-            <PlayIcon style={{ width: 30, height: 30 }} />
-          )}
-        </Button>
-        <a
-          href={bandcampUrl}
-          className="button button--change-background piece__buttons__button"
-          title="Official recordings"
-          rel="noreferrer noopener"
-          target="_blank"
-        >
-          <Album style={{ width: 30, height: 30 }} />
-        </a>
-        <Button
-          className="button--change-background piece__buttons__button"
-          tooltip="New recording"
-          onClick={handleNewRecordingClick}
-        >
-          <Add style={{ width: 30, height: 30 }} />
-        </Button>
+          {isCurrentlyPlaying ? <Stop /> : <PlayArrow />}
+        </IconButton>
+        <IconButton href={bandcampUrl} title="Official recordings">
+          <Album />
+        </IconButton>
+        <IconButton title="New recording" onClick={handleNewRecordingClick}>
+          <Add />
+        </IconButton>
       </div>
     </div>
   );

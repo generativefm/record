@@ -14,6 +14,7 @@ const recordingsReducer = (state = DEFAULT_STATE, action) => {
         fadeIn,
         fadeOut,
         queuedAt,
+        mimeType,
       } = action.payload;
       return {
         ...state,
@@ -24,6 +25,7 @@ const recordingsReducer = (state = DEFAULT_STATE, action) => {
           queuedAt,
           fadeIn,
           fadeOut,
+          mimeType,
           progress: 0,
         },
       };
@@ -47,6 +49,7 @@ const recordingsReducer = (state = DEFAULT_STATE, action) => {
         ...action.payload.reduce((o, recording) => {
           o[recording.recordingId] = {
             ...recording,
+            mimeType: recording.mimeType || 'audio/ogg;codecs=opus',
             progress: 1,
           };
           return o;

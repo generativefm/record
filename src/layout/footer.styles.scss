@@ -1,18 +1,18 @@
-@import '../styles/_colors.scss';
-@import '../styles/_effects.scss';
+@import '@generative.fm/web-ui/styles/_theme.scss';
 @import '../styles/_layout.scss';
-@import '../styles/_type.scss';
-@import '../styles/_values.scss';
 
 .footer {
-  background-color: $color-dark-2;
+  background-color: $color-dark-3;
   height: $heightFooter;
-  width: 100vw;
   box-shadow: $box-shadow-top;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 2;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
   &__left,
   &__center,
@@ -49,13 +49,22 @@
   }
 }
 
+@include is-narrow-screen() {
+  .footer {
+    bottom: 4rem;
+    height: 4rem;
+    padding-right: 0.5rem;
+    background-color: $color-dark-2;
+  }
+}
+
 .now-playing {
   display: flex;
   align-items: center;
 
   &__image {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
     margin: 0 1rem;
     box-shadow: $box-shadow-bottom;
     border-radius: $border-radius-sm;
@@ -63,6 +72,20 @@
 
   &__title {
     @include type-normal();
+    font-weight: $font-weight-medium;
     color: $color-white;
+  }
+}
+
+@include is-narrow-screen() {
+  .now-playing {
+    &__image {
+      margin-right: 0.5rem;
+    }
+
+    &__title {
+      margin-left: 0.25rem;
+      font-size: 0.9rem;
+    }
   }
 }

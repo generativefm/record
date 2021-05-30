@@ -7,8 +7,8 @@ import {
   Add,
   Album,
 } from '@material-ui/icons';
-import VolumeControl from '../volume/volume-control.component';
-import Button from '../common/button.component';
+import { IconButton } from '@generative.fm/web-ui';
+import MasterGainControl from '../volume/master-gain-control.component';
 import selectIsPlaying from '../playback/is-playing.selector';
 import selectPlaybackTarget from '../playback/target.selector';
 import PIECE from '../playback/piece.type';
@@ -70,43 +70,31 @@ const Footer = () => {
       <div className={isNarrowScreen ? 'footer__right' : 'footer__center'}>
         {isValidId && (
           <>
-            <Button
-              className="button--stroke"
-              tooltip={isPlaying ? 'Stop' : 'Play'}
+            <IconButton
+              title={isPlaying ? 'Stop' : 'Play'}
               isDisabled={!id || isRecording}
               onClick={handlePlaybackClick}
             >
-              {isPlaying ? (
-                <StopIcon style={{ width: 30, height: 30 }} />
-              ) : (
-                <PlayIcon style={{ width: 30, height: 30 }} />
-              )}
-            </Button>
+              {isPlaying ? <StopIcon /> : <PlayIcon />}
+            </IconButton>
             {bandcampUrl && (
-              <a
-                href={bandcampUrl}
-                className="button button--stroke"
-                title="Official recordings"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                <Album style={{ width: 30, height: 30 }} />
-              </a>
+              <IconButton href={bandcampUrl} title="Official recordings">
+                <Album />
+              </IconButton>
             )}
-            <Button
-              className="button--stroke"
-              tooltip="New recording"
+            <IconButton
+              title="New recording"
               isDisabled={!id}
               onClick={handleNewRecordingClick}
             >
-              <Add style={{ width: 30, height: 30 }} />
-            </Button>
+              <Add />
+            </IconButton>
           </>
         )}
       </div>
       {!isNarrowScreen && (
         <div className="footer__right">
-          <VolumeControl />
+          <MasterGainControl />
         </div>
       )}
     </footer>

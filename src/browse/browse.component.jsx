@@ -1,7 +1,6 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import pieces, { byId } from '@generative-music/pieces-alex-bainter';
-import Fuse from 'fuse.js';
 import { useLocation } from 'react-router-dom';
 import selectSearchTerm from '../search/search-term.selector';
 import Piece from './piece.component';
@@ -26,15 +25,19 @@ const NEW_RECORDING_QS_REGEX = /new-recording=([\w\d-]+)/i;
 
 const Browse = () => {
   const isRecording = useSelector(selectIsRecording);
-  const fuse = useRef(new Fuse(recordablePieces, { keys: ['id', 'title'] }));
   const searchTerm = useSelector(selectSearchTerm);
-  const searchResults = useMemo(
-    () =>
-      searchTerm
-        ? fuse.current.search(searchTerm).map(pluck('item'))
-        : recordablePieces,
-    [fuse, searchTerm]
-  );
+  const searchResults = useMemo(() => {
+    if (typeof searchTerm !== 'string') {
+      return recordablePieces;
+    }
+    const upperCaseSearchTerm = searchTerm.trim().toUpperCase();
+    if (!upperCaseSearchTerm) {
+      return recordablePieces;
+    }
+    return recordablePieces.filter(({ title }) =>
+      title.toUpperCase().includes(upperCaseSearchTerm)
+    );
+  }, [searchTerm]);
 
   const { search: queryString } = useLocation();
   const dispatch = useDispatch();

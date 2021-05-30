@@ -2,13 +2,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ContextMenuProvider } from '@generative.fm/web-ui';
 import Layout from './layout/layout.component';
 import getStore from './store/get-store';
 import MasterGainProvider from './volume/master-gain-provider.component';
 import recordingsLoadedFromStorage from './recordings/actions/recordings-loaded-from-storage.creator';
 import loadRecordings from './storage/load-recordings';
 import maybeInitializeSentry from './sentry/initialize';
-import './styles/base.scss';
+import '@generative.fm/web-ui/styles/base.scss';
 
 maybeInitializeSentry();
 
@@ -22,7 +23,9 @@ getStore().then((store) => {
     <Router>
       <Provider store={store}>
         <MasterGainProvider>
-          <Layout />
+          <ContextMenuProvider>
+            <Layout />
+          </ContextMenuProvider>
         </MasterGainProvider>
       </Provider>
     </Router>,

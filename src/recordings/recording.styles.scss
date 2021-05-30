@@ -1,8 +1,5 @@
-@import '../styles/_colors.scss';
-@import '../styles/_type.scss';
-@import '../styles/_effects.scss';
+@import '@generative.fm/web-ui/styles/_theme.scss';
 @import '../styles/_layout.scss';
-@import '../styles/_values.scss';
 
 .recording {
   @include type-normal();
@@ -31,6 +28,7 @@
 
     &__title {
       color: $color-white;
+      font-weight: $font-weight-medium;
     }
 
     &__progress {
@@ -66,24 +64,28 @@
     }
   }
 
-  @include if-narrow() {
+  @include is-narrow-screen() {
+    padding: 0.5rem;
     &__image {
       width: 3rem;
       height: 3rem;
       box-shadow: $box-shadow-bottom;
-      margin-right: 1rem;
+      margin-right: 0.5rem;
       flex-basis: 3rem;
+      border-radius: $border-radius-sm;
     }
 
     &__info {
       min-width: 0;
       display: block;
+      flex-grow: 1;
 
       &__title {
         text-overflow: ellipsis;
         overflow-x: hidden;
         white-space: nowrap;
         flex: 1;
+        font-size: 0.9rem;
       }
       &__lengths {
         margin-top: 0.5rem;

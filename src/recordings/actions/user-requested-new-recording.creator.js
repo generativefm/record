@@ -16,13 +16,21 @@ const userRequestedNewRecordingConfig = ({
   fadeIn,
   fadeOut,
 }) =>
-  createStandardAction(type)({
-    pieceId,
-    length,
-    fadeIn: parsedFloatOr0(fadeIn),
-    fadeOut: parsedFloatOr0(fadeOut),
-    recordingId: uuid(),
-    queuedAt: Date.now(),
-  });
+  createStandardAction(type)(
+    {
+      pieceId,
+      length,
+      fadeIn: parsedFloatOr0(fadeIn),
+      fadeOut: parsedFloatOr0(fadeOut),
+      recordingId: uuid(),
+      queuedAt: Date.now(),
+      mimeType: 'audio/wav',
+    },
+    {
+      snackbar: {
+        message: 'Recording queued',
+      },
+    }
+  );
 
 export default userRequestedNewRecordingConfig;

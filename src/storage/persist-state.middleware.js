@@ -1,16 +1,12 @@
 import openDb from './open-db';
 import selectVolume from '../volume/volume.selector';
-import selectPlaybackTarget from '../playback/target.selector';
-import selectPersistedAlerts from '../alerts/persisted-alerts.selector';
 import selectIsPromptAllowed from '../donate/is-prompt-allowed.selector';
 import pipe from '../utilities/pipe';
 import STATE_OBJECT_STORE_NAME from './state-object-store-name';
 import promisifyTransaction from './promisify-transaction';
 
-const selectors = {
+export const selectors = {
   volume: selectVolume,
-  'playback.target': selectPlaybackTarget,
-  alerts: selectPersistedAlerts,
   'donate.isPromptAllowed': selectIsPromptAllowed,
 };
 

@@ -1,5 +1,5 @@
 import USER_CLICKED_VOLUME_TOGGLE from './actions/user-clicked-volume-toggle.type';
-import USER_FINISHED_ADJUSTING_VOLUME from './actions/user-finished-adjusting-volume.type';
+import USER_ADJUSTED_VOLUME from './actions/user-adjusted-volume.type';
 
 const DEFAULT_STATE = {
   currentValue: 0.75,
@@ -19,7 +19,7 @@ const volumeReducer = (state = DEFAULT_STATE, action) => {
     case USER_CLICKED_VOLUME_TOGGLE: {
       return swapValues(state);
     }
-    case USER_FINISHED_ADJUSTING_VOLUME: {
+    case USER_ADJUSTED_VOLUME: {
       const newValue = action.payload;
       const { currentValue } = state;
       if (newValue === currentValue) {

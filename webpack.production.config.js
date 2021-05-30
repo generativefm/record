@@ -1,6 +1,5 @@
 'use strict';
 
-const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { EnvironmentPlugin } = require('webpack');
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
@@ -13,21 +12,14 @@ const prodConfig = Object.assign(baseConfig, {
 
 prodConfig.module.rules.unshift({
   test: /\.s?css$/,
-  include: /src/,
   use: [
     MiniCssExtractPlugin.loader,
     { loader: 'css-loader', options: { importLoaders: 1 } },
   ],
 });
 
-prodConfig.resolve = Object.assign(prodConfig.resolve, {
-  alias: {
-    'fuse.js$': path.resolve('./node_modules/fuse.js/dist/fuse.basic.min.js'),
-  },
-});
-
 prodConfig.plugins.push(
-  new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
+  new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
   new EnvironmentPlugin(['RELEASE_TAG'])
 );
 

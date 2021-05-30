@@ -1,25 +1,5 @@
-@import '~reset-css/sass/reset';
-@import '_colors.scss';
-@import '_type.scss';
-@import '_layout.scss';
-
-html,
-body,
-#root {
-  background-color: $color-dark-1;
-  height: 100%;
-  width: 100vw;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.is-shown {
-  visibility: visible;
-}
-
-.is-hidden {
-  visibility: hidden;
-}
+@use 'sass:math';
+@import '@generative.fm/web-ui/styles/_theme.scss';
 
 $text-margin: 2rem;
 
@@ -28,11 +8,12 @@ $text-margin: 2rem;
   color: $color-white;
   padding: 1rem;
   margin: 0 auto;
-  max-width: 50%;
+  max-width: 100rem;
+  margin-top: 2rem;
 
   h1 {
     @include type-more-prominent();
-    font-size: 2.2em;
+    font-size: 2em;
     margin: $text-margin * 2 0 1rem;
 
     &:first-of-type {
@@ -69,7 +50,7 @@ $text-margin: 2rem;
     }
   }
 
-  @include if-narrow() {
+  @include is-narrow-screen() {
     max-width: none;
     font-size: 16px;
     box-sizing: border-box;
@@ -82,4 +63,24 @@ $text-margin: 2rem;
 
 .text-center {
   text-align: center;
+}
+
+@include is-narrow-screen() {
+  .text-content {
+    margin-top: 0;
+    h1 {
+      font-size: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin: 1rem 0;
+    }
+
+    p,
+    ul {
+      margin-top: math.div($text-margin, 2);
+      font-size: 1rem;
+    }
+  }
 }

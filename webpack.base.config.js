@@ -3,16 +3,23 @@ const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { version } = require('./package.json');
 
 const config = {
   output: {
-    filename: '[name].[hash].js',
-    chunkFilename: '[chunkhash].js',
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[contenthash].js',
+    clean: true,
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
     mainFields: ['generativeFmManifest', 'browser', 'module', 'main'],
+    alias: {
+      react: path.join(__dirname, 'node_modules/react'),
+      'react-router-dom': path.join(__dirname, 'node_modules/react-router-dom'),
+      'react-dom': path.join(__dirname, 'node_modules/react-dom'),
+      tone: path.join(__dirname, 'node_modules/tone'),
+    },
   },
   module: {
     rules: [
@@ -34,7 +41,6 @@ const config = {
       },
       {
         test: /\.scss$/,
-        include: /src/,
         use: 'sass-loader',
       },
       {
@@ -82,9 +88,9 @@ const config = {
       },
     }),
     new FaviconsWebpackPlugin({ logo: './src/logo.png', prefix: '' }),
-    new CleanWebpackPlugin(),
     new EnvironmentPlugin({
       SAMPLE_FILE_HOST: '//localhost:6969',
+      APP_VERSION: version,
     }),
   ],
 };

@@ -1,3 +1,18 @@
+@import '@generative.fm/web-ui/styles/_theme.scss';
+@import '../styles/layout.scss';
+
 .content {
   flex: 1;
+  padding-top: 4rem;
+  padding-bottom: $heightFooter + 4rem;
+
+  &--has-search {
+    padding-top: 8rem;
+  }
+}
+
+@include is-narrow-screen() {
+  .content {
+    padding-top: 0;
+  }
 }

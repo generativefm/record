@@ -1,7 +1,9 @@
-@import '../styles/colors.scss';
+@import '@generative.fm/web-ui/styles/_theme.scss';
 
 .donation-prompt {
   &__content {
+    @include type-normal();
+    color: $color-white;
     text-align: center;
 
     a {
@@ -9,6 +11,7 @@
       color: $color-white;
       border-bottom: 1px solid $color-primary;
       transition: color 200ms;
+      padding-bottom: 0.25rem;
 
       &:hover {
         color: $color-primary;
@@ -31,16 +34,14 @@
     }
 
     &__pay-pal-link {
-      margin: 1rem 0 2rem;
+      margin: 0.5rem 0 2rem;
     }
 
     &__hide {
-      margin-top: 2rem;
-
-      &__label {
-        color: $color-grey;
-        cursor: pointer;
-      }
+      margin: 1rem 0;
+      text-align: center;
+      display: flex;
+      justify-content: center;
     }
   }
 }

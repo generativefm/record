@@ -1,14 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { OpenInNew as OpenInNewIcon } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import Overlay from '../layout/overlay.component';
-import Modal from '../modal/modal.component';
-import ModalHeader from '../modal/modal-header.component';
-import ModalContent from '../modal/modal-content.component';
-import ModalFooter from '../modal/modal-footer.component';
-import Button from '../common/button.component';
+import { Dialog, Checkbox } from '@generative.fm/web-ui';
+import { useDispatch } from 'react-redux';
 import userSelectedPromptSetting from './actions/user-selected-prompt-setting.creator';
 import './donation-prompt.styles.scss';
 
@@ -45,20 +40,17 @@ const DonationPrompt = ({ onDismiss }) => {
     setPayPalUrl(`${PAY_PAL_BASE_URL}${event.target.value}`);
   }, []);
 
-  const handleCheckboxChange = useCallback(
-    (event) => {
-      const isChecked = Boolean(event.target.checked);
-      setIsPromptSettingChecked(isChecked);
-      dispatch(userSelectedPromptSetting(!isChecked));
-    },
-    [dispatch]
-  );
+  const handleCheckboxChange = useCallback(() => {
+    setIsPromptSettingChecked((previousValue) => {
+      dispatch(userSelectedPromptSetting(previousValue));
+      return !previousValue;
+    });
+  }, [dispatch]);
 
   return (
-    <Overlay>
-      <Modal onDismiss={onDismiss}>
-        <ModalHeader>Name your price</ModalHeader>
-        <ModalContent className="donation-prompt__content">
+    <Dialog title="Name your price" onDismiss={onDismiss}>
+      <div className="donation-prompt__content">
+        <div>
           $
           <input
             type="tel"
@@ -70,34 +62,29 @@ const DonationPrompt = ({ onDismiss }) => {
             onChange={handlePriceChange}
           />
           USD
+        </div>
+        <div className="donation-prompt__content__pay-pal-link">
           <a
             href={payPalUrl}
-            className="button button--text button--primary donation-prompt__content__pay-pal-link"
             target="_blank"
             rel="noreferrer noopener"
             onClick={onDismiss}
           >
             Pay with PayPal <OpenInNewIcon style={{ marginLeft: '0.25rem' }} />
           </a>
-          For more ways to pay, see <Link to="/donate">Donate</Link>.
-          <div className="donation-prompt__content__hide">
-            <label className="donation-prompt__content__hide__label">
-              <input
-                type="checkbox"
-                onChange={handleCheckboxChange}
-                checked={isPromptSettingChecked}
-              ></input>
-              Don&apos;t ask me again
-            </label>
-          </div>
-        </ModalContent>
-        <ModalFooter>
-          <Button className="button--text" onClick={onDismiss}>
-            No thanks
-          </Button>
-        </ModalFooter>
-      </Modal>
-    </Overlay>
+        </div>
+        <div className="donation-prompt__content__hide">
+          <Checkbox
+            label="Don't ask again"
+            isChecked={isPromptSettingChecked}
+            onCheck={handleCheckboxChange}
+          />
+        </div>
+        <div>
+          For other ways to pay, see <Link to="/donate">Donate</Link>.
+        </div>
+      </div>
+    </Dialog>
   );
 };
 

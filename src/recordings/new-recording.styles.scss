@@ -1,10 +1,23 @@
-@import '../styles/_colors.scss';
-@import '../styles/_type.scss';
-@import '../styles/_effects.scss';
-@import '../styles/_layout.scss';
-@import '../styles/_values.scss';
+@import '@generative.fm/web-ui/styles/_theme.scss';
 
 .new-recording {
+  @include type-normal();
+  color: $color-white;
+  line-height: 2;
+  font-size: 1rem;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid $color-primary;
+    padding-bottom: 0.15rem;
+    transition: color 200ms;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
   &__piece {
     width: 100%;
     display: flex;
@@ -20,18 +33,14 @@
     }
 
     &__title {
-      margin-left: 1rem;
+      @include type-normal();
+      font-weight: $font-weight-medium;
+      color: $color-white;
     }
   }
 
   &__inputs {
     padding: 1rem 1rem 0;
-  }
-
-  &__estimate {
-    width: 100%;
-    text-align: center;
-    color: $color-grey;
   }
 
   &__left-button {
@@ -40,9 +49,8 @@
 }
 
 .input-row {
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 5rem 6rem 5rem;
+  @include type-normal();
+  display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
@@ -53,26 +61,6 @@
 
   &__label {
     text-align: right;
-  }
-
-  &__input-container {
-    padding: 0 1rem;
-
-    input {
-      @include type-normal();
-      text-align: right;
-      font-size: 1rem;
-      background: none;
-      border: 1px solid $color-grey;
-      box-sizing: border-box;
-      width: 100%;
-      color: $color-white;
-      outline-color: $color-primary;
-      border-radius: $border-radius-sm;
-    }
-  }
-
-  &__unit {
-    color: $color-grey;
+    color: $color-white;
   }
 }
