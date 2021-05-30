@@ -3,6 +3,7 @@ const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { version } = require('./package.json');
 
 const config = {
   output: {
@@ -89,6 +90,7 @@ const config = {
     new FaviconsWebpackPlugin({ logo: './src/logo.png', prefix: '' }),
     new EnvironmentPlugin({
       SAMPLE_FILE_HOST: '//localhost:6969',
+      APP_VERSION: version,
     }),
   ],
 };

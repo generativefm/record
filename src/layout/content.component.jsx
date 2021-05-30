@@ -43,6 +43,7 @@ const Content = () => {
             productName="Record"
             logoSrc={logoSrc}
             sourceCodeUrl="https://github.com/generative-fm/record"
+            version={process.env.APP_VERSION}
           />
         </Route>
         <Route path="/">
