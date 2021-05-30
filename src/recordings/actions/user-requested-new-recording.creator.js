@@ -24,6 +24,7 @@ const userRequestedNewRecordingConfig = ({
       fadeOut: parsedFloatOr0(fadeOut),
       recordingId: uuid(),
       queuedAt: Date.now(),
+      mimeType: 'audio/wav',
     },
     {
       snackbar: {

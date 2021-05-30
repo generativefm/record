@@ -48,6 +48,7 @@ const recordMiddleware = (store) => (next) => {
             fadeInS: fadeIn,
             fadeOutS: fadeOut,
             timeslice: TIMESLICE_MS,
+            mimeType: 'audio/wav',
           }
         )
           .pipe(
@@ -60,7 +61,7 @@ const recordMiddleware = (store) => (next) => {
             }),
             reduce((blobs, newBlob) => blobs.concat([newBlob]), []),
             mergeMap((blobs) => {
-              const blob = new Blob(blobs, { type: 'audio/ogg; codecs=opus' });
+              const blob = new Blob(blobs, { type: 'audio/wav' });
               if (typeof blob.arrayBuffer === 'function') {
                 return blob.arrayBuffer();
               }

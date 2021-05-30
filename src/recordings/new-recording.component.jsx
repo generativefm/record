@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { byId } from '@generative-music/pieces-alex-bainter';
-import record from '@generative-music/web-recorder';
+import { checkSupport } from '@generative-music/web-recorder';
 import { Dialog, DurationInput } from '@generative.fm/web-ui';
 import selectNewRecordingId from './new-recording-id.selector';
 import userCanceledNewRecording from './actions/user-canceled-new-recording.creator';
@@ -38,6 +38,8 @@ const NewRecording = () => {
   const history = useHistory();
   const isOnRecordingsPage = Boolean(useRouteMatch('/recordings'));
   const newRecordingId = useSelector(selectNewRecordingId);
+  const [isCheckingSupport, setIsCheckingSupport] = useState(true);
+  const [isSupported, setIsSupported] = useState(false);
   const [length, setLength] = useState();
   const [fadeIn, setFadeIn] = useState();
   const [fadeOut, setFadeOut] = useState();
@@ -83,7 +85,26 @@ const NewRecording = () => {
     [handleStartClick, isValidLength]
   );
 
-  if (!record.isSupported) {
+  useEffect(() => {
+    let isCancelled = false;
+    checkSupport().then((result) => {
+      if (isCancelled) {
+        return;
+      }
+      setIsSupported(result);
+      setIsCheckingSupport(false);
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  if (isCheckingSupport) {
+    return null;
+  }
+
+  if (!isSupported) {
     return (
       <Dialog title="Not supported" onDismiss={dispatchCancelAction}>
         <div className="new-recording">

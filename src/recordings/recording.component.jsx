@@ -51,6 +51,7 @@ const Recording = ({
   fadeIn,
   fadeOut,
   progress,
+  mimeType,
   onSave,
 }) => {
   const dispatch = useDispatch();
@@ -59,17 +60,20 @@ const Recording = ({
   const handleSaveClick = useCallback(() => {
     loadRecordingFile(recordingId).then((arrayBuffer) => {
       const url = URL.createObjectURL(
-        new Blob([arrayBuffer], { type: 'audio/ogg; codecs=opus' })
+        new Blob([arrayBuffer], { type: mimeType })
       );
       const linkElement = document.createElement('a');
       linkElement.setAttribute('href', url);
-      linkElement.setAttribute('download', `${pieceId}-excerpt.ogg`);
+      linkElement.setAttribute(
+        'download',
+        `${pieceId}-excerpt.${mimeType === 'audio/wav' ? 'wav' : 'ogg'}`
+      );
       linkElement.click();
       if (typeof onSave === 'function') {
         onSave();
       }
     });
-  }, [pieceId, recordingId, onSave]);
+  }, [pieceId, recordingId, onSave, mimeType]);
 
   const handleNewRecordingClick = useCallback(() => {
     dispatch(userOpenedNewRecordingConfig(pieceId));
@@ -178,6 +182,7 @@ Recording.propTypes = {
   fadeIn: PropTypes.number.isRequired,
   fadeOut: PropTypes.number.isRequired,
   progress: PropTypes.number.isRequired,
+  mimeType: PropTypes.string.isRequired,
   onSave: PropTypes.func,
 };
 

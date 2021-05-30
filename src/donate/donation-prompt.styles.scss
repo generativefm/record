@@ -38,12 +38,10 @@
     }
 
     &__hide {
-      margin-top: 2rem;
-
-      &__label {
-        color: $color-grey;
-        cursor: pointer;
-      }
+      margin: 1rem 0;
+      text-align: center;
+      display: flex;
+      justify-content: center;
     }
   }
 }

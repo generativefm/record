@@ -17,6 +17,7 @@ const config = {
       react: path.join(__dirname, 'node_modules/react'),
       'react-router-dom': path.join(__dirname, 'node_modules/react-router-dom'),
       'react-dom': path.join(__dirname, 'node_modules/react-dom'),
+      tone: path.join(__dirname, 'node_modules/tone'),
     },
   },
   module: {
