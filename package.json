@@ -1,6 +1,6 @@
 {
   "name": "@generative.fm/record",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Recording interface for Generative.fm",
   "main": "index.js",
   "scripts": {
