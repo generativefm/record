@@ -40,7 +40,7 @@
   }
 }
 
-@include if-narrow() {
+@include is-narrow-screen() {
   .piece {
     padding: 0.5rem;
     &__info {
