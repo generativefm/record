@@ -3,7 +3,7 @@ import { Integrations } from '@sentry/tracing';
 import shouldUse from './should-use';
 
 const maybeInitialize = () => {
-  if (shouldUse) {
+  if (shouldUse && process.env.RELEASE_TAG) {
     init({
       dsn:
         'https://706481c04f7e460791b36123b381fddf@o461193.ingest.sentry.io/5462662',
