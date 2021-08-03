@@ -10,7 +10,8 @@
     "test": "karma start --single-run",
     "test:watch": "karma start",
     "lint": "eslint . --ext \".js,.jsx\"",
-    "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy"
+    "deploy": "node -r dotenv/config node_modules/.bin/s3-sync deploy",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",

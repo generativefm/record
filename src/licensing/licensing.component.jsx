@@ -98,13 +98,6 @@ const Licensing = () => (
       You can show your appreciation by making a{' '}
       <Link to="/donate">donation</Link>.
     </p>
-    <h1>Other Licensing Arrangements</h1>
-    <h2>For special cases and people with fancy pants</h2>
-    <p>
-      If you prefer not to use the Creative Commons licensing, send an email
-      with your offer to{' '}
-      <a href="mailto:alex@alexbainter.com">alex@alexbainter.com</a>.
-    </p>
   </div>
 );
 
