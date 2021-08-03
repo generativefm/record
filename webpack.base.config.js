@@ -87,7 +87,10 @@ const config = {
         background: '#121212',
       },
     }),
-    new FaviconsWebpackPlugin({ logo: './src/logo.png', prefix: '' }),
+    new FaviconsWebpackPlugin({
+      logo: './src/logo.png',
+      prefix: `icons/[contenthash]/`,
+    }),
     new EnvironmentPlugin({
       SAMPLE_FILE_HOST: '//localhost:6969',
       APP_VERSION: version,
