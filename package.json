@@ -45,7 +45,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "image-webpack-loader": "^7.0.1",
-    "karma": "^5.1.0",
+    "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
