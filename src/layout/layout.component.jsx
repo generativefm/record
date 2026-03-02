@@ -8,13 +8,7 @@ import {
   IconButton,
   useCreateContextMenuForTarget,
 } from '@generative.fm/web-ui';
-import {
-  MusicNote,
-  QueueMusic,
-  Gavel,
-  Favorite,
-  MoreVert,
-} from '@material-ui/icons';
+import { MusicNote, QueueMusic, Gavel, MoreVert } from '@material-ui/icons';
 import { CSSTransition } from 'react-transition-group';
 import ContextMenu from './context-menu';
 import Search from '../search/search.component';
@@ -41,11 +35,6 @@ const NAV_LINKS = [
     label: 'Licensing',
     to: '/licensing',
     Icon: Gavel,
-  },
-  {
-    label: 'Donate',
-    to: '/donate',
-    Icon: Favorite,
   },
 ];
 

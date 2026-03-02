@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import { Donate, About } from '@generative.fm/web-ui';
+import { About } from '@generative.fm/web-ui';
 import classnames from 'classnames';
 import Browse from '../browse/browse.component';
 import Recordings from '../recordings/recordings.component';
@@ -34,9 +34,6 @@ const Content = () => {
         </Route>
         <Route path="/browse">
           <Browse />
-        </Route>
-        <Route path="/donate">
-          <Donate />
         </Route>
         <Route path="/about">
           <About

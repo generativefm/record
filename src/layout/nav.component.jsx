@@ -4,7 +4,6 @@ import {
   MusicNote as BrowseIcon,
   QueueMusic as RecordingsIcon,
   Gavel as LicensingIcon,
-  Favorite as DonateIcon,
 } from '@material-ui/icons';
 import useIsNarrowScreen from './use-is-narrow-screen.hook';
 import useDismissable from '../common/use-dismissable.hook';
@@ -57,14 +56,6 @@ const Nav = () => {
           <LicensingIcon />
           <span>Licensing</span>
         </NavLink>
-        <NavLink
-          to="/donate"
-          className="nav--narrow__item"
-          activeClassName="nav--narrow__item--active"
-        >
-          <DonateIcon />
-          <span>Donate</span>
-        </NavLink>
       </nav>
     );
   }
@@ -93,13 +84,6 @@ const Nav = () => {
           activeClassName="header__nav__item--active"
         >
           Licensing
-        </NavLink>
-        <NavLink
-          to="/donate"
-          className="header__nav__item"
-          activeClassName="header__nav__item--active"
-        >
-          Donate
         </NavLink>
       </nav>
     </header>
