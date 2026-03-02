@@ -59,8 +59,8 @@
     "source-map-loader": "^3.0.0",
     "style-loader": "^2.0.0",
     "webpack": "^5.37.1",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.3"
   },
   "dependencies": {
     "@generative-music/pieces-alex-bainter": "^5.2.2",
